@@ -40,8 +40,8 @@ variable "helm_config" {
     wait_for_jobs              = optional(bool, false)
     replace                    = optional(bool, false)
     postrender                 = optional(object({
-      binary_path              = null
-      args                     = null
+      binary_path              = optional(string, null)
+      args                     = optional(string, null)
       }))
   })
 
