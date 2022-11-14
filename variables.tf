@@ -4,7 +4,6 @@ variable "eks_cluster_id" {
 }
 
 #####todo: fix postrender variable
-
 variable "helm_config" {
   type = object({
     name                       = optional(string, "argocd")
