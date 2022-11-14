@@ -118,8 +118,8 @@ resource "helm_release" "default" {
   replace                    = var.helm_config["replace"]
   #postrender                 = var.helm_config.postrender.binary_path
   postrender                 = {
-    binary_path = var.helm_config.postrender.["binary_path"]
-    args   = var.helm_config.postrender.["args"]
+    binary_path = var.helm_config.postrender["binary_path"]
+    args   = var.helm_config.postrender["args"]
   }
   values                     = [one(data.utils_deep_merge_yaml.default[*].output)]
 }
