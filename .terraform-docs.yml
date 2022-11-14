@@ -31,7 +31,7 @@ sort:
 settings:
   anchor: true
   color: true
-  default: true
+  default: false
   description: false
   escape: true
   hide-empty: false
