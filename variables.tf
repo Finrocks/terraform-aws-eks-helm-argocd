@@ -5,12 +5,6 @@ variable "eks_cluster_id" {
 
 variable "helm_config" {
   type = object({
-    atomic                     = optional(bool, false)
-    cleanup_on_fail            = optional(bool, true)
-    disable_crd_hooks          = optional(bool, true)
-    disable_openapi_validation = optional(bool, true)
-    disable_webhooks           = optional(bool, true)
-    force_update               = optional(bool, true)
     name                       = optional(string, "argocd")
     namespace                  = optional(string, "argo")
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
@@ -23,28 +17,34 @@ variable "helm_config" {
     reuse_values               = optional(bool, false)
     wait                       = optional(bool, true)
     timeout                    = optional(number, 300)
+    atomic                     = optional(bool, false)
+    cleanup_on_fail            = optional(bool, true)
+    disable_crd_hooks          = optional(bool, true)
+    disable_openapi_validation = optional(bool, true)
+    disable_webhooks           = optional(bool, true)
+    force_update               = optional(bool, true)
   })
 
-  default = {
-    name                       = "argocd"
-    namespace                  = "argo"
-    repository                 = "https://argoproj.github.io/argo-helm"
-    chart                      = "argo-cd"
-    version                    = "3.33.3"
-    max_history                = 10
-    create_namespace           = true
-    dependency_update          = true
-    reuse_values               = false
-    timeout                    = 300
-    override_values            = ""
-    wait                       = true
-    cleanup_on_fail            = false
-    atomic                     = true
-    disable_crd_hooks          = true
-    disable_openapi_validation = true
-    disable_webhooks           = true
-    force_update               = true
-  }
+#  default = {
+#    name                       = "argocd"
+#    namespace                  = "argo"
+#    repository                 = "https://argoproj.github.io/argo-helm"
+#    chart                      = "argo-cd"
+#    version                    = "3.33.3"
+#    max_history                = 10
+#    create_namespace           = true
+#    dependency_update          = true
+#    reuse_values               = false
+#    timeout                    = 300
+#    override_values            = ""
+#    wait                       = true
+#    #cleanup_on_fail            = false
+#    #atomic                     = true
+#    #disable_crd_hooks          = true
+#    #disable_openapi_validation = true
+#    #disable_webhooks           = true
+#    #force_update               = true
+#  }
 
   description = <<-DOC
 
