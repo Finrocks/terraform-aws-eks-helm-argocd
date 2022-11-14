@@ -10,11 +10,12 @@ variable "helm_config" {
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
     chart                      = optional(string, "argo-cd")
     version                    = optional(string, "5.13.8")
-    override_values            = optional(string)
     max_history                = optional(number, 10)
     create_namespace           = optional(bool, true)
     dependency_update          = optional(bool, true)
     reuse_values               = optional(bool, false)
+    reset_values               = optional(bool, false)
+    override_values            = optional(string)
     wait                       = optional(bool, true)
     timeout                    = optional(number, 300)
     atomic                     = optional(bool, true)
@@ -23,10 +24,31 @@ variable "helm_config" {
     disable_openapi_validation = optional(bool, false)
     disable_webhooks           = optional(bool, false)
     force_update               = optional(bool, false)
+    description                = optional(string, null)
+    lint                       = optional(bool, false)
+    repository_key_file        = optional(string, null)
+    repository_cert_file       = optional(string, null)
+    repository_ca_file         = optional(string, null)
+    repository_username        = optional(string, null)
+    repository_password        = optional(string, null)
+    verify                     = optional(bool, false)
+    recreate_pods              = optional(bool, false)
+    devel                      = optional(string, null)
+    keyring                    = optional(string, "/.gnupg/pubring.gpg")
+    skip_crds                  = optional(bool, false)
+    render_subchart_notes      = optional(bool, true)
+    wait_for_jobs              = optional(bool, false)
+    replace                    = optional(bool, false)
+    postrender                 = object(optional(
+      {
+      binary_path              = null
+      args                     = null
+      }
+    ))
   })
 
   description = <<-DOC
-
+    All input from [helm_release](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#argument-reference) resources.
   DOC
 }
 
@@ -60,32 +82,10 @@ variable "config" {
 
 
   description = <<-DOC
-    name:
-      Release name.
-    chart:
-      Chart name to be installed.
-    repository:
-      Repository URL where to locate the requested chart.
-    version:
-      Specify the exact chart version to install. If this is not specified, the latest version is installed.
-    namespace:
-      The namespace to install the release into.
-    timeout:
-      Time in seconds to wait for any individual kubernetes operation.
-    reuse_values:
-      When upgrading, reuse the last release's values and merge in any overrides.
-    dependency_update:
-      Runs helm dependency update before installing the chart.
-    create_namespace:
-      Create the namespace if it does not yet exist.
-    wait:
-      Will wait until all resources are in a ready state before marking the release as successful.
-    override_values:
-      A helm values to override.
     create_default_iam_policy:
-      Whether to create default IAM policy.
+      Defines whether to create default IAM policy.
     create_default_iam_role:
-      Whether to create default IAM role.
+      Defines whether to create default IAM role.
     iam_policy_document:
       Custom IAM policy which will be assigned to IAM role.
     use_sts_regional_endpoints:
