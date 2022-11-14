@@ -79,12 +79,12 @@ variable "config" {
     use_sts_regional_endpoints = optional(bool, false)
   })
 
-  default = {
-    create_default_iam_policy  = true
-    create_default_iam_role    = true
-    iam_policy_document        = ""
-    use_sts_regional_endpoints = false
-  }
+#  default = {
+#    create_default_iam_policy  = true
+#    create_default_iam_role    = true
+#    iam_policy_document        = ""
+#    use_sts_regional_endpoints = false
+#  }
 
   description = <<-DOC
     create_default_iam_policy:
