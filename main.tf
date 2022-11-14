@@ -61,7 +61,7 @@ module "server_eks_iam_role" {
   aws_iam_policy_document     = local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
-  service_account_namespace   = var.config["namespace"]
+  service_account_namespace   = var.helm_config["namespace"]
 
   enabled = local.iam_role_enabled
   context = module.this.context
@@ -74,7 +74,7 @@ module "application_controller_eks_iam_role" {
   aws_iam_policy_document     = local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.application_controller_service_account_name
-  service_account_namespace   = var.config["namespace"]
+  service_account_namespace   = var.helm_config["namespace"]
 
   enabled = local.iam_role_enabled
   context = module.this.context
