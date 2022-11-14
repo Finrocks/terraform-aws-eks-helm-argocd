@@ -3,13 +3,14 @@ variable "eks_cluster_id" {
   description = "EKS cluster ID"
 }
 
-variable "config" {
+variable "helm_config" {
   type = object({
+    atomic                     = optional(bool, true)
     name                       = optional(string, "argocd")
     namespace                  = optional(string, "argo")
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
     chart                      = optional(string, "argo-cd")
-    version                    = optional(string, "3.33.3")
+    version                    = optional(string, "5.13.8")
     override_values            = optional(string)
     max_history                = optional(number, 10)
     create_namespace           = optional(bool, true)
@@ -17,13 +18,10 @@ variable "config" {
     reuse_values               = optional(bool, false)
     wait                       = optional(bool, true)
     timeout                    = optional(number, 300)
-    create_default_iam_policy  = optional(bool, true)
-    create_default_iam_role    = optional(bool, true)
-    iam_policy_document        = optional(string)
-    use_sts_regional_endpoints = optional(bool, false)
   })
 
   default = {
+    atomic                     = true
     name                       = "argocd"
     namespace                  = "argo"
     repository                 = "https://argoproj.github.io/argo-helm"
@@ -36,6 +34,49 @@ variable "config" {
     timeout                    = 300
     override_values            = ""
     wait                       = true
+  }
+
+  description = <<-DOC
+
+  DOC
+}
+
+variable "argocd_config" {
+  type = object({
+    create_additional_project          = optional(bool, false)
+    create_additional_cluster          = optional(bool, false)
+    argocd_additional_project_name     = optional(string)
+    argocd_additional_cluster_name     = optional(string)
+  })
+
+  default = {
+    create_additional_project          = false
+    create_additional_cluster          = false
+    argocd_additional_project_name     = ""
+    argocd_additional_cluster_name     = ""
+  }
+
+  description = <<-DOC
+    create_additional_project:
+      Define whatever create additional project or not.
+    create_additional_cluster:
+      Define whatever create additional cluster or not.
+    argocd_additional_project:
+      Name of the project, requires `create_additional_project_name = true` .
+    argocd_additional_cluster:
+      Name of the cluster, requires `create_additional_project_name = true`
+  DOC
+}
+
+variable "config" {
+  type = object({
+    create_default_iam_policy  = optional(bool, true)
+    create_default_iam_role    = optional(bool, true)
+    iam_policy_document        = optional(string)
+    use_sts_regional_endpoints = optional(bool, false)
+  })
+
+  default = {
     create_default_iam_policy  = true
     create_default_iam_role    = true
     iam_policy_document        = ""
@@ -46,7 +87,7 @@ variable "config" {
     name:
       Release name.
     chart:
-      Chart name to be installed. 
+      Chart name to be installed.
     repository:
       Repository URL where to locate the requested chart.
     version:

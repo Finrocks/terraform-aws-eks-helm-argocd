@@ -2,8 +2,8 @@ locals {
   enabled                                     = module.this.enabled
   account_id                                  = one(data.aws_caller_identity.default[*].account_id)
   eks_cluster_oidc_issuer_url                 = one(data.aws_eks_cluster.default[*].identity[0].oidc[0].issuer)
-  application_controller_service_account_name = format("%s-application-controller", var.config["name"])
-  server_service_account_name                 = format("%s-server", var.config["name"])
+  application_controller_service_account_name = format("%s-application-controller", var.helm_config["name"])
+  server_service_account_name                 = format("%s-server", var.helm_config["name"])
   iam_role_enabled                            = local.enabled && var.config["create_default_iam_role"]
   iam_policy_enabled                          = local.iam_role_enabled && var.config["create_default_iam_policy"]
   iam_policy_document                         = local.iam_policy_enabled ? one(data.aws_iam_policy_document.default[*].json) : var.config["iam_policy_document"]
@@ -83,16 +83,17 @@ module "application_controller_eks_iam_role" {
 resource "helm_release" "default" {
   count = local.enabled ? 1 : 0
 
-  name              = var.config["name"]
-  repository        = var.config["repository"]
-  chart             = var.config["chart"]
-  version           = var.config["version"]
-  namespace         = var.config["namespace"]
-  max_history       = var.config["max_history"]
-  create_namespace  = var.config["create_namespace"]
-  dependency_update = var.config["dependency_update"]
-  reuse_values      = var.config["reuse_values"]
-  wait              = var.config["wait"]
-  timeout           = var.config["timeout"]
+  atomic            = var.helm_config["atomic"]
+  name              = var.helm_config["name"]
+  repository        = var.helm_config["repository"]
+  chart             = var.helm_config["chart"]
+  version           = var.helm_config["version"]
+  namespace         = var.helm_config["namespace"]
+  max_history       = var.helm_config["max_history"]
+  create_namespace  = var.helm_config["create_namespace"]
+  dependency_update = var.helm_config["dependency_update"]
+  reuse_values      = var.helm_config["reuse_values"]
+  wait              = var.helm_config["wait"]
+  timeout           = var.helm_config["timeout"]
   values            = [one(data.utils_deep_merge_yaml.default[*].output)]
 }
