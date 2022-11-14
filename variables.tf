@@ -3,6 +3,8 @@ variable "eks_cluster_id" {
   description = "EKS cluster ID"
 }
 
+#####todo: fix postrender variable
+
 variable "helm_config" {
   type = object({
     name                       = optional(string, "argocd")
@@ -39,10 +41,10 @@ variable "helm_config" {
     render_subchart_notes      = optional(bool, true)
     wait_for_jobs              = optional(bool, false)
     replace                    = optional(bool, false)
-    postrender                 = optional(object({
-      binary_path              = optional(string, null)
-      args                     = optional(list(string), [null])
-      }))
+#    postrender                 = optional(object({
+#      binary_path              = optional(string, null)
+#      args                     = optional(list(string), [null])
+#      }))
   })
 
   description = <<-DOC
