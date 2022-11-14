@@ -26,8 +26,6 @@ variable "helm_config" {
   })
 
   default = {
-    #cleanup_on_fail            = false
-    #atomic                     = true
     name                       = "argocd"
     namespace                  = "argo"
     repository                 = "https://argoproj.github.io/argo-helm"
@@ -40,6 +38,12 @@ variable "helm_config" {
     timeout                    = 300
     override_values            = ""
     wait                       = true
+    cleanup_on_fail            = false
+    atomic                     = true
+    disable_crd_hooks          = true
+    disable_openapi_validation = true
+    disable_webhooks           = true
+    force_update               = true
   }
 
   description = <<-DOC
