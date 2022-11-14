@@ -41,7 +41,7 @@ variable "helm_config" {
     replace                    = optional(bool, false)
     postrender                 = optional(object({
       binary_path              = optional(string, null)
-      args                     = optional(list(string), [""])
+      args                     = optional(list(string), [null])
       }))
   })
 
