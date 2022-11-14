@@ -6,6 +6,7 @@ variable "eks_cluster_id" {
 variable "helm_config" {
   type = object({
     atomic                     = optional(bool, true)
+    cleanup_on_fail            = optional(bool, true)
     name                       = optional(string, "argocd")
     namespace                  = optional(string, "argo")
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
@@ -21,6 +22,7 @@ variable "helm_config" {
   })
 
   default = {
+    #cleanup_on_fail            = false
     atomic                     = true
     name                       = "argocd"
     namespace                  = "argo"
