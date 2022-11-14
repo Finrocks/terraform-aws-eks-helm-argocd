@@ -40,10 +40,10 @@ variable "helm_config" {
     render_subchart_notes      = optional(bool, true)
     wait_for_jobs              = optional(bool, false)
     replace                    = optional(bool, false)
-#    postrender                 = optional(object({
-#      binary_path              = optional(string, null)
-#      args                     = optional(list(string), [null])
-#      }))
+    #    postrender                 = optional(object({
+    #      binary_path              = optional(string, null)
+    #      args                     = optional(list(string), [null])
+    #      }))
   })
 
   description = <<-DOC
@@ -53,10 +53,10 @@ variable "helm_config" {
 
 variable "argocd_config" {
   type = object({
-    create_additional_project          = optional(bool, false)
-    create_additional_cluster          = optional(bool, false)
-    argocd_additional_project_name     = optional(string)
-    argocd_additional_cluster_name     = optional(string)
+    create_additional_project      = optional(bool, false)
+    create_additional_cluster      = optional(bool, false)
+    argocd_additional_project_name = optional(string)
+    argocd_additional_cluster_name = optional(string)
   })
 
   description = <<-DOC

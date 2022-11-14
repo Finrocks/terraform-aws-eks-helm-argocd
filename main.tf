@@ -117,10 +117,10 @@ resource "helm_release" "default" {
   render_subchart_notes      = var.helm_config["render_subchart_notes"]
   wait_for_jobs              = var.helm_config["wait_for_jobs"]
   replace                    = var.helm_config["replace"]
-#  postrender                  {
-#    binary_path              = var.helm_config.postrender["binary_path"]
-#    args                     = var.helm_config.postrender["args"]
-#  }
+  #  postrender                  {
+  #    binary_path              = var.helm_config.postrender["binary_path"]
+  #    args                     = var.helm_config.postrender["args"]
+  #  }
 
-  values                     = [one(data.utils_deep_merge_yaml.default[*].output)]
+  values = [one(data.utils_deep_merge_yaml.default[*].output)]
 }
