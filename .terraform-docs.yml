@@ -1,0 +1,43 @@
+formatter: markdown
+
+output:
+  file: README.md
+  mode: replace
+  template: |-
+    ## Usage
+
+    ```hcl
+    module "argocd" {
+      source = "./"
+
+      eks_cluster_id = var.eks_cluster_id
+
+      name      = "argocd"
+      namespace = "rlw"
+    }
+    ```
+
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS --> 
+
+    ## License
+    The Apache-2.0 license
+
+sort:
+  enabled: true
+  by: required
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  required: true
+  sensitive: true
+  type: true
