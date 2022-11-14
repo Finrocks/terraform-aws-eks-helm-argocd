@@ -10,7 +10,7 @@ locals {
 
   argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
     {
-      fullname_override      = var.config["name"]
+      fullname_override      = var.helm_config["name"]
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
       role_enabled           = local.iam_role_enabled
       controller_sa_name     = local.application_controller_service_account_name
