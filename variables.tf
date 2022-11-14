@@ -39,12 +39,10 @@ variable "helm_config" {
     render_subchart_notes      = optional(bool, true)
     wait_for_jobs              = optional(bool, false)
     replace                    = optional(bool, false)
-    postrender                 = object(optional(
-      {
+    postrender                 = optional(object({
       binary_path              = null
       args                     = null
-      }
-    ))
+      }))
   })
 
   description = <<-DOC
