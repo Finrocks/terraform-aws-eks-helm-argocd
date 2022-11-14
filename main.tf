@@ -36,7 +36,7 @@ data "utils_deep_merge_yaml" "default" {
 
   input = [
     local.argocd_helm_values,
-    var.config["override_values"]
+    var.helm_config["override_values"]
   ]
 }
 
