@@ -5,8 +5,12 @@ variable "eks_cluster_id" {
 
 variable "helm_config" {
   type = object({
-    atomic                     = optional(bool, true)
+    atomic                     = optional(bool, false)
     cleanup_on_fail            = optional(bool, true)
+    disable_crd_hooks          = optional(bool, false)
+    disable_openapi_validation = optional(bool, false)
+    disable_webhooks           = optional(bool, false)
+    force_update               = optional(bool, false)
     name                       = optional(string, "argocd")
     namespace                  = optional(string, "argo")
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
@@ -23,7 +27,7 @@ variable "helm_config" {
 
   default = {
     #cleanup_on_fail            = false
-    atomic                     = true
+    #atomic                     = true
     name                       = "argocd"
     namespace                  = "argo"
     repository                 = "https://argoproj.github.io/argo-helm"
