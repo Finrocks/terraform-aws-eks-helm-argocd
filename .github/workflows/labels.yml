@@ -2,10 +2,8 @@
 name: Sync labels
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - master
-      - main
 
 jobs:
   sync-labels:
