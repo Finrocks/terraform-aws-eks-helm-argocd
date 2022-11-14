@@ -17,34 +17,13 @@ variable "helm_config" {
     reuse_values               = optional(bool, false)
     wait                       = optional(bool, true)
     timeout                    = optional(number, 300)
-    atomic                     = optional(bool, false)
-    cleanup_on_fail            = optional(bool, true)
-    disable_crd_hooks          = optional(bool, true)
-    disable_openapi_validation = optional(bool, true)
-    disable_webhooks           = optional(bool, true)
-    force_update               = optional(bool, true)
+    atomic                     = optional(bool, true)
+    cleanup_on_fail            = optional(bool, false)
+    disable_crd_hooks          = optional(bool, false)
+    disable_openapi_validation = optional(bool, false)
+    disable_webhooks           = optional(bool, false)
+    force_update               = optional(bool, false)
   })
-
-#  default = {
-#    name                       = "argocd"
-#    namespace                  = "argo"
-#    repository                 = "https://argoproj.github.io/argo-helm"
-#    chart                      = "argo-cd"
-#    version                    = "3.33.3"
-#    max_history                = 10
-#    create_namespace           = true
-#    dependency_update          = true
-#    reuse_values               = false
-#    timeout                    = 300
-#    override_values            = ""
-#    wait                       = true
-#    #cleanup_on_fail            = false
-#    #atomic                     = true
-#    #disable_crd_hooks          = true
-#    #disable_openapi_validation = true
-#    #disable_webhooks           = true
-#    #force_update               = true
-#  }
 
   description = <<-DOC
 
@@ -58,13 +37,6 @@ variable "argocd_config" {
     argocd_additional_project_name     = optional(string)
     argocd_additional_cluster_name     = optional(string)
   })
-
-  default = {
-    create_additional_project          = false
-    create_additional_cluster          = false
-    argocd_additional_project_name     = ""
-    argocd_additional_cluster_name     = ""
-  }
 
   description = <<-DOC
     create_additional_project:
@@ -86,12 +58,6 @@ variable "config" {
     use_sts_regional_endpoints = optional(bool, false)
   })
 
-  default = {
-    create_default_iam_policy  = true
-    create_default_iam_role    = true
-    iam_policy_document        = ""
-    use_sts_regional_endpoints = false
-  }
 
   description = <<-DOC
     name:

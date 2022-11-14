@@ -83,7 +83,6 @@ module "application_controller_eks_iam_role" {
 resource "helm_release" "default" {
   count = local.enabled ? 1 : 0
 
-
   name                       = var.helm_config["name"]
   repository                 = var.helm_config["repository"]
   chart                      = var.helm_config["chart"]
