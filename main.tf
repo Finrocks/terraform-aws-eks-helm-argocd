@@ -31,6 +31,7 @@ data "aws_eks_cluster" "default" {
   name = var.eks_cluster_id
 }
 
+####todo: create_default_iam_role = false  -  fix depends
 data "utils_deep_merge_yaml" "default" {
   count = local.enabled ? 1 : 0
 
@@ -38,6 +39,8 @@ data "utils_deep_merge_yaml" "default" {
     local.argocd_helm_values,
     var.helm_config["override_values"]
   ]
+
+  depends_on = [module.argocd_server_iam_role, module.argocd_application_controller_iam_role]
 }
 
 data "aws_iam_policy_document" "default" {
