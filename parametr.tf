@@ -106,7 +106,7 @@ data "aws_iam_policy_document" "this" {
 ####todo: need fix when enabled = false
 module "argocd" {
   enabled = true
-  source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
+  source  = "git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
   #version = "0.2.0"
 
   eks_cluster_id = local.eks_cluster_id
