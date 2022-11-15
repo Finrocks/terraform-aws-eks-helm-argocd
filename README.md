@@ -63,14 +63,26 @@ locals {
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 | <a name="provider_utils"></a> [utils](#provider\_utils) | >= 0.14.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_argocd"></a> [argocd](#module\_argocd) | git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git | n/a |
+| <a name="module_argocd_additional_cluster"></a> [argocd\_additional\_cluster](#module\_argocd\_additional\_cluster) | git@github.com:Finrocks/terraform-argocd-additional-cluster.git | n/a |
+| <a name="module_argocd_additional_label"></a> [argocd\_additional\_label](#module\_argocd\_additional\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_argocd_application_controller_iam_role"></a> [argocd\_application\_controller\_iam\_role](#module\_argocd\_application\_controller\_iam\_role) | rallyware/eks-iam-role/aws | 0.1.2 |
+| <a name="module_argocd_kms_key"></a> [argocd\_kms\_key](#module\_argocd\_kms\_key) | cloudposse/kms-key/aws | 0.12.1 |
+| <a name="module_argocd_kms_label"></a> [argocd\_kms\_label](#module\_argocd\_kms\_label) | cloudposse/label/null | 0.25.0 |
+| <a name="module_argocd_label"></a> [argocd\_label](#module\_argocd\_label) | cloudposse/label/null | 0.25.0 |
+| <a name="module_argocd_parameter_store"></a> [argocd\_parameter\_store](#module\_argocd\_parameter\_store) | cloudposse/ssm-parameter-store/aws | 0.10.0 |
+| <a name="module_argocd_parameter_store_read"></a> [argocd\_parameter\_store\_read](#module\_argocd\_parameter\_store\_read) | cloudposse/ssm-parameter-store/aws | 0.10.0 |
 | <a name="module_argocd_server_iam_role"></a> [argocd\_server\_iam\_role](#module\_argocd\_server\_iam\_role) | rallyware/eks-iam-role/aws | 0.1.2 |
+| <a name="module_eks_label"></a> [eks\_label](#module\_eks\_label) | cloudposse/label/null | 0.25.0 |
+| <a name="module_label"></a> [label](#module\_label) | cloudposse/label/null | 0.25.0 |
+| <a name="module_label_vpc"></a> [label\_vpc](#module\_label\_vpc) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
@@ -78,16 +90,19 @@ locals {
 | Name | Type |
 |------|------|
 | [helm_release.default](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+| [random_password.argocd_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [aws_caller_identity.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_eks_cluster.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
+| [aws_eks_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_iam_policy_document.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_ssm_parameter.encrypted_password](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [utils_deep_merge_yaml.default](https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Required |
 |------|-------------|------|:--------:|
-| <a name="input_argocd_config"></a> [argocd\_config](#input\_argocd\_config) | create\_additional\_project:<br>  Define whatever create additional project or not.<br>create\_additional\_cluster:<br>  Define whatever create additional cluster or not.<br>argocd\_additional\_project:<br>  Name of the project, requires `create_additional_project_name = true` .<br>argocd\_additional\_cluster:<br>  Name of the cluster, requires `create_additional_project_name = true` | <pre>object({<br>    create_additional_project      = optional(bool, false)<br>    create_additional_cluster      = optional(bool, false)<br>    argocd_additional_project_name = optional(string)<br>    argocd_additional_cluster_name = optional(string)<br>  })</pre> | yes |
+| <a name="input_argocd_config"></a> [argocd\_config](#input\_argocd\_config) | create\_additional\_project:<br>  Define whatever create additional project or not.<br>create\_additional\_cluster:<br>  Define whatever create additional cluster or not.<br>argocd\_additional\_project:<br>  Name of the project, requires `create_additional_project_name = true` .<br>argocd\_additional\_cluster:<br>  Name of the cluster, requires `create_additional_project_name = true` | <pre>object({<br>    argocd_url                     = string<br>    create_additional_project      = optional(bool, false)<br>    create_additional_cluster      = optional(bool, false)<br>    argocd_additional_project_name = optional(string)<br>    argocd_additional_cluster_name = optional(string)<br>  })</pre> | yes |
 | <a name="input_config"></a> [config](#input\_config) | create\_default\_iam\_policy:<br>  Defines whether to create default IAM policy.<br>create\_default\_iam\_role:<br>  Defines whether to create default IAM role.<br>iam\_policy\_document:<br>  Custom IAM policy which will be assigned to IAM role.<br>use\_sts\_regional\_endpoints:<br>  Whether to create use STS regional endpoints. | <pre>object({<br>    create_default_iam_policy  = optional(bool, true)<br>    create_default_iam_role    = optional(bool, true)<br>    iam_policy_document        = optional(string)<br>    use_sts_regional_endpoints = optional(bool, false)<br>  })</pre> | yes |
 | <a name="input_eks_cluster_id"></a> [eks\_cluster\_id](#input\_eks\_cluster\_id) | EKS cluster ID | `string` | yes |
 | <a name="input_helm_config"></a> [helm\_config](#input\_helm\_config) | All input from [helm\_release](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#argument-reference) resources. | <pre>object({<br>    name                       = optional(string, "argocd")<br>    namespace                  = optional(string, "argo")<br>    repository                 = optional(string, "https://argoproj.github.io/argo-helm")<br>    chart                      = optional(string, "argo-cd")<br>    version                    = optional(string, "5.13.8")<br>    max_history                = optional(number, 10)<br>    create_namespace           = optional(bool, true)<br>    dependency_update          = optional(bool, true)<br>    reuse_values               = optional(bool, false)<br>    reset_values               = optional(bool, false)<br>    override_values            = optional(string)<br>    wait                       = optional(bool, true)<br>    timeout                    = optional(number, 300)<br>    atomic                     = optional(bool, true)<br>    cleanup_on_fail            = optional(bool, false)<br>    disable_crd_hooks          = optional(bool, false)<br>    disable_openapi_validation = optional(bool, false)<br>    disable_webhooks           = optional(bool, false)<br>    force_update               = optional(bool, false)<br>    description                = optional(string, null)<br>    lint                       = optional(bool, false)<br>    repository_key_file        = optional(string, null)<br>    repository_cert_file       = optional(string, null)<br>    repository_ca_file         = optional(string, null)<br>    repository_username        = optional(string, null)<br>    repository_password        = optional(string, null)<br>    verify                     = optional(bool, false)<br>    recreate_pods              = optional(bool, false)<br>    devel                      = optional(string, null)<br>    keyring                    = optional(string, "/.gnupg/pubring.gpg")<br>    skip_crds                  = optional(bool, false)<br>    render_subchart_notes      = optional(bool, true)<br>    wait_for_jobs              = optional(bool, false)<br>    replace                    = optional(bool, false)<br>    #    postrender                 = optional(object({<br>    #      binary_path              = optional(string, null)<br>    #      args                     = optional(list(string), [null])<br>    #      }))<br>  })</pre> | yes |
