@@ -53,6 +53,7 @@ variable "helm_config" {
 
 variable "argocd_config" {
   type = object({
+    argocd_url                     = string
     create_additional_project      = optional(bool, false)
     create_additional_cluster      = optional(bool, false)
     argocd_additional_project_name = optional(string)

@@ -21,3 +21,7 @@ server:
       eks.amazonaws.com/role-arn: ${server_role_arn}
       eks.amazonaws.com/sts-regional-endpoints: "${sts_regional_endpoints}"
 %{ endif }
+
+configs:
+  secret:
+    argocdServerAdminPassword: "${admin_password}"
