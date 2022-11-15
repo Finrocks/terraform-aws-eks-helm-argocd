@@ -1,6 +1,5 @@
 ## Usage
-
-    ```hcl
+```hcl
     locals {
       argocd_values = templatefile("./helm-values/argocd.yaml",
         {
@@ -46,6 +45,7 @@
       ]
     }
     ```
+    
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
