@@ -1,14 +1,14 @@
 ## Usage
 ```hcl
-    locals {
-      argocd_values = templatefile("./helm-values/argocd.yaml",
-        {
-          argocd_url                      = "${var.argocd_url}"
-          admin_password                  = data.aws_ssm_parameter.encrypted_password.value
-          github_token                    = var.argocd_github_access_token
-        }
-      )
+locals {
+  argocd_values = templatefile("./helm-values/argocd.yaml",
+    {
+      argocd_url                      = "${var.argocd_url}"
+      admin_password                  = data.aws_ssm_parameter.encrypted_password.value
+      github_token                    = var.argocd_github_access_token
     }
+  )
+}
               
     module "argocd" {
       enabled = true
