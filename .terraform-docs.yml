@@ -53,7 +53,7 @@ output:
 
       context = module.argocd_label.context
 
-  # Uncomment on first apply
+      # Uncomment on first apply
       depends_on = [
         time_sleep.eks_node_groups_wait
       ]
