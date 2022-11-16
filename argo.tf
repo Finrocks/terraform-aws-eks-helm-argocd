@@ -2,7 +2,7 @@ module "argocd_kms_key" {
   source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
-  description             = format("KMS key for Velero on %s", local.eks_cluster_id)
+  description             = format("KMS key for Argocd on %s", local.eks_cluster_id)
   deletion_window_in_days = 10
   enable_key_rotation     = true
   alias                   = format("alias/%s/argocd.kms", local.eks_cluster_id)
