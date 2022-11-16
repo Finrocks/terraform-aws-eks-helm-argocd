@@ -1,5 +1,5 @@
 module "argocd_kms_key" {
-  source = "cloudposse/kms-key/aws"
+  source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
   description             = format("KMS key for Velero on %s", local.eks_cluster_id)
@@ -12,13 +12,13 @@ module "argocd_kms_key" {
 }
 
 module "argocd_kms_label" {
-  source              = "cloudposse/label/null"
-  version             = "0.25.0"
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
 
-  delimiter           = "/"
-  label_order         = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
-  attributes          = ["kms-key"]
-  context             = module.argocd_additional_label.context
+  delimiter   = "/"
+  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  attributes  = ["kms-key"]
+  context     = module.argocd_additional_label.context
 }
 
 module "argocd_server_iam_role" {

@@ -2,7 +2,7 @@ locals {
   argocd_namespace = "argo"
   argo_sync_policy = {
     "automated" : {
-      selfHeal: true
+      selfHeal : true
     }
     "syncOptions" = ["CreateNamespace=true", "ApplyOutOfSyncOnly=true"]
     "retry" : {
@@ -17,9 +17,9 @@ locals {
 
   argocd_values = templatefile("./helm-values/argocd.yaml",
     {
-      argocd_url                      = var.argocd_config["argocd_url"]
+      argocd_url = var.argocd_config["argocd_url"]
       #admin_password                  = data.aws_ssm_parameter.encrypted_password.value
-      admin_password                  = module.argocd_parameter_store_read.values
+      admin_password = module.argocd_parameter_store_read.values
     }
   )
 
@@ -32,7 +32,7 @@ resource "random_password" "argocd_password" {
 }
 
 module "argocd_kms_key" {
-  source = "cloudposse/kms-key/aws"
+  source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
   description             = format("KMS key for argocd password for %s", local.eks_cluster_id)
@@ -40,14 +40,14 @@ module "argocd_kms_key" {
   enable_key_rotation     = true
   alias                   = format("alias/%s/argocd/", local.eks_cluster_id)
 
-  name                    = "argocd"
-  context                 = module.argocd_kms_label.context
+  name    = "argocd"
+  context = module.argocd_kms_label.context
 }
 
 module "argocd_parameter_store" {
-  source          = "cloudposse/ssm-parameter-store/aws"
-  version         = "0.10.0"
-  enabled         = true
+  source  = "cloudposse/ssm-parameter-store/aws"
+  version = "0.10.0"
+  enabled = true
 
   parameter_write = [
     {
@@ -65,7 +65,7 @@ module "argocd_parameter_store" {
   ]
 
   ignore_value_changes = true
-  kms_arn         = module.argocd_kms_key.alias_arn
+  kms_arn              = module.argocd_kms_key.alias_arn
 
   context = module.argocd_kms_label.context
 
@@ -77,16 +77,16 @@ module "argocd_parameter_store" {
 
 module "argocd_parameter_store_read" {
   source  = "cloudposse/ssm-parameter-store/aws"
-  version         = "0.10.0"
+  version = "0.10.0"
 
   parameter_read = ["/${local.eks_cluster_id}/argocd/password/encrypted"]
 
   depends_on = [module.argocd_parameter_store]
-  context        = module.this.context
+  context    = module.this.context
 }
 
 data "aws_ssm_parameter" "encrypted_password" {
-  name = "/${local.eks_cluster_id}/argocd/password/encrypted"
+  name       = "/${local.eks_cluster_id}/argocd/password/encrypted"
   depends_on = [module.argocd_parameter_store]
 }
 
@@ -113,33 +113,33 @@ module "argocd" {
 
   config = {
     create_default_iam_policy = var.config["create_default_iam_policy"]
-    create_default_iam_role = var.config["create_default_iam_role"]
+    create_default_iam_role   = var.config["create_default_iam_role"]
     #iam_policy_document = data.aws_iam_policy_document.this.json
     use_sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
   }
 
   helm_config = {
-    name                                     = var.helm_config["argocd"]
-    namespace                                = var.helm_config["namespace"]
-    repository                               = var.helm_config["repository"]
-    chart                                    = var.helm_config["chart"]
-    version                                  = var.helm_config["version"]
-    max_history                              = var.helm_config["max_history"]
-    create_namespace                         = var.helm_config["create_namespace"]
-    dependency_update                        = var.helm_config["dependency_update"]
-    wait                                     = var.helm_config["wait"]
-    wait_for_jobs                            = var.helm_config["wait_for_jobs"]
-    timeout                                  = var.helm_config["timeout"]
-    recreate_pods                            = var.helm_config["recreate_pods"]
-    override_values                          = [one(data.utils_deep_merge_yaml.default[*].output)]
+    name              = var.helm_config["argocd"]
+    namespace         = var.helm_config["namespace"]
+    repository        = var.helm_config["repository"]
+    chart             = var.helm_config["chart"]
+    version           = var.helm_config["version"]
+    max_history       = var.helm_config["max_history"]
+    create_namespace  = var.helm_config["create_namespace"]
+    dependency_update = var.helm_config["dependency_update"]
+    wait              = var.helm_config["wait"]
+    wait_for_jobs     = var.helm_config["wait_for_jobs"]
+    timeout           = var.helm_config["timeout"]
+    recreate_pods     = var.helm_config["recreate_pods"]
+    override_values   = [one(data.utils_deep_merge_yaml.default[*].output)]
   }
 
   argocd_config = {
-    argocd_url                               = var.argocd_config["argocd_url"]
-    create_additional_project                = var.argocd_config["create_additional_project"]
-    create_additional_cluster                = var.argocd_config["create_additional_cluster"]
-    argocd_additional_project_name           = var.argocd_config["argocd_additional_project_name"]
-    argocd_additional_cluster_name           = var.argocd_config["argocd_additional_cluster_name"]
+    argocd_url                     = var.argocd_config["argocd_url"]
+    create_additional_project      = var.argocd_config["create_additional_project"]
+    create_additional_cluster      = var.argocd_config["create_additional_cluster"]
+    argocd_additional_project_name = var.argocd_config["argocd_additional_project_name"]
+    argocd_additional_cluster_name = var.argocd_config["argocd_additional_cluster_name"]
   }
 
   context = module.argocd_label.context
@@ -152,11 +152,11 @@ module "argocd" {
 
 ####todo: need fix when enabled = false
 module "argocd_additional_cluster" {
-  enabled             = true
-  source              = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
+  enabled = true
+  source  = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
 
-  eks_cluster_id      = local.eks_cluster_id
-  depends_on          = [module.argocd]
+  eks_cluster_id = local.eks_cluster_id
+  depends_on     = [module.argocd]
 }
 
 #module "argocd_apps" {
