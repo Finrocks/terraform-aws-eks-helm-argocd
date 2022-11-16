@@ -143,7 +143,7 @@ module "argocd_additional_cluster" {
   source  = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
 
   eks_cluster_id = local.eks_cluster_id
-  depends_on     = [module.argocd]
+  depends_on     = [helm_release.argocd]
 }
 
 #module "argocd_apps" {

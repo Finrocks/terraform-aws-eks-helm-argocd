@@ -52,7 +52,7 @@ module "argocd_application_controller_iam_role" {
 }
 
 ####todo: fix postrender variable
-resource "helm_release" "default" {
+resource "helm_release" "argocd" {
   count = local.enabled ? 1 : 0
 
   name                       = var.helm_config["name"]
