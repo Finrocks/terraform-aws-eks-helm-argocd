@@ -31,19 +31,6 @@ resource "random_password" "argocd_password" {
   override_special = "_%@$"
 }
 
-module "argocd_kms_key" {
-  source  = "cloudposse/kms-key/aws"
-  version = "0.12.1"
-
-  description             = format("KMS key for argocd password for %s", local.eks_cluster_id)
-  deletion_window_in_days = 7
-  enable_key_rotation     = true
-  alias                   = format("alias/%s/argocd/", local.eks_cluster_id)
-
-  name    = "argocd"
-  context = module.argocd_kms_label.context
-}
-
 module "argocd_parameter_store" {
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
