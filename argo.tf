@@ -1,3 +1,26 @@
+module "argocd_kms_key" {
+  source = "cloudposse/kms-key/aws"
+  version = "0.12.1"
+
+  description             = format("KMS key for Velero on %s", local.eks_cluster_id)
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+  alias                   = format("alias/%s/argocd.kms", local.eks_cluster_id)
+
+  name    = "argocd"
+  context = module.argocd_kms_label.context
+}
+
+module "argocd_kms_label" {
+  source              = "cloudposse/label/null"
+  version             = "0.25.0"
+
+  delimiter           = "/"
+  label_order         = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  attributes          = ["kms-key"]
+  context             = module.argocd_additional_label.context
+}
+
 module "argocd_server_iam_role" {
   source  = "rallyware/eks-iam-role/aws"
   version = "0.1.2"
@@ -24,7 +47,7 @@ module "argocd_application_controller_iam_role" {
   context = module.this.context
 }
 
-#####todo: fix postrender variable
+####todo: fix postrender variable
 resource "helm_release" "default" {
   count = local.enabled ? 1 : 0
 
