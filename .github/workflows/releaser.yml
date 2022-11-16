@@ -1,0 +1,25 @@
+name: Release Drafter
+
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: release-drafter/release-drafter@v5.21.1
+      with:
+        publish: true
+        prerelease: false
+        config-name: auto-releaser-config.yml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
