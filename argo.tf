@@ -1,4 +1,5 @@
 module "argocd_kms_key" {
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
@@ -12,6 +13,7 @@ module "argocd_kms_key" {
 }
 
 module "argocd_kms_label" {
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
@@ -22,6 +24,7 @@ module "argocd_kms_label" {
 }
 
 module "argocd_server_iam_role" {
+  count = local.enabled ? 1 : 0
   source  = "rallyware/eks-iam-role/aws"
   version = "0.1.2"
 
@@ -35,6 +38,7 @@ module "argocd_server_iam_role" {
 }
 
 module "argocd_application_controller_iam_role" {
+  count = local.enabled ? 1 : 0
   source  = "rallyware/eks-iam-role/aws"
   version = "0.1.2"
 
