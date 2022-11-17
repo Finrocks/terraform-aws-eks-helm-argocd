@@ -70,7 +70,6 @@ locals {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_argocd_additional_cluster"></a> [argocd\_additional\_cluster](#module\_argocd\_additional\_cluster) | git@github.com:Finrocks/terraform-argocd-additional-cluster.git | n/a |
 | <a name="module_argocd_additional_label"></a> [argocd\_additional\_label](#module\_argocd\_additional\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_argocd_application_controller_iam_role"></a> [argocd\_application\_controller\_iam\_role](#module\_argocd\_application\_controller\_iam\_role) | cloudposse/eks-iam-role/aws | 1.1.0 |
 | <a name="module_argocd_kms_key"></a> [argocd\_kms\_key](#module\_argocd\_kms\_key) | cloudposse/kms-key/aws | 0.12.1 |
