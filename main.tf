@@ -17,7 +17,7 @@ locals {
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
       role_enabled           = local.iam_role_enabled
       controller_sa_name     = local.application_controller_service_account_name
-      controller_role_arn    = module.argocd_application_controller_iam_role.service_account_role_arn
+      controller_role_arn    = module.argocd_application_controller_iam_role[0].service_account_role_arn
       server_sa_name         = local.server_service_account_name
       server_role_arn        = module.argocd_server_iam_role.service_account_role_arn
     }

@@ -18,7 +18,7 @@ output "server_service_account_role_arn" {
 }
 
 output "server_service_account_policy_name" {
-  value       = module.argocd_server_iam_role.service_account_policy_name
+  value       = module.argocd_server_iam_role[0].service_account_policy_name
   description = "ArgoCD server IAM policy name"
 }
 
