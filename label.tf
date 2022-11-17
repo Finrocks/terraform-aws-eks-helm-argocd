@@ -19,7 +19,9 @@ module "argocd_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  context = module.argocd_additional_label.context
+  environment = var.environment
+  tenant      = var.tenant
+  context     = module.this.context
 }
 
 module "argocd_additional_label" {

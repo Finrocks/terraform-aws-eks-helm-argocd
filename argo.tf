@@ -13,18 +13,33 @@ module "argocd_kms_key" {
 }
 
 module "argocd_server_iam_role" {
-  source  = "rallyware/eks-iam-role/aws"
-  version = "0.1.2"
+  source = "cloudposse/eks-iam-role/aws"
+  version = "1.1.0"
 
-  aws_iam_policy_document     = local.iam_policy_document
+  attributes  = ["argocd"]
+
+  aws_iam_policy_document = local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
 
-  enabled = false
-#  enabled = local.iam_role_enabled
-  context = module.this.context
+  enabled = local.iam_role_enabled
+  context             = module.argocd_label.context
 }
+
+#module "argocd_server_iam_role" {
+#  source  = "rallyware/eks-iam-role/aws"
+#  version = "0.1.2"
+#
+#  aws_iam_policy_document     = local.iam_policy_document
+#  eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
+#  service_account_name        = local.server_service_account_name
+#  service_account_namespace   = var.helm_config["namespace"]
+#
+#  enabled = true
+##  enabled = local.iam_role_enabled
+#  context = module.this.context
+#}
 
 module "argocd_application_controller_iam_role" {
   source  = "rallyware/eks-iam-role/aws"
