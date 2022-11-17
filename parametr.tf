@@ -48,55 +48,6 @@ data "aws_ssm_parameter" "encrypted_password" {
   count            = local.enabled ? 1 : 0
 }
 
-
-
-####todo: need fix when enabled = false
-#module "argocd" {
-#  enabled = true
-#  source  = "git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
-#  #version = "0.2.0"
-#
-#  eks_cluster_id = local.eks_cluster_id
-#
-#  config = {
-#    create_default_iam_policy = var.config["create_default_iam_policy"]
-#    create_default_iam_role   = var.config["create_default_iam_role"]
-#    #iam_policy_document = data.aws_iam_policy_document.this.json
-#    use_sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
-#  }
-#
-#  helm_config = {
-#    name              = var.helm_config["argocd"]
-#    namespace         = var.helm_config["namespace"]
-#    repository        = var.helm_config["repository"]
-#    chart             = var.helm_config["chart"]
-#    version           = var.helm_config["version"]
-#    max_history       = var.helm_config["max_history"]
-#    create_namespace  = var.helm_config["create_namespace"]
-#    dependency_update = var.helm_config["dependency_update"]
-#    wait              = var.helm_config["wait"]
-#    wait_for_jobs     = var.helm_config["wait_for_jobs"]
-#    timeout           = var.helm_config["timeout"]
-#    recreate_pods     = var.helm_config["recreate_pods"]
-#    override_values   = [one(data.utils_deep_merge_yaml.default[*].output)]
-#  }
-#
-#  argocd_config = {
-#    argocd_url                     = var.argocd_config["argocd_url"]
-#    create_additional_project      = var.argocd_config["create_additional_project"]
-#    create_additional_cluster      = var.argocd_config["create_additional_cluster"]
-#    argocd_additional_project_name = var.argocd_config["argocd_additional_project_name"]
-#    argocd_additional_cluster_name = var.argocd_config["argocd_additional_cluster_name"]
-#  }
-#
-#  context = module.argocd_label.context
-#
-#  # Uncomment on first apply
-#  depends_on = [
-#    module.argocd_parameter_store, data.aws_ssm_parameter.encrypted_password, module.argocd_parameter_store_read
-#  ]
-#}
-
 ####todo: need fix when enabled = false
 module "argocd_additional_cluster" {
   enabled = true
