@@ -21,7 +21,8 @@ module "argocd_server_iam_role" {
   service_account_name        = local.server_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
 
-  enabled = local.iam_role_enabled
+  enabled = false
+#  enabled = local.iam_role_enabled
   context = module.this.context
 }
 
@@ -34,7 +35,8 @@ module "argocd_application_controller_iam_role" {
   service_account_name        = local.application_controller_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
 
-  enabled = local.iam_role_enabled
+  enabled = false
+#  enabled = local.iam_role_enabled
   context = module.this.context
 }
 
