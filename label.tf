@@ -1,9 +1,9 @@
-#module "label" {
-#  source  = "cloudposse/label/null"
-#  version = "0.25.0"
-#
-#  context = module.this.context
-#}
+module "label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  context = module.this.context
+}
 module "argocd_kms_label" {
   count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"

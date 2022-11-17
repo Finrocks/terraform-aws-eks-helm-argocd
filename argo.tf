@@ -9,7 +9,7 @@ module "argocd_kms_key" {
   alias                   = format("alias/%s/argocd-key", local.eks_cluster_id)
 
   name    = "argocd"
-  context = module.argocd_kms_label.context
+  context = module.argocd_kms_label[0].context
 }
 
 module "argocd_server_iam_role" {

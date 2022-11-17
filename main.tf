@@ -12,7 +12,7 @@ locals {
   iam_policy_document                         = local.iam_policy_enabled ? one(data.aws_iam_policy_document.default[*].json) : var.config["iam_policy_document"]
 
 
-    argocd_namespace = "argo"
+  argocd_namespace = "argo"
   argo_sync_policy = {
     "automated" : {
       selfHeal : true
