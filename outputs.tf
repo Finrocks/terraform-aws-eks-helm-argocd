@@ -1,3 +1,12 @@
+output "argocd_password" {
+  value = random_password.argocd_password.result
+  description = "Argocd raw password"
+}
+output "argocd_password_encrypted" {
+  value = random_password.argocd_password.result
+  description = "Argocd encrypted password"
+}
+
 output "metadata" {
   value       = try(helm_release.default[0].metadata, null)
   description = "Block status of the deployed ArgoCD"
