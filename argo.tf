@@ -37,7 +37,7 @@ module "argocd_application_controller_iam_role" {
 
   enabled = false
 #  enabled = local.iam_role_enabled
-  context = module.this.context
+#  context = module.this.context
 }
 
 ####todo: fix postrender variable
