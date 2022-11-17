@@ -8,7 +8,7 @@ output "argocd_password_encrypted" {
 }
 
 output "metadata" {
-  value       = try(helm_release.default[0].metadata, null)
+  value       = try(helm_release.argocd[0].metadata, null)
   description = "Block status of the deployed ArgoCD"
 }
 
