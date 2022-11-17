@@ -26,7 +26,7 @@ module "argocd_parameter_store" {
   ]
 
   ignore_value_changes = true
-  kms_arn              = module.argocd_kms_key.alias_arn
+  kms_arn              = module.argocd_kms_key[0].alias_arn
 
   depends_on = [random_password.argocd_password]
   context = module.argocd_kms_label[0].context
@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "this" {
       "kms:Decrypt"
     ]
 
-    resources = [module.argocd_kms_key.key_arn]
+    resources = [module.argocd_kms_key[0].key_arn]
   }
 }
 
