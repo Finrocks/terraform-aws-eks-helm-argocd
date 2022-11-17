@@ -28,7 +28,7 @@ locals {
     }
   }
 
-  argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
+  argocd_helm_values = sensitive(templatefile("${path.module}/helm-values/argocd.yaml",
     {
       fullname_override      = var.helm_config["name"]
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
@@ -41,7 +41,7 @@ locals {
       admin_password                  = data.aws_ssm_parameter.encrypted_password[0].value
       admin_password = module.argocd_parameter_store_read.values
     }
-  )
+  ))
 }
 
 data "aws_caller_identity" "default" {
@@ -58,7 +58,7 @@ data "utils_deep_merge_yaml" "default" {
   count = local.enabled ? 1 : 0
 
   input = [
-    sensitive(local.argocd_helm_values),
+    local.argocd_helm_values,
     var.helm_config["override_values"]
   ]
 }
