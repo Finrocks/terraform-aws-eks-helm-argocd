@@ -48,19 +48,7 @@ data "aws_ssm_parameter" "encrypted_password" {
   count            = local.enabled ? 1 : 0
 }
 
-data "aws_iam_policy_document" "this" {
-  count            = local.enabled ? 1 : 0
-  statement {
-    sid    = "ArgoCDOwn"
-    effect = "Allow"
 
-    actions = [
-      "kms:Decrypt"
-    ]
-
-    resources = [module.argocd_kms_key[0].key_arn]
-  }
-}
 
 ####todo: need fix when enabled = false
 #module "argocd" {

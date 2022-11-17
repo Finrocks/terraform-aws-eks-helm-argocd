@@ -64,17 +64,5 @@ data "utils_deep_merge_yaml" "default" {
   ]
 }
 
-data "aws_iam_policy_document" "default" {
-  count = local.iam_policy_enabled ? 1 : 0
 
-  statement {
-    effect = "Allow"
-
-    resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer"]
-
-    actions = [
-      "sts:AssumeRole"
-    ]
-  }
-}
 
