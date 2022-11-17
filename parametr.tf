@@ -49,13 +49,13 @@ data "aws_ssm_parameter" "encrypted_password" {
 }
 
 ####todo: need fix when enabled = false
-module "argocd_additional_cluster" {
-  enabled = true
-  source  = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
-
-  eks_cluster_id = local.eks_cluster_id
-  depends_on     = [helm_release.argocd]
-}
+#module "argocd_additional_cluster" {
+#  enabled = true
+#  source  = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
+#
+#  eks_cluster_id = local.eks_cluster_id
+#  depends_on     = [helm_release.argocd]
+#}
 
 #module "argocd_apps" {
 #  enabled = true
