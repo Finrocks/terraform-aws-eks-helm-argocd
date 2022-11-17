@@ -72,7 +72,7 @@ locals {
 |------|--------|---------|
 | <a name="module_argocd_additional_cluster"></a> [argocd\_additional\_cluster](#module\_argocd\_additional\_cluster) | git@github.com:Finrocks/terraform-argocd-additional-cluster.git | n/a |
 | <a name="module_argocd_additional_label"></a> [argocd\_additional\_label](#module\_argocd\_additional\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_argocd_application_controller_iam_role"></a> [argocd\_application\_controller\_iam\_role](#module\_argocd\_application\_controller\_iam\_role) | rallyware/eks-iam-role/aws | 0.1.2 |
+| <a name="module_argocd_application_controller_iam_role"></a> [argocd\_application\_controller\_iam\_role](#module\_argocd\_application\_controller\_iam\_role) | cloudposse/eks-iam-role/aws | 1.1.0 |
 | <a name="module_argocd_kms_key"></a> [argocd\_kms\_key](#module\_argocd\_kms\_key) | cloudposse/kms-key/aws | 0.12.1 |
 | <a name="module_argocd_kms_label"></a> [argocd\_kms\_label](#module\_argocd\_kms\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_argocd_label"></a> [argocd\_label](#module\_argocd\_label) | cloudposse/label/null | 0.25.0 |
@@ -92,6 +92,7 @@ locals {
 | [aws_eks_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_iam_policy_document.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.zalupka](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_ssm_parameter.encrypted_password](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [utils_deep_merge_yaml.default](https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml) | data source |
 
