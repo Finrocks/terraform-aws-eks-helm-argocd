@@ -14,13 +14,13 @@ module "argocd_parameter_store" {
     {
       name        = "/${local.eks_cluster_id}/argocd/password"
       type        = "SecureString"
-      value       = random_password.argocd_password.result
+      value       = random_password.argocd_password[0].result
       description = "A password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
     },
     {
       name        = "/${local.eks_cluster_id}/argocd/password/encrypted"
       type        = "SecureString"
-      value       = bcrypt(random_password.argocd_password.result, 10)
+      value       = bcrypt(random_password.argocd_password[0].result, 10)
       description = "An encrypted password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
     },
   ]
