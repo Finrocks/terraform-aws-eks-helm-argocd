@@ -76,7 +76,7 @@ variable "config" {
   type = object({
     create_iam_role    = optional(bool, true)
     create_iam_role    = optional(bool, true)
-    iam_policy_document        = optional(string)
+    iam_policy_document        = optional(list(any))
     use_sts_regional_endpoints = optional(bool, false)
   })
 
