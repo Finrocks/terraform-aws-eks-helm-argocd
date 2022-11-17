@@ -1,31 +1,5 @@
-locals {
-  argocd_namespace = "argo"
-  argo_sync_policy = {
-    "automated" : {
-      selfHeal : true
-    }
-    "syncOptions" = ["CreateNamespace=true", "ApplyOutOfSyncOnly=true"]
-    "retry" : {
-      "limit" : 5
-      "backoff" : {
-        "duration" : "30s"
-        "factor" : 2
-        "maxDuration" : "3m0s"
-      }
-    }
-  }
-
-  argocd_values = templatefile("./helm-values/argocd.yaml",
-    {
-      argocd_url = var.argocd_config["argocd_url"]
-      #admin_password                  = data.aws_ssm_parameter.encrypted_password.value
-      admin_password = module.argocd_parameter_store_read.values
-    }
-  )
-
-}
-
 resource "random_password" "argocd_password" {
+  count            = local.enabled ? 1 : 0
   length           = 20
   special          = true
   override_special = "_%@$"
@@ -34,7 +8,7 @@ resource "random_password" "argocd_password" {
 module "argocd_parameter_store" {
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
-  enabled = true
+  #enabled = true
 
   parameter_write = [
     {
@@ -54,12 +28,8 @@ module "argocd_parameter_store" {
   ignore_value_changes = true
   kms_arn              = module.argocd_kms_key.alias_arn
 
+  depends_on = [random_password.argocd_password]
   context = module.argocd_kms_label.context
-
-  depends_on = [
-    random_password.argocd_password
-  ]
-
 }
 
 module "argocd_parameter_store_read" {
@@ -73,11 +43,13 @@ module "argocd_parameter_store_read" {
 }
 
 data "aws_ssm_parameter" "encrypted_password" {
-  name       = "/${local.eks_cluster_id}/argocd/password/encrypted"
-  depends_on = [module.argocd_parameter_store]
+  name             = "/${local.eks_cluster_id}/argocd/password/encrypted"
+  depends_on       = [module.argocd_parameter_store]
+  count            = local.enabled ? 1 : 0
 }
 
 data "aws_iam_policy_document" "this" {
+  count            = local.enabled ? 1 : 0
   statement {
     sid    = "ArgoCDOwn"
     effect = "Allow"

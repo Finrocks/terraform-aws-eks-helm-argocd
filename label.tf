@@ -1,22 +1,19 @@
-module "label" {
-  source  = "cloudposse/label/null"
-  version = "0.25.0"
-
-  context = module.this.context
-}
-
-#module "argocd_label" {
+#module "label" {
 #  source  = "cloudposse/label/null"
 #  version = "0.25.0"
 #
-#  environment   = local.environment
-#  tenant      = var.project_name
-#
-#  label_order = ["environment", "tenant", "stage", "name", "attributes"]
-#  #label_value_case = "title"
-#  #delimiter = ""
+#  context = module.this.context
 #}
+module "argocd_kms_label" {
+  count = local.enabled ? 1 : 0
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
 
+  delimiter   = "/"
+  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  attributes  = ["kms-key"]
+  context     = module.argocd_additional_label.context
+}
 
 module "argocd_label" {
   source  = "cloudposse/label/null"
