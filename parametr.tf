@@ -8,7 +8,6 @@ resource "random_password" "argocd_password" {
 module "argocd_parameter_store" {
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
-  #enabled = true
 
   parameter_write = [
     {
@@ -29,6 +28,7 @@ module "argocd_parameter_store" {
   kms_arn              = module.argocd_kms_key[0].alias_arn
 
   depends_on = [random_password.argocd_password]
+  #enabled = true
   context = module.parameter_store_label[0].context
 }
 
@@ -39,6 +39,7 @@ module "argocd_parameter_store_read" {
   parameter_read = ["/${local.eks_cluster_id}/argocd/password/encrypted"]
 
   depends_on = [module.argocd_parameter_store]
+  #enabled = true
   context    = module.this.context
 }
 
