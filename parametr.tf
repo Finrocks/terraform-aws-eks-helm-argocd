@@ -11,7 +11,7 @@ module "argocd_parameter_store" {
 
   parameter_write = [
     {
-      name        = one(module.parameter_store_label[*].name)
+      name        = module.parameter_store_label[0].name
 #      name        = "/${local.eks_cluster_id}/argocd/password"
       type        = "SecureString"
       value       = random_password.argocd_password[0].result
