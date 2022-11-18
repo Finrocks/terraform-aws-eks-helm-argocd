@@ -40,7 +40,7 @@ locals {
       server_sa_name         = local.server_service_account_name
       controller_role_arn    = can(module.argocd_application_controller_iam_role.service_account_role_arn)
 #      server_role_arn        = try(module.argocd_server_iam_role.service_account_role_arn, "fallback")
-      server_role_arn        = lookup(module.argocd_server_iam_role, service_account_role_arn, "fallback")
+      server_role_arn        = lookup(module.argocd_server_iam_role[*], service_account_role_arn, "fallback")
       argocd_url             = var.argocd_config["argocd_url"]
       #admin_password         = data.aws_ssm_parameter.encrypted_password[0].value
       admin_password         = module.argocd_parameter_store_read.values
