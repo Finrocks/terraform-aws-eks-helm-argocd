@@ -10,6 +10,9 @@ module "parameter_store_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
+#  environment = var.environment
+  name = format("/%s/argocd/password", local.eks_cluster_id)
+  #"/${local.eks_cluster_id}/argocd/password"
   delimiter   = "/"
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   #attributes  = ["kms-key"]
