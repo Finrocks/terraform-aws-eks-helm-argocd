@@ -75,7 +75,7 @@ variable "argocd_config" {
 variable "config" {
   type = object({
     create_iam_role    = optional(bool, true)
-    additional_iam_policy_document        = optional(list(string), [])
+    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
     use_sts_regional_endpoints = optional(bool, false)
   })
 
