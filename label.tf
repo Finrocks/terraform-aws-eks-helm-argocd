@@ -10,10 +10,9 @@ module "parameter_store_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  label_order = ["namespace", "environment", "stage", "tenant", "attributes"]
-  tenant = var.tenant
+  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  #tenant = var.tenant
   attributes  = ["argocd", "password"]
-  labels_as_tags = ["unset"]
   context     = module.argocd_tenant_label.context
 }
 
@@ -21,7 +20,6 @@ module "argocd_kms_label" {
   count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
-
 
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   attributes  = ["kms-key"]
