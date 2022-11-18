@@ -6,7 +6,7 @@ module "argocd_kms_key" {
   description             = format("KMS key for Argocd on %s", local.eks_cluster_id)
   deletion_window_in_days = 10
   enable_key_rotation     = true
-  alias                   = format("alias/%s/argocd", local.eks_cluster_id)
+  alias                   = format("alias/%s/argocd", "${var.environment}-${var.tenant}")
 
   context = module.argocd_kms_label[0].context
 }

@@ -22,7 +22,7 @@ module "argocd_kms_label" {
   version = "0.25.0"
 
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
-  attributes  = ["kms-key"]
+  attributes  = ["argocd-kms-key"]
   context     = module.argocd_additional_label.context
 }
 
