@@ -5,16 +5,11 @@ module "label" {
   context = module.this.context
 }
 
-variable "ddel" {
-  default = "argocd/password"
-}
-
 module "parameter_store_label" {
   count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  attributes  = [var.ddel]
   label_order = ["namespace", "stage", "tenant", "name", "attributes"]
   context     = module.argocd_additional_label.context
 }
