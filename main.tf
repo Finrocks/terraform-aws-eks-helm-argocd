@@ -10,7 +10,8 @@ locals {
   #iam_role_enabled                            = local.enabled && var.config["create_default_iam_role"]
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"] ? true : false
   iam_policy_enabled                          = local.iam_role_enabled
-  iam_policy_document                         = local.iam_policy_enabled ? one(data.aws_iam_policy_document.default[*].json) : var.config["iam_policy_document"]
+  #iam_policy_document                         = local.iam_policy_enabled ? one(data.aws_iam_policy_document.default[*].json) : var.config["iam_policy_document"]
+  iam_policy_document                         = local.iam_policy_enabled ? data.aws_iam_policy_document.default[0].json : var.config["iam_policy_document"]
 
 
   argocd_namespace = "argo"
