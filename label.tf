@@ -1,3 +1,12 @@
+locals {
+  qqq = templatefile("${path.module}/helm-values/test.yaml",
+      {
+        argocd      = "argocd"
+        password     = "password"
+      }
+    )
+}
+
 module "label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
@@ -15,7 +24,7 @@ module "parameter_store_label" {
   #"/${local.eks_cluster_id}/argocd/password"
   delimiter   = "+"
   label_order = ["namespace", "stage", "tenant", "name", "attributes"]
-  attributes  = ["argocd\\/password"]
+  attributes  = [local.qqq]
   context     = module.argocd_additional_label.context
 }
 
