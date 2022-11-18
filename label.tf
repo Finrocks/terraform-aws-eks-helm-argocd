@@ -45,7 +45,7 @@ module "argocd_additional_label" {
   version = "0.25.0"
 
   delimiter   = "+"
-  name = "/${local.eks_cluster_id}/argocd/password"
+  #name = "/${local.eks_cluster_id}/argocd/password"
   tenant      = var.tenant
   context     = module.this.context
 }
