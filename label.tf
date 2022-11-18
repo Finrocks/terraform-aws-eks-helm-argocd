@@ -21,6 +21,8 @@ module "argocd_kms_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
+  environment = var.environment
+  tenant = var.tenant
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   attributes  = ["argocd-kms-key"]
   context     = module.argocd_additional_label.context
