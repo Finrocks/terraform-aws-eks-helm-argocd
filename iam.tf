@@ -29,8 +29,6 @@ module "argocd_server_iam_role" {
   source                      = "cloudposse/eks-iam-role/aws"
   version                     = "1.1.0"
 
-  #attributes                  = ["argocd"]
-
   aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]    #local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
