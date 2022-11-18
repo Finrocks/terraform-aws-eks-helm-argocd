@@ -5,15 +5,12 @@ module "label" {
   context = module.this.context
 }
 
-# For example, when using defaults, `module.this.context.delimiter`
-# will be null, and `module.this.delimiter` will be `-` (hyphen).
-
 module "parameter_store_label" {
   count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  name = module.this.name
+  #name = module.this.name
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   attributes  = ["argocd-password"]
   context     = module.argocd_additional_label.context

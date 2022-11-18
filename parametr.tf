@@ -43,6 +43,7 @@ module "argocd_parameter_store" {
 
   depends_on = [random_password.argocd_password]
   #enabled = true
+  name = null
   context = module.parameter_store_label[0].context
 }
 
