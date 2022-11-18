@@ -35,7 +35,7 @@ locals {
     {
       fullname_override      = var.helm_config["name"]
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
-      role_enabled           = (local.iam_role_enabled == true ? 1 : 0)  #local.iam_role_enabled   #var.config["create_iam_role"]
+      role_enabled           = local.iam_role_enabled == true ? 1 : 0 #local.iam_role_enabled   #var.config["create_iam_role"]
       controller_sa_name     = local.application_controller_service_account_name
       server_sa_name         = local.server_service_account_name
       controller_role_arn    = module.argocd_application_controller_iam_role.service_account_role_arn
