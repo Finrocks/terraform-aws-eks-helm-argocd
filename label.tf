@@ -10,7 +10,7 @@ module "parameter_store_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  label_order = ["namespace", "stage", "tenant", "name", "attributes"]
+  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   context     = module.argocd_additional_label.context
 }
 
