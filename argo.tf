@@ -8,7 +8,8 @@ module "argocd_kms_key" {
   enable_key_rotation     = true
   alias                   = format("alias/%s/argocd-key", local.eks_cluster_id)
 
-  name    = "argocdsupername"
+#  name    = "argocd"
+  name    = format("zxc/%s", "argocd")
   context = module.argocd_kms_label[0].context
 }
 

@@ -4,6 +4,18 @@ module "label" {
 
   context = module.this.context
 }
+
+module "paramert_store_label" {
+  count = local.enabled ? 1 : 0
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  delimiter   = "/"
+  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  #attributes  = ["kms-key"]
+  context     = module.argocd_additional_label.context
+}
+
 module "argocd_kms_label" {
   count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
