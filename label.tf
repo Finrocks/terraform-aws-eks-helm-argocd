@@ -11,8 +11,9 @@ module "parameter_store_label" {
   version = "0.25.0"
 
   label_order = ["namespace", "environment", "stage", "tenant", "attributes"]
-  tenant = var.tenant
-  context     = module.argocd_additional_label.context
+  #tenant = var.tenant
+  attributes  = ["argocd", "password"]
+  context     = module.argocd_tenant_label.context
 }
 
 module "argocd_kms_label" {
@@ -45,4 +46,7 @@ module "argocd_additional_label" {
 module "argocd_tenant_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
+
+  tenant      = var.tenant
+  context     = module.this.context
 }
