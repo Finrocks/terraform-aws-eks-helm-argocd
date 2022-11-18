@@ -6,7 +6,7 @@ global:
     runAsGroup: 999
     fsGroup: 999
 
-%{{ if role_enabled }}
+%{ if role_enabled }
 controller:
   serviceAccount:
     name: ${controller_sa_name}
@@ -20,13 +20,8 @@ server:
     annotations:
       eks.amazonaws.com/role-arn: ${server_role_arn}
       eks.amazonaws.com/sts-regional-endpoints: "${sts_regional_endpoints}"
+%{ endif }
 
 configs:
   secret:
     argocdServerAdminPassword: "${admin_password}"
-
-{{ else }}
-configs:
-  secret:
-    argocdServerAdminPassword: "${admin_password}"
-%{{ endif }}
