@@ -11,7 +11,8 @@ module "argocd_parameter_store" {
 
   parameter_write = [
     {
-      name        = "/${local.eks_cluster_id}/argocd/password"
+#      name        = "/${local.eks_cluster_id}/argocd/password"
+#      name        = "/${local.eks_cluster_id}/argocd/password"
       type        = "SecureString"
       value       = random_password.argocd_password[0].result
       description = "A password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
