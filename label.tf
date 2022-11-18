@@ -15,7 +15,7 @@ module "parameter_store_label" {
   #"/${local.eks_cluster_id}/argocd/password"
   delimiter   = "+"
   label_order = ["namespace", "stage", "tenant", "name", "attributes"]
-  attributes  = ["argocd\/password"]
+  attributes  = ["argocd\\/password"]
   context     = module.argocd_additional_label.context
 }
 
