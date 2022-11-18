@@ -9,7 +9,7 @@ module "argocd_kms_key" {
   alias                   = format("alias/%s/argocd-key", local.eks_cluster_id)
 
 #  name    = "argocd"
-  name    = format("zxc/%s", "argocd")
+  #name    = format("zxc/%s", "argocd")
   context = module.argocd_kms_label[0].context
 }
 
