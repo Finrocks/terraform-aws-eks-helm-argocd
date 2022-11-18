@@ -11,7 +11,7 @@ module "parameter_store_label" {
   version = "0.25.0"
 
   label_order = ["namespace", "environment", "stage", "tenant", "attributes"]
-  #tenant = var.tenant
+  tenant = var.tenant
   attributes  = ["argocd", "password"]
   context     = module.argocd_tenant_label.context
 }
