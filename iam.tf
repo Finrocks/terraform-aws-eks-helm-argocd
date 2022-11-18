@@ -46,7 +46,7 @@ module "argocd_server_iam_role" {
 
   attributes  = ["argocd"]
 
-  aws_iam_policy_document =   [tostring(data.aws_iam_policy_document.default[0].json, data.aws_iam_policy_document.this[0].json]    #local.iam_policy_document
+  aws_iam_policy_document =   [data.aws_iam_policy_document.default[0].json, data.aws_iam_policy_document.this[0].json]    #local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
