@@ -25,14 +25,14 @@ module "argocd_kms_label" {
   context     = module.argocd_additional_label.context
 }
 
-#module "argocd_label" {
-#  source  = "cloudposse/label/null"
-#  version = "0.25.0"
-#
-#  environment = var.environment
-#  tenant      = var.tenant
-#  context     = module.label.context
-#}
+module "argocd_role_label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  environment = var.environment
+  tenant      = var.tenant
+  context     = module.label.context
+}
 
 module "argocd_additional_label" {
   source  = "cloudposse/label/null"
