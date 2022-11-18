@@ -13,7 +13,7 @@ module "parameter_store_label" {
 #  environment = var.environment
   name = format("/%s/argocd/password", local.eks_cluster_id)
   #"/${local.eks_cluster_id}/argocd/password"
-  delimiter   = "/"
+  delimiter   = "vvv"
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   #attributes  = ["kms-key"]
   context     = module.argocd_additional_label.context
