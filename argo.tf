@@ -1,18 +1,3 @@
-module "argocd_kms_key" {
-  count = local.enabled ? 1 : 0
-  source  = "cloudposse/kms-key/aws"
-  version = "0.12.1"
-
-  description             = format("KMS key for Argocd on %s", local.eks_cluster_id)
-  deletion_window_in_days = 10
-  enable_key_rotation     = true
-  alias                   = format("alias/%s/argocd-key", local.eks_cluster_id)
-
-#  name    = "argocd"
-  #name    = format("zxc/%s", "argocd")
-  context = module.argocd_kms_label[0].context
-}
-
 ####todo: fix postrender variable
 resource "helm_release" "argocd" {
   count = local.enabled ? 1 : 0
