@@ -21,7 +21,7 @@ module "argocd_label" {
 
   environment = var.environment
   tenant      = var.tenant
-  context     = module.this.context
+  context     = module.label.context
 }
 
 module "argocd_additional_label" {
