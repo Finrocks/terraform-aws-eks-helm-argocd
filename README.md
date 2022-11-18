@@ -79,7 +79,7 @@ locals {
 | <a name="module_argocd_parameter_store_read"></a> [argocd\_parameter\_store\_read](#module\_argocd\_parameter\_store\_read) | cloudposse/ssm-parameter-store/aws | 0.10.0 |
 | <a name="module_argocd_server_iam_role"></a> [argocd\_server\_iam\_role](#module\_argocd\_server\_iam\_role) | cloudposse/eks-iam-role/aws | 1.1.0 |
 | <a name="module_label"></a> [label](#module\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_paramert_store_label"></a> [paramert\_store\_label](#module\_paramert\_store\_label) | cloudposse/label/null | 0.25.0 |
+| <a name="module_parameter_store_label"></a> [parameter\_store\_label](#module\_parameter\_store\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
