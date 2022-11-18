@@ -13,7 +13,7 @@ module "parameter_store_label" {
   label_order = ["namespace", "environment", "stage", "tenant", "attributes"]
   tenant = var.tenant
   attributes  = ["argocd", "password"]
-  labels_as_tags = []
+  labels_as_tags = ["unset"]
   context     = module.argocd_tenant_label.context
 }
 
