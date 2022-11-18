@@ -11,7 +11,7 @@ locals {
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"] ? true : false
   iam_policy_enabled                          = local.iam_role_enabled
   #iam_policy_document                         = local.iam_policy_enabled ? one(data.aws_iam_policy_document.default[*].json) : var.config["iam_policy_document"]
-  iam_policy_document                         = local.iam_policy_enabled ? data.aws_iam_policy_document.default[0].json : var.config["iam_policy_document"]
+  #iam_policy_document                         = local.iam_policy_enabled ? data.aws_iam_policy_document.default[0].json : var.config["iam_policy_document"]
 
 
   argocd_namespace = "argo"
@@ -39,9 +39,9 @@ locals {
       controller_role_arn    = module.argocd_application_controller_iam_role.service_account_role_arn
       server_sa_name         = local.server_service_account_name
       server_role_arn        = module.argocd_server_iam_role.service_account_role_arn
-      argocd_url = var.argocd_config["argocd_url"]
-      admin_password                  = data.aws_ssm_parameter.encrypted_password[0].value
-      admin_password = module.argocd_parameter_store_read.values
+      argocd_url             = var.argocd_config["argocd_url"]
+      #admin_password         = data.aws_ssm_parameter.encrypted_password[0].value
+      admin_password         = module.argocd_parameter_store_read.values
     }
   )
 }
