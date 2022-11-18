@@ -25,7 +25,7 @@ configs:
   secret:
     argocdServerAdminPassword: "${admin_password}"
 
-{{ else }}
+{ else }
 configs:
   secret:
     argocdServerAdminPassword: "${admin_password}"
