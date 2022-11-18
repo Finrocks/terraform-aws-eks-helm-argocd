@@ -61,7 +61,7 @@ module "argocd_application_controller_iam_role" {
 
   attributes  = ["argocd"]
 
-  aws_iam_policy_document =   [data.aws_iam_policy_document.zalupka[*].json]
+  aws_iam_policy_document =   [data.aws_iam_policy_document.zalupka[0].json]
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
