@@ -38,11 +38,11 @@ locals {
       role_enabled           = (local.iam_role_enabled == true ? 1 : 0)  #local.iam_role_enabled   #var.config["create_iam_role"]
       controller_sa_name     = local.application_controller_service_account_name
       server_sa_name         = local.server_service_account_name
-      controller_role_arn    = one(toset(module.argocd_application_controller_iam_role[*].service_account_role_arn))
+      controller_role_arn    = one(toset(module.argocd_application_controller_iam_role.service_account_role_arn))
 #      controller_role_arn    = one(module.argocd_application_controller_iam_role[*].service_account_role_arn)
 #      server_role_arn        = try(module.argocd_server_iam_role.service_account_role_arn, "fallback")
 #      server_role_arn        = lookup(module.argocd_server_iam_role[*], service_account_role_arn, "fallback")
-      server_role_arn        = one(toset([module.argocd_server_iam_role[*].service_account_role_arn]))
+      server_role_arn        = module.argocd_server_iam_role[*].service_account_role_arn
       argocd_url             = var.argocd_config["argocd_url"]
       #admin_password         = data.aws_ssm_parameter.encrypted_password[0].value
       admin_password         = module.argocd_parameter_store_read.values
