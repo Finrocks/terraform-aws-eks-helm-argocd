@@ -10,12 +10,7 @@ module "parameter_store_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-#  environment = var.environment
-#  name = "/${local.eks_cluster_id}/argocd/password"
-  #"/${local.eks_cluster_id}/argocd/password"
-  delimiter   = "+"
   label_order = ["namespace", "stage", "tenant", "name", "attributes"]
-  attributes  = ["argocd\\/password"]
   context     = module.argocd_additional_label.context
 }
 
@@ -25,7 +20,6 @@ module "argocd_kms_label" {
   version = "0.25.0"
 
   environment = var.environment
-  delimiter   = "/"
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   attributes  = ["kms-key"]
   context     = module.argocd_additional_label.context
@@ -44,7 +38,6 @@ module "argocd_additional_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  delimiter   = "+"
-  tenant      = var.tenant
+  #tenant      = var.tenant
   context     = module.this.context
 }
