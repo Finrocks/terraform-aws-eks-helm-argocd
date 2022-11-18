@@ -21,8 +21,6 @@ module "argocd_kms_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  environment = split("-", local.eks_cluster_id)[0]
-  tenant = split("-", local.eks_cluster_id)[1]
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   attributes  = ["argocd-kms-key"]
   context     = module.argocd_additional_label.context
