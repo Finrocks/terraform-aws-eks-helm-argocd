@@ -76,6 +76,7 @@ locals {
 | <a name="module_argocd_kms_label"></a> [argocd\_kms\_label](#module\_argocd\_kms\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_argocd_parameter_store"></a> [argocd\_parameter\_store](#module\_argocd\_parameter\_store) | cloudposse/ssm-parameter-store/aws | 0.10.0 |
 | <a name="module_argocd_parameter_store_read"></a> [argocd\_parameter\_store\_read](#module\_argocd\_parameter\_store\_read) | cloudposse/ssm-parameter-store/aws | 0.10.0 |
+| <a name="module_argocd_role_label"></a> [argocd\_role\_label](#module\_argocd\_role\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_argocd_server_iam_role"></a> [argocd\_server\_iam\_role](#module\_argocd\_server\_iam\_role) | cloudposse/eks-iam-role/aws | 1.1.0 |
 | <a name="module_argocd_tenant_label"></a> [argocd\_tenant\_label](#module\_argocd\_tenant\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_label"></a> [label](#module\_label) | cloudposse/label/null | 0.25.0 |
