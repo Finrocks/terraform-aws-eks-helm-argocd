@@ -72,6 +72,19 @@ variable "argocd_config" {
   DOC
 }
 
+data "aws_iam_policy_document" "zalupka" {
+  statement {
+    sid    = "ArgoCDOwn"
+    effect = "Allow"
+
+    actions = [
+      "kms:Decrypt"
+    ]
+
+    resources = ["arn:aws:kms:eu-central-1:529407427714:key/12e31715-87ef-4fd1-83bb-3ded7af1565a"]
+  }
+}
+
 variable "config" {
   type = object({
     create_iam_role    = optional(bool, true)
