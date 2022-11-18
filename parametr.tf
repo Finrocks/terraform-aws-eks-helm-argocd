@@ -29,7 +29,7 @@ module "argocd_parameter_store" {
   kms_arn              = module.argocd_kms_key[0].alias_arn
 
   depends_on = [random_password.argocd_password]
-  context = module.argocd_kms_label[0].context
+  context = module.parameter_store_label[0].context
 }
 
 module "argocd_parameter_store_read" {

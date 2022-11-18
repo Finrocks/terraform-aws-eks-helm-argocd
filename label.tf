@@ -5,7 +5,7 @@ module "label" {
   context = module.this.context
 }
 
-module "paramert_store_label" {
+module "parameter_store_label" {
   count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
