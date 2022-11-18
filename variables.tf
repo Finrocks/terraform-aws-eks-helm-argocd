@@ -93,6 +93,12 @@ variable "config" {
     use_sts_regional_endpoints = optional(bool, false)
   })
 
+  default = {
+    create_iam_role = true
+    additional_iam_policy_document = []
+    use_sts_regional_endpoints = false
+  }
+
   description = <<-DOC
     create_iam_role:
       Defines whether to create default IAM role and attach it to argocd application controller and server.
