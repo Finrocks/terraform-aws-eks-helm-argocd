@@ -6,7 +6,7 @@ global:
     runAsGroup: 999
     fsGroup: 999
 
-%{ if var.config["create_iam_role"] }
+%{ if role_enabled }
 controller:
   serviceAccount:
     name: ${controller_sa_name}
