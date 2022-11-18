@@ -75,16 +75,15 @@ variable "argocd_config" {
 variable "config" {
   type = object({
     create_iam_role    = optional(bool, true)
-    #create_iam_role    = optional(bool, true)
-    iam_policy_document        = optional(list(string))
+    additional_iam_policy_document        = optional(list(string), [])
     use_sts_regional_endpoints = optional(bool, false)
   })
 
   description = <<-DOC
     create_iam_role:
       Defines whether to create default IAM role and attach it to argocd application controller and server.
-    iam_policy_document:
-      Custom IAM policy which will be assigned to IAM role.
+    additional_iam_policy_document:
+      List of policy ARNs which will be additional attached to created IAM role.
     use_sts_regional_endpoints:
       Whether to create use STS regional endpoints.
   DOC
