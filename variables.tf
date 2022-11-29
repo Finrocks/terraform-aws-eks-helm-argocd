@@ -1,14 +1,14 @@
-#variable "eks_cluster_id" {
-#  type        = string
-#  description = "EKS cluster ID"
-#}
+variable "eks_cluster_id" {
+  type        = string
+  description = "EKS cluster ID"
+}
 
 #####todo: fix postrender variable
 
 
 variable "config" {
   type = object({
-    eks_cluster_id     = string
+    #eks_cluster_id     = string
     create_iam_role    = optional(bool, true)
     additional_iam_policy_document        = optional(list(string), [])
 #    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
@@ -16,7 +16,7 @@ variable "config" {
   })
 
   default = {
-    eks_cluster_id = ""
+    #eks_cluster_id = ""
     create_iam_role = true
     additional_iam_policy_document = []
     use_sts_regional_endpoints = false

@@ -57,7 +57,7 @@ data "aws_caller_identity" "default" {
 data "aws_eks_cluster" "cluster" {
   count = local.enabled ? 1 : 0
 
-  name =  var.config["eks_cluster_id"]
+  name =  var.eks_cluster_id #var.config["eks_cluster_id"]
 }
 
 data "utils_deep_merge_yaml" "default" {
