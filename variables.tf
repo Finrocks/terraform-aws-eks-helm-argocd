@@ -4,6 +4,56 @@
 #}
 
 #####todo: fix postrender variable
+
+
+variable "config" {
+  type = object({
+    eks_cluster_id     = string
+    create_iam_role    = optional(bool, true)
+    additional_iam_policy_document        = optional(list(string), [])
+#    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
+    use_sts_regional_endpoints = optional(bool, false)
+  })
+
+  default = {
+    eks_cluster_id = null
+    create_iam_role = true
+    additional_iam_policy_document = []
+    use_sts_regional_endpoints = false
+  }
+
+  description = <<-DOC
+    create_iam_role:
+      Defines whether to create default IAM role and attach it to argocd application controller and server.
+    additional_iam_policy_document:
+      List of policy ARNs which will be additional attached to created IAM role.
+    use_sts_regional_endpoints:
+      Whether to create use STS regional endpoints.
+  DOC
+}
+
+variable "argocd_config" {
+  type = object({
+#    eks_cluster_id                 = string
+#    argocd_url                     = string
+    create_additional_project      = optional(bool, false)
+    create_additional_cluster      = optional(bool, false)
+    argocd_additional_project_name = optional(string)
+    argocd_additional_cluster_name = optional(string)
+  })
+
+  description = <<-DOC
+    create_additional_project:
+      Define whatever create additional project or not.
+    create_additional_cluster:
+      Define whatever create additional cluster or not.
+    argocd_additional_project:
+      Name of the project, requires `create_additional_project_name = true` .
+    argocd_additional_cluster:
+      Name of the cluster, requires `create_additional_project_name = true`
+  DOC
+}
+
 variable "helm_config" {
   type = object({
     name                       = optional(string, "argocd")
@@ -51,27 +101,6 @@ variable "helm_config" {
   DOC
 }
 
-variable "argocd_config" {
-  type = object({
-    argocd_url                     = string
-    create_additional_project      = optional(bool, false)
-    create_additional_cluster      = optional(bool, false)
-    argocd_additional_project_name = optional(string)
-    argocd_additional_cluster_name = optional(string)
-  })
-
-  description = <<-DOC
-    create_additional_project:
-      Define whatever create additional project or not.
-    create_additional_cluster:
-      Define whatever create additional cluster or not.
-    argocd_additional_project:
-      Name of the project, requires `create_additional_project_name = true` .
-    argocd_additional_cluster:
-      Name of the cluster, requires `create_additional_project_name = true`
-  DOC
-}
-
 data "aws_iam_policy_document" "zalupka" {
   statement {
     sid    = "ArgoCDOwn"
@@ -83,30 +112,4 @@ data "aws_iam_policy_document" "zalupka" {
 
     resources = ["arn:aws:kms:eu-central-1:529407427714:key/12e31715-87ef-4fd1-83bb-3ded7af1565a"]
   }
-}
-
-variable "config" {
-  type = object({
-    eks_cluster_id     = string
-    create_iam_role    = optional(bool, true)
-    additional_iam_policy_document        = optional(list(string), [])
-#    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
-    use_sts_regional_endpoints = optional(bool, false)
-  })
-
-  default = {
-    eks_cluster_id = null
-    create_iam_role = true
-    additional_iam_policy_document = []
-    use_sts_regional_endpoints = false
-  }
-
-  description = <<-DOC
-    create_iam_role:
-      Defines whether to create default IAM role and attach it to argocd application controller and server.
-    additional_iam_policy_document:
-      List of policy ARNs which will be additional attached to created IAM role.
-    use_sts_regional_endpoints:
-      Whether to create use STS regional endpoints.
-  DOC
 }
