@@ -57,7 +57,7 @@ data "aws_caller_identity" "default" {
 data "aws_eks_cluster" "cluster" {
   count = local.enabled ? 1 : 0
 
-  name = var.config["cluster_name"]
+  name =  "dev-pixtab-cluster" #var.config["cluster_name"]
 }
 
 data "utils_deep_merge_yaml" "default" {
