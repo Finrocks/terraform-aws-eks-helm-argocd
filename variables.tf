@@ -1,7 +1,7 @@
-variable "eks_cluster_id" {
-  type        = string
-  description = "EKS cluster ID"
-}
+#variable "eks_cluster_id" {
+#  type        = string
+#  description = "EKS cluster ID"
+#}
 
 #####todo: fix postrender variable
 variable "helm_config" {
@@ -10,7 +10,7 @@ variable "helm_config" {
     namespace                  = optional(string, "argo")
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
     chart                      = optional(string, "argo-cd")
-    version                    = optional(string, "5.13.9")
+    version                    = optional(string, "5.15.0")
     max_history                = optional(number, 10)
     create_namespace           = optional(bool, true)
     dependency_update          = optional(bool, true)
@@ -87,6 +87,7 @@ data "aws_iam_policy_document" "zalupka" {
 
 variable "config" {
   type = object({
+    eks_cluster_id     = string
     create_iam_role    = optional(bool, true)
     additional_iam_policy_document        = optional(list(string), [])
 #    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
@@ -94,6 +95,7 @@ variable "config" {
   })
 
   default = {
+    eks_cluster_id = null
     create_iam_role = true
     additional_iam_policy_document = []
     use_sts_regional_endpoints = false
