@@ -8,7 +8,7 @@
 
 variable "config" {
   type = object({
-    cluster_name     = string
+    eks_cluster_id     = string
     create_iam_role    = optional(bool, true)
     additional_iam_policy_document        = optional(list(string), [])
 #    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
@@ -16,14 +16,14 @@ variable "config" {
   })
 
   default = {
-    cluster_name = null
+    eks_cluster_id = ""
     create_iam_role = true
     additional_iam_policy_document = []
     use_sts_regional_endpoints = false
   }
 
   description = <<-DOC
-    cluster_name"
+    eks_cluster_id
       The name of the EKS cluster to install.
     create_iam_role:
       Defines whether to create default IAM role and attach it to argocd application controller and server.
