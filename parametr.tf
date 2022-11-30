@@ -37,7 +37,7 @@ module "argocd_parameter_store" {
       name        = "/dev-pixtab-cluster/argocd/password/encrypted"
 #      name        = "/${local.eks_cluster_id}/argocd/password/encrypted"
       type        = "SecureString"
-      value       = bcrypt(random_password.argocd_password.result, 10)
+      value       = bcrypt(one(random_password.argocd_password[*].result), 10)
       description = "An encrypted password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
     },
   ]
@@ -49,11 +49,12 @@ module "argocd_parameter_store" {
 
   #enabled = true
   #name = null
-  context = module.parameter_store_label.context
+
   #name = "zaxsd"
   #label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   #attributes  = ["argocd-password"]
   #context     = module.this.context
+  context = one(module.parameter_store_label[*].context)
   depends_on = [random_password.argocd_password]
 
 #  depends_on = [random_password.argocd_password]
