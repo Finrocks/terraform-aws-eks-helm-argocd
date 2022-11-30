@@ -100,16 +100,3 @@ variable "helm_config" {
     All input from [helm_release](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#argument-reference) resources.
   DOC
 }
-
-data "aws_iam_policy_document" "zalupka" {
-  statement {
-    sid    = "ArgoCDOwn"
-    effect = "Allow"
-
-    actions = [
-      "kms:Decrypt"
-    ]
-
-    resources = ["arn:aws:kms:eu-central-1:529407427714:key/12e31715-87ef-4fd1-83bb-3ded7af1565a"]
-  }
-}
