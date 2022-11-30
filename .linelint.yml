@@ -3,10 +3,8 @@ autofix: false
 
 # list of paths to ignore, uses gitignore syntaxes (executes before any rule)
 ignore:
-  - .git/
-  - README.md
-  - examples/basic/README.md
-
+  # - README.md
+  
 rules:
   # checks if file ends in a newline character
   end-of-file:
