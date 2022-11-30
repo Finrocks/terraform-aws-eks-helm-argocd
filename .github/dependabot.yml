@@ -8,41 +8,27 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 10  
     target-branch: "dependencies-updates" 
-#    labels: ["dependencies", "bump"]
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
 
+      
   - package-ecosystem: terraform
-    directory: "terraform/images-projects/brands/"
+    directory: "examples/basic"
     schedule:
       interval: daily
     open-pull-requests-limit: 10
     target-branch: "dependencies-updates" 
-#    labels: ["dependencies", "bump"]
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
       
   - package-ecosystem: terraform
-    directory: "terraform/images-projects/backend/"
+    directory: "/"
     schedule:
       interval: daily
     open-pull-requests-limit: 10
     target-branch: "dependencies-updates" 
-#    labels: ["dependencies", "bump"]
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
-      
-  - package-ecosystem: terraform
-    directory: "/terraform/coins-projects/envs/"
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 10
-    target-branch: "dependencies-updates" 
-#    labels: ["dependencies", "bump"]
-    labels: ["dependencies"]
-    commit-message:
-      prefix: "dependencies: "
-
