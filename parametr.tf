@@ -1,5 +1,5 @@
 module "argocd_kms_key" {
-#  count = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
@@ -8,12 +8,12 @@ module "argocd_kms_key" {
   enable_key_rotation     = true
   alias                   = format("alias/%s/argocd", local.eks_cluster_id)
 
-#  context = one(module.argocd_kms_label[*].context)
-  context = module.argocd_kms_label.context
+  context = one(module.argocd_kms_label[*].context)
+#  context = module.argocd_kms_label.context
 }
 
 resource "random_password" "argocd_password" {
-  #count            = local.enabled ? 1 : 0
+  count            = local.enabled ? 1 : 0
   length           = 20
   special          = true
   override_special = "_%@$"
@@ -30,7 +30,7 @@ module "argocd_parameter_store" {
       name        = "/dev-pixtab-cluster/argocd/password"
 #      name        = "/${local.eks_cluster_id}/argocd/password"
       type        = "SecureString"
-      value       = random_password.argocd_password.result
+      value       = one(random_password.argocd_password[*].result)
       description = "A password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
     },
     {
@@ -43,16 +43,16 @@ module "argocd_parameter_store" {
   ]
 
   ignore_value_changes = true
-#  kms_arn              = one(module.argocd_kms_key[*].alias_arn)
-  kms_arn              = module.argocd_kms_key.alias_arn
+  kms_arn              = one(module.argocd_kms_key[*].alias_arn)
+#  kms_arn              = module.argocd_kms_key.alias_arn
 
 
   #enabled = true
   #name = null
-  #context = module.parameter_store_label.context
-  name = "zaxsd"
-  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
-  attributes  = ["argocd-password"]
+  context = module.parameter_store_label.context
+  #name = "zaxsd"
+  #label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  #attributes  = ["argocd-password"]
   #context     = module.this.context
   depends_on = [random_password.argocd_password]
 
