@@ -1,9 +1,11 @@
 output "argocd_password" {
-  value = nonsensitive(random_password.argocd_password[0].result)
+#  value = nonsensitive(random_password.argocd_password[*].result)
+  value = nonsensitive(random_password.argocd_password.result)
   description = "Argocd raw password"
 }
 output "argocd_password_encrypted" {
-  value = bcrypt(random_password.argocd_password[0].result, 10)
+#  value = bcrypt(random_password.argocd_password[0].result, 10)
+  value = bcrypt(random_password.argocd_password.result, 10)
   description = "Argocd encrypted password"
 }
 
