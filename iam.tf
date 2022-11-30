@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "argocd" {
 }
 
 data "aws_iam_policy_document" "kms" {
-  count            = local.enabled ? 1 : 0
+  count = local.iam_role_enabled ? 1 : 0
   statement {
     effect = "Allow"
 
@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "kms" {
 
 module "argocd_server_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
-  source                      = "cloudposse/eks-iam-role/aws"
+  source                      = "rallyware/eks-iam-role/aws"
   version                     = "1.1.0"
 
   aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]    #local.iam_policy_document
