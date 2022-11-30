@@ -1,5 +1,5 @@
 data "aws_iam_policy_document" "argocd" {
-  count = local.iam_policy_enabled ? 1 : 0
+  count = local.iam_role_enabled ? 1 : 0
 
   statement {
     effect = "Allow"

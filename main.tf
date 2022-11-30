@@ -8,7 +8,7 @@ locals {
   application_controller_service_account_name = format("%s-application-controller", var.helm_config["name"])
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
-  iam_policy_enabled                          = local.iam_role_enabled
+#  iam_policy_enabled                          = local.iam_role_enabled
   additional_iam_policy_document               = sort(var.config["additional_iam_policy_document"])
 
   argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
