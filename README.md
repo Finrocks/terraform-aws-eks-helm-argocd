@@ -44,7 +44,7 @@ locals {
         time_sleep.eks_node_groups_wait
       ]
     }
-    ```
+```
     
 
 <!-- BEGIN_TF_DOCS -->
