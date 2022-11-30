@@ -22,10 +22,12 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         with:
           manifest: .github/labels.yml      
+          
       - uses: paulfantom/periodic-labeler@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          LABEL_MAPPINGS_FILE: .github/pediodlabeler.yml
           
 #       - uses: fuxingloh/multi-labeler@v2.0.1
 #         with:
