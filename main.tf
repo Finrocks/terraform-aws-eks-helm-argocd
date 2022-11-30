@@ -6,7 +6,6 @@ locals {
   eks_cluster_oidc_issuer_url                 = one(data.aws_eks_cluster.cluster[*].identity[0].oidc[0].issuer)
   application_controller_service_account_name = format("%s-application-controller", var.helm_config["name"])
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
-  #iam_role_enabled                            = local.enabled && var.config["create_default_iam_role"]
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
   iam_policy_enabled                          = local.iam_role_enabled
   additional_iam_policy_document               = sort(var.config["additional_iam_policy_document"])
