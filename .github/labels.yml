@@ -25,33 +25,23 @@
   name: wontfix
   description: This will not be worked on
 
-- color: a0040c
-  name: no-pr-activity
-  description: stalled PR
-- color: d93f0b
-  name: no-issue-activity
-  description: stalled issue
-- color: f9dcbd
-  name: build
-  description: Changes that affect the build system or external dependencies
-- color: 63dae2
-  name: ci
-  description: Changes to our CI configuration files and scripts
-- color: 6e93e5
-  name: docs
-  description: Documentation only changes
-- color: 5edb3f
-  name: feat
-  description: A new feature
-- color: 58e8c8
-  name: fix
-  description: A bug fix
-- color: efada0
-  name: refactor
-  description: A code change that neither fixes a bug nor adds a feature
-- color: 1d76db
-  name: test
-  description: Adding missing tests or correcting existing tests
-- color: dfb443
-  name: chore
-  description: Adding missing tests or correcting existing tests
+# Labels specific to cloudalchemy
+- color: 0366d6
+  name: area/docs
+  description: Improvements or additions to documentation
+- color: 0366d6
+  name: area/tests
+  description: Everything related to molecule tests and linters
+- color: 0366d6
+  name: area/automation
+  description: Bots, bots everywhere
+- color: 0366d6
+  name: area/vars
+  description: Ansible variables used in role
+- color: 0366d6
+  name: area/tasks
+  description: Logic behind ansible role
+- color: 0366d6
+  name: area/jinja
+  description: Templates
+  
