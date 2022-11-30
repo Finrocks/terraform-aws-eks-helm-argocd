@@ -1,15 +1,12 @@
-name: Release Drafter
+name: Release
 
 
 on:
   workflow_dispatch:
   push:
-    # branches to consider in the event; optional, defaults to all
-    branches:
-      - master
-  pull_request:
-  pull_request_target:
-    types: [opened, reopened, synchronize]
+    tags:
+      - v*.*.*
+
 
 permissions:
   contents: read
@@ -19,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -45,13 +42,9 @@ jobs:
       - uses: release-drafter/release-drafter@v5.21.1
         with:
           publish: true
-          prerelease: false
+          version: ${{ steps.version.outputs.version }}
+          prerelease: true
           config-name: auto-releaser-config.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: force update major tag
-        run: |
-          git tag v${{ steps.version.outputs.major }} ${{ steps.version.outputs.tag }} -f
-          git push origin refs/tags/v${{ steps.version.outputs.major }} -f
           
