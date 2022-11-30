@@ -16,9 +16,9 @@ locals {
       fullname_override      = var.helm_config["name"]
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
       role_enabled           = local.iam_role_enabled == true ? 1 : 0 #local.iam_role_enabled   #var.config["create_iam_role"]
-      controller_sa_name     = local.application_controller_service_account_name
       server_sa_name         = local.server_service_account_name
-      controller_role_arn    = module.argocd_application_controller_iam_role.service_account_role_arn
+      controller_sa_name     = local.application_controller_service_account_name
+      controller_role_arn    = local.iam_role_enabled == true ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : ""
 #      controller_role_arn    = one(module.argocd_application_controller_iam_role[*].service_account_role_arn)
 #      server_role_arn        = try(module.argocd_server_iam_role.service_account_role_arn, "fallback")
 #      server_role_arn        = lookup(module.argocd_server_iam_role[*], service_account_role_arn, "fallback")

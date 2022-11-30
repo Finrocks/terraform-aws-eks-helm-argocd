@@ -1,4 +1,4 @@
-fullnameOverride: ${fullname_override}
+fullnameOverride: "${fullname_override}"
 
 global:
   securityContext:
@@ -9,16 +9,16 @@ global:
 %{ if role_enabled }
 controller:
   serviceAccount:
-    name: ${controller_sa_name}
+    name: "${controller_sa_name}"
     annotations:
-      eks.amazonaws.com/role-arn: ${controller_role_arn}
+      eks.amazonaws.com/role-arn: "${controller_role_arn}"
       eks.amazonaws.com/sts-regional-endpoints: "${sts_regional_endpoints}"
 
 server:
   serviceAccount:
-    name: ${server_sa_name}
+    name: "${server_sa_name}"
     annotations:
-      eks.amazonaws.com/role-arn: ${server_role_arn}
+      eks.amazonaws.com/role-arn: "${server_role_arn}"
       eks.amazonaws.com/sts-regional-endpoints: "${sts_regional_endpoints}"
 %{ endif }
 
