@@ -29,3 +29,4 @@ updates:
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
+
