@@ -14,23 +14,6 @@ locals {
   #iam_policy_document                         = local.iam_policy_enabled ? one(data.aws_iam_policy_document.default[*].json) : var.config["iam_policy_document"]
   #iam_policy_document                         = local.iam_policy_enabled ? data.aws_iam_policy_document.default[0].json : var.config["iam_policy_document"]
 
-
-  argocd_namespace = "argo"
-  argo_sync_policy = {
-    "automated" : {
-      selfHeal : true
-    }
-    "syncOptions" = ["CreateNamespace=true", "ApplyOutOfSyncOnly=true"]
-    "retry" : {
-      "limit" : 5
-      "backoff" : {
-        "duration" : "30s"
-        "factor" : 2
-        "maxDuration" : "3m0s"
-      }
-    }
-  }
-
   argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
     {
       fullname_override      = var.helm_config["name"]
