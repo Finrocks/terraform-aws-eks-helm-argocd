@@ -4,9 +4,16 @@ name: Release Drafter
 on:
   workflow_dispatch:
   push:
+    # branches to consider in the event; optional, defaults to all
     branches:
       - master
+  pull_request:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
 
+permissions:
+  contents: read
+  
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
@@ -15,6 +22,34 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          registry-url: https://registry.npmjs.org
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: yarn test
+        run: yarn test
+        
+      - name: version
+        id: version
+        run: |
+          tag=${GITHUB_REF/refs\/tags\//}
+          version=${tag#v}
+          major=${version%%.*}
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "major=${major}" >> $GITHUB_OUTPUT
+          
     - uses: release-drafter/release-drafter@v5.21.1
       with:
         publish: true
@@ -22,3 +57,9 @@ jobs:
         config-name: auto-releaser-config.yml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: force update major tag
+        run: |
+          git tag v${{ steps.version.outputs.major }} ${{ steps.version.outputs.tag }} -f
+          git push origin refs/tags/v${{ steps.version.outputs.major }} -f
+          
