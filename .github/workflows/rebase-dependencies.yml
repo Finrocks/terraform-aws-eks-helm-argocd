@@ -1,0 +1,29 @@
+name: Automatic Rebase
+
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  rebase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+          ref: dependencies-updates
+          
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git rebase origin/master
+          git push origin dependencies-updates --force  
+          
