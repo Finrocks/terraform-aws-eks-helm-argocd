@@ -5,7 +5,7 @@ registries:
  spacelift:
    type: terraform-registry
    url: https://app.spacelift.io
-   token: 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
+   token: ${{ secrets.SPACELIFT_TOKEN }}
    
 updates:
   - package-ecosystem: "github-actions"
