@@ -21,11 +21,12 @@ data "aws_iam_policy_document" "kms" {
       "kms:Decrypt"
     ]
 
-    resources = [module.argocd_kms_key[0].key_arn]
+    resources = [one(module.argocd_kms_key[*].key_arn)]
   }
 }
 
 module "argocd_server_iam_role" {
+  count                       = local.iam_role_enabled ? 1 : 0
   source                      = "cloudposse/eks-iam-role/aws"
   version                     = "1.1.0"
 
@@ -39,6 +40,7 @@ module "argocd_server_iam_role" {
 }
 
 module "argocd_application_controller_iam_role" {
+  count                       = local.iam_role_enabled ? 1 : 0
   source                      = "cloudposse/eks-iam-role/aws"
   version                     = "1.1.0"
 
