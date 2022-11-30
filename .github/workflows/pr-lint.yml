@@ -22,9 +22,7 @@ jobs:
           issue-number: ${{tojson(github.event.number)}}
           body: |
             Please ensure your PR conforms to conventional commits (see https://www.conventionalcommits.org).
-
             Commits MUST be prefixed with a type, which consists of one of the following:
-
             * **build**: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
             * **ci**: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
             * **docs**: Documentation only changes
@@ -35,3 +33,5 @@ jobs:
             * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
             * **test**: Adding missing tests or correcting existing tests
             * **chore**: No production code change
+            
+
