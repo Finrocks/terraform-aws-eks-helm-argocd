@@ -25,6 +25,15 @@ data "aws_iam_policy_document" "kms" {
   }
 }
 
+data "aws_iam_policy_document" "merge" {
+  count = local.iam_role_enabled ? 1 : 0
+
+  override_policy_documents = [
+    data.aws_iam_policy_document.argocd.json,
+    data.aws_iam_policy_document.kms.json
+  ]
+}
+
 module "argocd_server_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
 #  source                      = "cloudposse/eks-iam-role/aws"
@@ -32,7 +41,8 @@ module "argocd_server_iam_role" {
   source                      = "rallyware/eks-iam-role/aws"
   version                     = "0.1.2"
 
-  aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]    #local.iam_policy_document
+  aws_iam_policy_document     = one(data.aws_iam_policy_document.merge[*].json)   #local.iam_policy_document
+#  aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]    #local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
