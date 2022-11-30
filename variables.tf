@@ -12,13 +12,6 @@ variable "config" {
     use_sts_regional_endpoints = optional(bool, false)
   })
 
-#  default = {
-#    eks_cluster_id = null
-#    create_iam_role = true
-#    additional_iam_policy_document = []
-#    use_sts_regional_endpoints = false
-#  }
-
   description = <<-DOC
     eks_cluster_id
       The name of the EKS cluster to install.
@@ -33,15 +26,16 @@ variable "config" {
 
 variable "argocd_config" {
   type = object({
-#    eks_cluster_id                 = string
-#    argocd_url                     = string
+    argocd_url                     = string
     create_additional_project      = optional(bool, false)
     create_additional_cluster      = optional(bool, false)
-    argocd_additional_project_name = optional(string)
-    argocd_additional_cluster_name = optional(string)
+    argocd_additional_project_name = optional(string, null)
+    argocd_additional_cluster_name = optional(string, null)
   })
 
   description = <<-DOC
+    argocd_url:
+      description
     create_additional_project:
       Define whatever create additional project or not.
     create_additional_cluster:
