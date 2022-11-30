@@ -1,9 +1,8 @@
 name: Generate terraform docs
 
-
 on:
   workflow_dispatch:
-  pull_request:
+  push:
 
 
 concurrency:
@@ -15,23 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.ref }}
 
-    - name: main docs
-      uses: Dirrk/terraform-docs@v1.0.8
+    - name: Render terraform docs inside the README.md
+      uses: terraform-docs/gh-actions@v1.0.0
       with:
-        tf_docs_working_dir: .
-        tf_docs_output_file: README.md
-        tf_docs_output_method: inject
-        tf_docs_git_push: 'true'
-        tf_docs_args: '--sort-inputs-by-required'
-
-    - name: basic example docs
-      uses: Dirrk/terraform-docs@v1.0.8
-      with:
-        tf_docs_working_dir: ./examples/basic/
-        tf_docs_output_file: README.md
-        tf_docs_output_method: inject
-        tf_docs_git_push: 'true'
-        tf_docs_args: '--sort-inputs-by-required'
+        working-dir: .
+        git-push: "true"
+        output-file: README.md
+        output-method: inject
+        config-file: ".terraform-docs.yml"

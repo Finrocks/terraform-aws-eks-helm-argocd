@@ -1,42 +1,23 @@
-name: Lint
-
+name: PR title conformance
 
 on:
-  workflow_dispatch:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - edited
-      - synchronize
-
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
-  cancel-in-progress: true
+  pull_request_target:
 
 jobs:
-  Checking:
+  lint-pr:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Lint PR
-        uses: aslafy-z/conventional-pr-title-action@v3
+        uses: aslafy-z/conventional-pr-title-action@v2.4.1
         with:
           preset: conventional-changelog-angular@^5.0.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Checking if all files end with a newline
-        uses: fernandrone/linelint@master
-        id: linelint
-
       - name: Comment for PR title conformance
         if: failure()
-        uses: peter-evans/create-or-update-comment@v2.1.0
+        uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{tojson(github.event.number)}}
           body: |
@@ -52,3 +33,5 @@ jobs:
             * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
             * **test**: Adding missing tests or correcting existing tests
             * **chore**: No production code change
+            
+
