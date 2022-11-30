@@ -21,7 +21,6 @@
 #
 
 module "this" {
-  count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0" # requires Terraform >= 0.13.0
 
