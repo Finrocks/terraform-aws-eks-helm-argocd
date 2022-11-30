@@ -19,13 +19,14 @@ locals {
       controller_sa_name     = local.application_controller_service_account_name
       controller_role_arn    = local.iam_role_enabled == true ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : ""
       server_sa_name         = local.server_service_account_name
-      server_role_arn        = local.iam_role_enabled == true ? module.argocd_server_iam_role[0].service_account_role_arn : ""
+      server_role_arn        = local.iam_role_enabled == true ? one(module.argocd_server_iam_role[*].service_account_role_arn) : ""
       argocd_url             = var.argocd_config["argocd_url"]
       admin_password         = one(data.aws_ssm_parameter.encrypted_password[*].value)
       #admin_password         = module.argocd_parameter_store_read.values
     }
   )
 }
+#one(module.argocd_server_iam_role[*].service_account_role_arn)
 
 data "aws_caller_identity" "default" {
   count = local.enabled ? 1 : 0
