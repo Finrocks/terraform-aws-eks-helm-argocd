@@ -50,11 +50,11 @@ jobs:
           echo "version=${version}" >> $GITHUB_OUTPUT
           echo "major=${major}" >> $GITHUB_OUTPUT
           
-    - uses: release-drafter/release-drafter@v5.21.1
-      with:
-        publish: true
-        prerelease: false
-        config-name: auto-releaser-config.yml
+      - uses: release-drafter/release-drafter@v5.21.1
+        with:
+          publish: true
+          prerelease: false
+          config-name: auto-releaser-config.yml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
