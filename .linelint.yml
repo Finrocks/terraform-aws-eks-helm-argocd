@@ -3,9 +3,7 @@ autofix: false
 
 # list of paths to ignore, uses gitignore syntaxes (executes before any rule)
 ignore:
-  - .git/
-  - README.md
-  - examples/basic/README.md
+  # - README.md
 
 rules:
   # checks if file ends in a newline character
@@ -15,6 +13,11 @@ rules:
 
     # set to true to disable autofix (if enabled globally)
     disable-autofix: true
+
+    # will be ignored only by this rule
+    ignore:
+    #  - README.md
+      
 
     # if true also checks if file ends in a single newline character
     single-new-line: true
