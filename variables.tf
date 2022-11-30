@@ -14,7 +14,7 @@ variable "config" {
   })
 
   default = {
-    #eks_cluster_id = ""
+    eks_cluster_id = null
     create_iam_role = true
     additional_iam_policy_document = []
     use_sts_regional_endpoints = false
