@@ -36,7 +36,7 @@ module "argocd_server_iam_role" {
   service_account_namespace   = var.helm_config["namespace"]
 
   enabled                     = local.iam_role_enabled
-  context                     = module.argocd_role_label.context
+  context                     = one(module.argocd_role_label[*].context)
 }
 
 module "argocd_application_controller_iam_role" {
@@ -50,7 +50,7 @@ module "argocd_application_controller_iam_role" {
   service_account_namespace   = var.helm_config["namespace"]
 
   enabled                     = local.iam_role_enabled
-  context                     = module.argocd_role_label.context
+  context                     = one(module.argocd_role_label[*].context)
 }
 
 resource "aws_iam_role_policy_attachment" "existing_policies_to_argocd_role" {
