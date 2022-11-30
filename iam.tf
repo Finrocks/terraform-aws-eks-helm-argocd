@@ -29,8 +29,8 @@ data "aws_iam_policy_document" "merge" {
   count = local.iam_role_enabled ? 1 : 0
 
   override_policy_documents = [
-    data.aws_iam_policy_document.argocd.json,
-    data.aws_iam_policy_document.kms.json
+    one(data.aws_iam_policy_document.argocd[*].json),
+    one(data.aws_iam_policy_document.kms[*].json)
   ]
 }
 
