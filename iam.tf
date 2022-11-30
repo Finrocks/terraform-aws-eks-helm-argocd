@@ -27,8 +27,10 @@ data "aws_iam_policy_document" "kms" {
 
 module "argocd_server_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
+#  source                      = "cloudposse/eks-iam-role/aws"
+#  version                     = "1.1.0"
   source                      = "rallyware/eks-iam-role/aws"
-  version                     = "1.1.0"
+  version                     = "0.1.2"
 
   aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]    #local.iam_policy_document
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
