@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module "argocd" {
   source = "../../"
 
@@ -6,11 +5,4 @@ module "argocd" {
 
   name      = "argocd"
   namespace = "rlw"
-=======
-module "aweasome_module" {
-  source    = "../../"
-  name      = "aweasome"
-  stage     = "production"
-  namespace = "babebort"
->>>>>>> c4d88a1 (Initial commit)
 }
