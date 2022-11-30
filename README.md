@@ -55,6 +55,7 @@ locals {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | 3.4.3 |
 | <a name="requirement_utils"></a> [utils](#requirement\_utils) | >= 0.14.0 |
 
 ## Providers
@@ -63,7 +64,7 @@ locals {
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
 | <a name="provider_utils"></a> [utils](#provider\_utils) | >= 0.14.0 |
 
 ## Modules
@@ -87,7 +88,7 @@ locals {
 |------|------|
 | [aws_iam_role_policy_attachment.existing_policies_to_argocd_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [random_password.argocd_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_password.argocd_password](https://registry.terraform.io/providers/hashicorp/random/3.4.3/docs/resources/password) | resource |
 | [aws_caller_identity.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_eks_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_iam_policy_document.argocd](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
