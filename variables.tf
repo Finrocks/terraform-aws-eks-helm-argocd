@@ -9,16 +9,15 @@ variable "config" {
     eks_cluster_id     = string
     create_iam_role    = optional(bool, true)
     additional_iam_policy_document        = optional(list(string), [])
-#    additional_iam_policy_document        = optional(list(string), [data.aws_iam_policy_document.zalupka.json])
     use_sts_regional_endpoints = optional(bool, false)
   })
 
-  default = {
-    eks_cluster_id = null
-    create_iam_role = true
-    additional_iam_policy_document = []
-    use_sts_regional_endpoints = false
-  }
+#  default = {
+#    eks_cluster_id = null
+#    create_iam_role = true
+#    additional_iam_policy_document = []
+#    use_sts_regional_endpoints = false
+#  }
 
   description = <<-DOC
     eks_cluster_id
