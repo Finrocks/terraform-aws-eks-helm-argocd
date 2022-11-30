@@ -1,4 +1,5 @@
 module "label" {
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
@@ -27,6 +28,7 @@ module "argocd_kms_label" {
 }
 
 module "argocd_role_label" {
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
@@ -36,6 +38,7 @@ module "argocd_role_label" {
 }
 
 module "argocd_additional_label" {
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/label/null"
   version = "0.25.0"
 

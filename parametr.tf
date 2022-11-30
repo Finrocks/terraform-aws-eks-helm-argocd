@@ -11,7 +11,6 @@ module "argocd_kms_key" {
   context = module.argocd_kms_label[0].context
 }
 
-
 resource "random_password" "argocd_password" {
   count            = local.enabled ? 1 : 0
   length           = 20
@@ -41,29 +40,32 @@ module "argocd_parameter_store" {
   ]
 
   ignore_value_changes = true
-  kms_arn              = module.argocd_kms_key[0].alias_arn
+  kms_arn              = one(module.argocd_kms_key[*].alias_arn)
 
-  depends_on = [random_password.argocd_password]
+
   #enabled = true
   name = null
-  context = module.parameter_store_label[0].context
+  context = one(module.parameter_store_label[*].context)
+  depends_on = [random_password.argocd_password]
 }
 
 module "argocd_parameter_store_read" {
+  count = local.enabled ? 1 : 0
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
 
   parameter_read = ["/${local.eks_cluster_id}/argocd/password/encrypted"]
 
-  depends_on = [module.argocd_parameter_store]
   #enabled = true
   context    = module.this.context
+
+  depends_on = [module.argocd_parameter_store]
 }
 
 data "aws_ssm_parameter" "encrypted_password" {
+  count            = local.enabled ? 1 : 0
   name             = "/${local.eks_cluster_id}/argocd/password/encrypted"
   depends_on       = [module.argocd_parameter_store]
-  count            = local.enabled ? 1 : 0
 }
 
 ####todo: need fix when enabled = false
