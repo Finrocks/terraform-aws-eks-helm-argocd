@@ -48,6 +48,7 @@ module "argocd_parameter_store" {
   #enabled = true
   #name = null
   #context = module.parameter_store_label.context
+  name = "zaxsd"
   label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
   attributes  = ["argocd-password"]
   context     = module.this.context
