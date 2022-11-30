@@ -18,17 +18,5 @@ area/automation:
   - .github/*
   - .github/**/*
   - .mergify.yml
-area/vars:
-  - defaults/*
-  - vars/*
-  - vars/**/*
-area/tasks:
-  - handlers/*
-  - tasks/*
-  - tasks/**/*
-area/jinja:
-  - templates/*
-  - templates/**/*
-
-terraform:
+area/terraform:
   - *.tf
