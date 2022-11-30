@@ -47,9 +47,12 @@ module "argocd_parameter_store" {
 
   #enabled = true
   #name = null
-  context = module.parameter_store_label.context
-
+  #context = module.parameter_store_label.context
+  label_order = ["namespace", "environment", "stage", "tenant", "name", "attributes"]
+  attributes  = ["argocd-password"]
+  context     = module.this.context
   depends_on = [random_password.argocd_password]
+
 #  depends_on = [random_password.argocd_password]
 #  depends_on = count.index > 0 ? [random_password.argocd_password[count.index-1]] : []
 }
