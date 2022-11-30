@@ -1,12 +1,6 @@
 ---
 version: 2
 
-registries:
- spacelift:
-   type: terraform-registry
-   url: https://app.spacelift.io
-   token: ${{ secrets.SPACELIFT_TOKEN }}
-   
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -29,8 +23,6 @@ updates:
       
   - package-ecosystem: terraform
     directory: "/"
-    registries:
-     - spacelift
     schedule:
       interval: daily
     open-pull-requests-limit: 10
