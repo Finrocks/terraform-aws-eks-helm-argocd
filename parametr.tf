@@ -19,7 +19,7 @@ resource "random_password" "argocd_password" {
 }
 
 module "argocd_parameter_store" {
-  count = local.enabled ? 1 : 0
+  #count = local.enabled ? 1 : 0
 
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
@@ -44,7 +44,8 @@ module "argocd_parameter_store" {
 
 
   #enabled = true
-  name = null
+  #name = null
+  name = ""
   context = one(module.parameter_store_label[*].context)
   depends_on = [random_password.argocd_password]
 }
