@@ -133,7 +133,6 @@ locals {
 | <a name="output_argocd_password"></a> [argocd\_password](#output\_argocd\_password) | Argocd raw password |
 | <a name="output_argocd_password_encrypted"></a> [argocd\_password\_encrypted](#output\_argocd\_password\_encrypted) | Argocd encrypted password |
 | <a name="output_metadata"></a> [metadata](#output\_metadata) | Block status of the deployed ArgoCD |
-| <a name="output_server_service"></a> [server\_service](#output\_server\_service) | ArgoCD server IAM role ARN |
 | <a name="output_server_service_account_policy_id"></a> [server\_service\_account\_policy\_id](#output\_server\_service\_account\_policy\_id) | ArgoCD server IAM policy ID |
 | <a name="output_server_service_account_policy_name"></a> [server\_service\_account\_policy\_name](#output\_server\_service\_account\_policy\_name) | ArgoCD server IAM policy name |
 | <a name="output_server_service_account_role_arn"></a> [server\_service\_account\_role\_arn](#output\_server\_service\_account\_role\_arn) | ArgoCD server IAM role ARN |
