@@ -1,38 +1,36 @@
-name: Lint
+name: PR title conformance
 
 
 on:
-  workflow_dispatch:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - reopened
       - edited
       - synchronize
 
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
-  Checking:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Checking if all files end with a newline
+        uses: fernandrone/linelint@master
+        id: linelint
+        
       - name: Lint PR
         uses: aslafy-z/conventional-pr-title-action@v3
         with:
           preset: conventional-changelog-angular@^5.0.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checking if all files end with a newline
-        uses: fernandrone/linelint@master
-        id: linelint
 
       - name: Comment for PR title conformance
         if: failure()
@@ -49,6 +47,6 @@ jobs:
             * **fix**: A bug fix
             * **perf**: A code change that improves performance
             * **refactor**: A code change that neither fixes a bug nor adds a feature
-            * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-            * **test**: Adding missing tests or correcting existing tests
-            * **chore**: No production code change
+            * **dependencies**: Automated dependency updates built into GitHub
+            * **All list of possible labes you can find here**: https://github.com/Finrocks/global-infrastructure/labels
+            
