@@ -44,5 +44,5 @@ module "argocd_additional_label" {
   version = "0.25.0"
 
   tenant      = module.this.tenant  #??
-  context     = one(module.label.context)
+  context     = one(module.label[*].context)
 }
