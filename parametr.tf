@@ -19,7 +19,7 @@ resource "random_password" "argocd_password" {
 }
 
 module "argocd_parameter_store" {
-  count = local.enabled ? 1 : 0
+  #count = local.enabled ? 1 : 0
 
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
@@ -45,9 +45,11 @@ module "argocd_parameter_store" {
 
   #enabled = true
   #name = null
-  context = one(module.parameter_store_label[*].context)
+  context = module.parameter_store_label.contex
 
   depends_on = [random_password.argocd_password]
+#  depends_on = [random_password.argocd_password]
+#  depends_on = count.index > 0 ? [random_password.argocd_password[count.index-1]] : []
 }
 
 data "aws_ssm_parameter" "encrypted_password" {
