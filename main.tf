@@ -1,5 +1,4 @@
 locals {
-  namespace = "ss"
   enabled                                     = module.this.enabled
   account_id                                  = one(data.aws_caller_identity.default[*].account_id)
   eks_cluster_id                              = one(data.aws_eks_cluster.cluster[*].id)
@@ -8,14 +7,13 @@ locals {
   application_controller_service_account_name = format("%s-application-controller", var.helm_config["name"])
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
-#  iam_policy_enabled                          = local.iam_role_enabled
   additional_iam_policy_document               = sort(var.config["additional_iam_policy_document"])
 
   argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
     {
       fullname_override      = var.helm_config["name"]
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
-      role_enabled           = local.iam_role_enabled # == true ? 1 : 0 #local.iam_role_enabled   #var.config["create_iam_role"]
+      role_enabled           = local.iam_role_enabled
       controller_sa_name     = local.application_controller_service_account_name
       controller_role_arn    = local.iam_role_enabled == true ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : ""
       server_sa_name         = local.server_service_account_name
@@ -26,7 +24,6 @@ locals {
     }
   )
 }
-#one(module.argocd_server_iam_role[*].service_account_role_arn)
 
 data "aws_caller_identity" "default" {
   count = local.enabled ? 1 : 0
