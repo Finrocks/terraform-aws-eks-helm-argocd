@@ -1,8 +1,14 @@
 name: Generate terraform docs
 
+
 on:
   workflow_dispatch:
-  push:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
 
 
 concurrency:
