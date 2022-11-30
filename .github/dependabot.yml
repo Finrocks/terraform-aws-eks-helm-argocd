@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10  
-    target-branch: "dependencies-updates" 
+#    target-branch: "dependencies-updates" 
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
@@ -18,7 +18,7 @@ updates:
     schedule:
       interval: daily
     open-pull-requests-limit: 10
-    target-branch: "dependencies-updates" 
+#    target-branch: "dependencies-updates" 
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
@@ -28,7 +28,7 @@ updates:
     schedule:
       interval: daily
     open-pull-requests-limit: 10
-    target-branch: "dependencies-updates" 
+#    target-branch: "dependencies-updates" 
     labels: ["dependencies"]
     commit-message:
       prefix: "dependencies: "
