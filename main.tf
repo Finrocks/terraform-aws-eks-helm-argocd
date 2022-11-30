@@ -1,7 +1,6 @@
 locals {
   enabled                                     = module.this.enabled
   account_id                                  = one(data.aws_caller_identity.default[*].account_id)
-  namespace                                   = module.this["namespace"]
   eks_cluster_id                              = one(data.aws_eks_cluster.cluster[*].id)
   argocd_endpoint                             = one(data.aws_eks_cluster.cluster[*].endpoint)
   eks_cluster_oidc_issuer_url                 = one(data.aws_eks_cluster.cluster[*].identity[0].oidc[0].issuer)
