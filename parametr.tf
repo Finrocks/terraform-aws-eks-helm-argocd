@@ -1,5 +1,5 @@
 module "argocd_kms_key" {
-  count = local.enabled ? 1 : 0
+#  count = local.enabled ? 1 : 0
   source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
@@ -8,7 +8,8 @@ module "argocd_kms_key" {
   enable_key_rotation     = true
   alias                   = format("alias/%s/argocd", local.eks_cluster_id)
 
-  context = one(module.argocd_kms_label[*].context)
+#  context = one(module.argocd_kms_label[*].context)
+  context = module.argocd_kms_label.context
 }
 
 resource "random_password" "argocd_password" {
@@ -40,7 +41,8 @@ module "argocd_parameter_store" {
   ]
 
   ignore_value_changes = true
-  kms_arn              = one(module.argocd_kms_key[*].alias_arn)
+#  kms_arn              = one(module.argocd_kms_key[*].alias_arn)
+  kms_arn              = module.argocd_kms_key.alias_arn
 
 
   #enabled = true
