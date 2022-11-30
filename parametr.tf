@@ -49,18 +49,18 @@ module "argocd_parameter_store" {
   depends_on = [random_password.argocd_password]
 }
 
-module "argocd_parameter_store_read" {
-  count = local.enabled ? 1 : 0
-  source  = "cloudposse/ssm-parameter-store/aws"
-  version = "0.10.0"
-
-  parameter_read = ["/${local.eks_cluster_id}/argocd/password/encrypted"]
-
-  #enabled = true
-  context    = module.this.context
-
-  depends_on = [module.argocd_parameter_store]
-}
+#module "argocd_parameter_store_read" {
+#  count = local.enabled ? 1 : 0
+#  source  = "cloudposse/ssm-parameter-store/aws"
+#  version = "0.10.0"
+#
+#  parameter_read = ["/${local.eks_cluster_id}/argocd/password/encrypted"]
+#
+#  #enabled = true
+#  context    = module.this.context
+#
+#  depends_on = [module.argocd_parameter_store]
+#}
 
 data "aws_ssm_parameter" "encrypted_password" {
   count            = local.enabled ? 1 : 0

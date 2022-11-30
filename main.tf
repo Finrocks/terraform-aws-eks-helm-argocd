@@ -44,8 +44,8 @@ locals {
 #      server_role_arn        = lookup(module.argocd_server_iam_role[*], service_account_role_arn, "fallback")
       server_role_arn        = module.argocd_server_iam_role.service_account_role_arn
       argocd_url             = var.argocd_config["argocd_url"]
-      #admin_password         = data.aws_ssm_parameter.encrypted_password[0].value
-      admin_password         = module.argocd_parameter_store_read.values
+      admin_password         = one(data.aws_ssm_parameter.encrypted_password[*].value)
+      #admin_password         = module.argocd_parameter_store_read.values
     }
   )
 }
