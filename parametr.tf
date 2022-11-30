@@ -8,7 +8,7 @@ module "argocd_kms_key" {
   enable_key_rotation     = true
   alias                   = format("alias/%s/argocd", local.eks_cluster_id)
 
-  context = module.argocd_kms_label[0].context
+  context = one(module.argocd_kms_label[*].context)
 }
 
 resource "random_password" "argocd_password" {
@@ -28,13 +28,13 @@ module "argocd_parameter_store" {
     {
       name        = "/${local.eks_cluster_id}/argocd/password"
       type        = "SecureString"
-      value       = random_password.argocd_password[0].result
+      value       = one(random_password.argocd_password[*].result)
       description = "A password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
     },
     {
       name        = "/${local.eks_cluster_id}/argocd/password/encrypted"
       type        = "SecureString"
-      value       = bcrypt(random_password.argocd_password[0].result, 10)
+      value       = bcrypt(one(random_password.argocd_password[*].result), 10)
       description = "An encrypted password for accessing ArgoCD installation in ${local.eks_cluster_id} EKS cluster"
     },
   ]
@@ -47,6 +47,12 @@ module "argocd_parameter_store" {
   name = null
   context = one(module.parameter_store_label[*].context)
   depends_on = [random_password.argocd_password]
+}
+
+data "aws_ssm_parameter" "encrypted_password" {
+  count            = local.enabled ? 1 : 0
+  name             = "/${local.eks_cluster_id}/argocd/password/encrypted"
+  depends_on       = [module.argocd_parameter_store]
 }
 
 #module "argocd_parameter_store_read" {
@@ -62,11 +68,7 @@ module "argocd_parameter_store" {
 #  depends_on = [module.argocd_parameter_store]
 #}
 
-data "aws_ssm_parameter" "encrypted_password" {
-  count            = local.enabled ? 1 : 0
-  name             = "/${local.eks_cluster_id}/argocd/password/encrypted"
-  depends_on       = [module.argocd_parameter_store]
-}
+
 
 ####todo: need fix when enabled = false
 #module "argocd_additional_cluster" {
