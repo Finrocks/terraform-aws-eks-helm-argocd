@@ -1,4 +1,5 @@
 locals {
+  namespace = "ss"
   enabled                                     = module.this.enabled
   account_id                                  = one(data.aws_caller_identity.default[*].account_id)
   eks_cluster_id                              = one(data.aws_eks_cluster.cluster[*].id)
