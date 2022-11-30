@@ -19,4 +19,4 @@ area/automation:
   - .github/**/*
   - .mergify.yml
 area/terraform:
-  - *.tf
+  - .tf
