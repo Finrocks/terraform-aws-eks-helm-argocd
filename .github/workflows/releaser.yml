@@ -55,8 +55,8 @@ jobs:
           publish: true
           prerelease: false
           config-name: auto-releaser-config.yml
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: force update major tag
         run: |
