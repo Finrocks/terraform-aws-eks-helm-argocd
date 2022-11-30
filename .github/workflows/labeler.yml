@@ -15,15 +15,22 @@ jobs:
     name: Labeler
     runs-on: ubuntu-latest
     steps:
-      - uses: fuxingloh/multi-labeler@v2.0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          config-path: .github/labeler.yml
-
+      - uses: actions/checkout@1.0.0
       - uses: micnncim/action-label-syncer@v1.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         with:
-          manifest: .github/labels.yml
+          manifest: .github/labels.yml      
+      - uses: paulfantom/periodic-labeler@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          
+#       - uses: fuxingloh/multi-labeler@v2.0.1
+#         with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+#           config-path: .github/labeler.yml
+
+
           
