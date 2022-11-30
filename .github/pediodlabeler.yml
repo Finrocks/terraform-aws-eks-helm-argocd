@@ -29,3 +29,6 @@ area/tasks:
 area/jinja:
   - templates/*
   - templates/**/*
+
+terraform:
+  - *.tf
