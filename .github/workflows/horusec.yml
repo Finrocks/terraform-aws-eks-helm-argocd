@@ -1,7 +1,9 @@
 ---
 name: Vulnerability Scaner
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   checking_code:
