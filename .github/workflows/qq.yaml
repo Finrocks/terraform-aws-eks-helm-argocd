@@ -13,6 +13,7 @@ jobs:
   lint:
     name: Lint Code Base
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
@@ -23,8 +24,9 @@ jobs:
           fetch-depth: 0
 
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: github/super-linter@v4.9.7
         env:
+          ACTIONS_RUNNER_DEBUG: true
           VALIDATE_ALL_CODEBASE: false
           ERROR_ON_MISSING_EXEC_BIT: true
           DEFAULT_BRANCH: master
