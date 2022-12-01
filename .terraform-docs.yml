@@ -9,7 +9,7 @@ output:
   
   Terraform module to provision and manage postgresql resources. 
     
-  # Usage:
+  # Usage
 
   ```hcl
     locals {
@@ -31,7 +31,7 @@ output:
   <!-- BEGIN_TF_DOCS -->
   {{ .Content }}
   <!-- END_TF_DOCS --> 
-  # License:
+  # License
   The Apache-2.0 license
     
 sort:
