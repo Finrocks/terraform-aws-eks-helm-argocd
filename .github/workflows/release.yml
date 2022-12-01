@@ -42,6 +42,9 @@ jobs:
         run: ${{ steps.version.outputs.version }}       
       - name: major
         run: ${{ steps.version.outputs.major }}
+      
+      
+      - uses: release-drafter/release-drafter@v5.21.1
         with:
           publish: true
           version: ${{ steps.version.outputs.version }}
