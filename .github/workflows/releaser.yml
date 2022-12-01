@@ -7,9 +7,6 @@ on:
     tags:
       - v*.*.*
 
-
-# permissions:
-#   contents: read
   
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
@@ -43,12 +40,10 @@ jobs:
         with:
           publish: true
           version: ${{ steps.version.outputs.version }}
-#          prerelease: true
           config-name: configs/draft-release.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-
       - name: force update major tag
         run: |
           git tag v${{ steps.version.outputs.major }} ${{ steps.version.outputs.tag }} -f
