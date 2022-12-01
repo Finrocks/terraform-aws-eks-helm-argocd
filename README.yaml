@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: github-action-deploy-helmfile
+name: terraform-aws-eks-helm-argocd
 
 # Tags of this project
 tags:
@@ -18,7 +18,7 @@ tags:
 license: "APACHE2"
 
 # Canonical GitHub repo
-github_repo: cloudposse/github-action-deploy-helmfile
+github_repo: Finrocks/terraform-aws-eks-helm-argocd
 
 # Badges to display
 badges:
@@ -47,75 +47,57 @@ references:
 # How to use this project
 usage: |-
   Deploy environment
-  ```yaml
-    name: Pull Request
-    on:
-      pull_request:
-        branches: [ 'main' ]
-        types: [opened, synchronize, reopened]
-    jobs:
-      deploy:
-        runs-on: ubuntu-latest
-        environment:
-          name: preview
-          url: ${{ steps.deploy.outputs.webapp-url }}  
-        steps:
-          
-          - name: Configure AWS Credentials
-            uses: aws-actions/configure-aws-credentials@v1.7.0
-            with:
-              aws-region: us-west-2
-              role-to-assume: arn:aws:iam::111111111111:role/preview
-              role-session-name: deploy
-        
-          - name: Deploy
-            uses: cloudposse/github-action-deploy-helmfile@main
-            id: deploy
-            with:
-              aws-region: us-west-2
-              cluster: preview-eks
-              environment: preview
-              namespace: preview
-              image: nginx
-              image-tag: latest
-              operation: deploy
-              debug: false
+  ```hcl
+    locals {
+  argocd_values = templatefile("./helm-values/argocd.yaml",
+    {
+      argocd_url                      = "${var.argocd_url}"
+      admin_password                  = data.aws_ssm_parameter.encrypted_password.value
+      github_token                    = var.argocd_github_access_token
+    }
+  )
+}
+              
+    module "argocd" {
+      enabled = true
+      source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
+      #version = "0.2.0"
+      eks_cluster_id = module.eks.eks_cluster_id
+      config = {
+        create_default_iam_policy = true
+        create_default_iam_role = true
+        #iam_policy_document = data.aws_iam_policy_document.this.json
+        use_sts_regional_endpoints = true
+      }
+      helm_config = {
+        name                                     = "argocd"
+        namespace                                = local.argocd_namespace
+        repository                               = "https://argoproj.github.io/argo-helm"
+        chart                                    = "argo-cd"
+        version                                  = "5.13.8"
+        max_history                              = 10
+        create_namespace                         = true
+        dependency_update                        = true
+        wait                                     = true
+        wait_for_jobs                            = true
+        timeout                                  = 300
+        recreate_pods                            = true
+        override_values                          = local.argocd_values
+      }
+      argocd_config = {
+      }
+      context = module.argocd_label.context
+      # Uncomment on first apply
+      depends_on = [
+        time_sleep.eks_node_groups_wait
+      ]
+    }
     ```
-  Destroy environment
-  ```yaml
-    name: Pull Request
-    on:
-      pull_request:
-        branches: [ 'main' ]
-        types: [closed]
-    jobs:
-      destroy:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Configure AWS Credentials
-            uses: aws-actions/configure-aws-credentials@v1.7.0
-            with:
-              aws-region: us-west-2
-              role-to-assume: arn:aws:iam::111111111111:role/preview
-              role-session-name: destroy          
-        
-          - name: Destroy
-            uses: cloudposse/github-action-deploy-helmfile@main
-            id: destroy
-            with:
-              aws-region: us-west-2
-              cluster: preview-eks
-              environment: preview
-              namespace: preview
-              image: "<none>"
-              image-tag: "<none>"
-              operation: destroy
-              debug: false
-    ```
+
 #include:
 #  - "docs/github-action.md"
 
 # Contributors to this project
 contributors:
-  - name: "Igor Rodionov"
-    github: "goruha"
+  - name: "Oleksandr Bortnik"
+    github: "Finrocks"
