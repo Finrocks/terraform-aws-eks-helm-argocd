@@ -33,7 +33,7 @@ jobs:
          "tag=${GITHUB_REF/refs\/tags\//}"
          "version=${tag#v}"
          "major=${version%%.*}"
-          echo { "tag=${tag}"; "version=${version}"; "major=${major}"; } >> $GITHUB_OUTPUT 
+         { echo "tag=${tag}"; echo "version=${version}"; echo "major=${major}"; } >> $GITHUB_OUTPUT 
 
 #{ cmd1; cmd2; } >> file
 
