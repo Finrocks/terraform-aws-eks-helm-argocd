@@ -33,3 +33,4 @@ jobs:
         git-push: "true"
         output-file: README.md
         config-file: ".terraform-docs.yml"
+
