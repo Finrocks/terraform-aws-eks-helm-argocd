@@ -30,9 +30,9 @@ jobs:
       - name: version
         id: version
         run: |                  
-         "tag=${GITHUB_REF/refs\/tags\//}"
-         "version=${tag#v}"
-         "major=${version%%.*}"
+          tag=${GITHUB_REF/refs\/tags\//}
+          version=${tag#v}
+          major=${version%%.*}
           printf "tag=${tag}\nversion=${version}\nmajor=${major}\n" >> $GITHUB_OUTPUT 
 
 
