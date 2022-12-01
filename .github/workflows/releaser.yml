@@ -44,7 +44,7 @@ jobs:
           publish: true
           version: ${{ steps.version.outputs.version }}
 #          prerelease: true
-          config-name: auto-releaser-config.yml
+          config-name: configs/draft-release.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
