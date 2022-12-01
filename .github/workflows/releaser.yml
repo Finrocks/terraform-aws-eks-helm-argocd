@@ -34,8 +34,8 @@ jobs:
           major=${version%%.*}
           {
             echo "tag=${tag}";
-            echo "version=${version}"
-            echo "major=${major}"
+            echo "version=${version}";
+            echo "major=${major}";
           } >> $GITHUB_OUTPUT
 
                   
