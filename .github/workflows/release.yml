@@ -37,7 +37,7 @@ jobs:
 
 
 
-#{ cmd1; cmd2; } >> file
+##{ cmd1; cmd2; } >> file
 #       - name: version
 #         id: version
 #         run: |                  
