@@ -4,3 +4,6 @@ author: babebort@gmail.com
 branding:
   icon: 'file-text'
   color: 'white'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
