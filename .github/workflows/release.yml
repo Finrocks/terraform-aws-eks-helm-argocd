@@ -29,37 +29,12 @@ jobs:
 
       - name: version
         id: version
+        shell: bash
         run: |                  
           tag=${GITHUB_REF/refs\/tags\//}
           version=${tag#v}
           major=${version%%.*}
-          printf "tag=${tag}\nversion=${version}\nmajor=${major}\n" >> $GITHUB_OUTPUT 
-
-
-
-##{ cmd1; cmd2; } >> file
-#       - name: version
-#         id: version
-#         run: |                  
-#          "tag=${GITHUB_REF/refs\/tags\//}"
-#          "version=${tag#v}"
-#          "major=${version%%.*}"
-#          {  echo "tag=${tag}";
-#             echo "version=${version}";
-#             echo "major=${major}";
-#          } >> $GITHUB_OUTPUT        
-          
-          
-          
-#       - name: version
-#         id: version
-#         run: |                  
-#          tag=${GITHUB_REF/refs\/tags\//}
-#          version=${tag#v}
-#          major=${version%%.*}
-#          echo "tag=${tag}" >> $GITHUB_OUTPUT
-#          echo "version=${version}" >> $GITHUB_OUTPUT
-#          echo "major=${major}" >> $GITHUB_OUTPUT          
+          printf 'tag=%s\nversion=%s\nmajor=%s' "$tag" "$version" "$major" >> $GITHUB_OUTPUT         
           
       - uses: release-drafter/release-drafter@v5.21.1
         with:
