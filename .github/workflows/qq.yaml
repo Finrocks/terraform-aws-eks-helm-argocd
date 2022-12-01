@@ -14,19 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: ${{ always() }}
-        with:
-          api_key: 6fe80c67-1bf0-4e6e-af76-0928bdc1ac7d
-        
-      - name: Analyze Test and/or Coverage Results
-        uses: runforesight/foresight-test-kit-action@v1
-        if: ${{ always() }}
-        with:
-          api_key: 6fe80c67-1bf0-4e6e-af76-0928bdc1ac7d
-          test_format: JUNIT
-          test_framework: JEST
-          test_path: <test_results_path_optional>
-          coverage_format: GOLANG
-          coverage_path: <coverage_results_path_optional>  
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          # Change to 'master' if your main branch differs
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
