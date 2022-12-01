@@ -26,7 +26,7 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v4.9.7
         env:
-          ACTIONS_RUNNER_DEBUG: true
+          ACTIONS_RUNNER_DEBUG: false
           VALIDATE_ALL_CODEBASE: false
           ERROR_ON_MISSING_EXEC_BIT: true
           DEFAULT_BRANCH: master
