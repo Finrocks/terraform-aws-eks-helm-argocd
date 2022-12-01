@@ -8,16 +8,6 @@ on:
     branches:
       - master
   pull_request_target:
-    types: [opened, reopened, synchronize]      name: Release Drafter
-
-
-on:
-  workflow_dispatch:
-  push:
-    # branches to consider in the event; optional, defaults to all
-    branches:
-      - master
-  pull_request_target:
     types: [opened, reopened, synchronize]      
   pull_request:
 
@@ -39,55 +29,6 @@ jobs:
           
       - uses: release-drafter/release-drafter@v5.21.1
         with:
-          config-name: configs/draft-release.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-  pull_request:
-
-
-permissions:
-  contents: read
-  
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
-  cancel-in-progress: true
-
-jobs:
-  update_release_draft:
-    permissions:
-      # write permission is required to create a github release
-      contents: write
-      # write permission is required for autolabeler
-      # otherwise, read permission is required at least
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0
-
-#       - name: Setup Node
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: '16'
-        
-#       - name: version
-#         id: version
-#         run: |
-#           tag=${GITHUB_REF/refs\/tags\//}
-#           version=${tag#v}
-#           major=${version%%.*}
-#           echo "tag=${tag}" >> $GITHUB_OUTPUT
-#           echo "version=${version}" >> $GITHUB_OUTPUT
-#           echo "major=${major}" >> $GITHUB_OUTPUT
-          
-      - uses: release-drafter/release-drafter@v5.21.1
-        with:
- #         publish: true
- #         version: ${{ steps.version.outputs.version }}
- #         prerelease: true
           config-name: configs/draft-release.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
