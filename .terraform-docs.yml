@@ -27,7 +27,7 @@ output:
       source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
       ....
     }
-  ```
+    ```
   <!-- BEGIN_TF_DOCS -->
   {{ .Content }}
   <!-- END_TF_DOCS --> 
