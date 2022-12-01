@@ -36,13 +36,8 @@ jobs:
           major=${version%%.*}
           printf 'tag=%s\nversion=%s\nmajor=%s' "$tag" "$version" "$major" >> $GITHUB_OUTPUT         
           
-      - name: tag
-        run: echo ${{ steps.version.outputs.tag }}
-      - name: version
-        run: echo  ${{ steps.version.outputs.version }}       
-      - name: major
-        run: echo ${{ steps.version.outputs.major }}
-      
+      - name: TEST_VAR
+        run: echo "tag=${{ steps.version.outputs.tag }} version==${{ steps.version.outputs.version }} major=${{ steps.version.outputs.major }}"
       
       - uses: release-drafter/release-drafter@v5.21.1
         with:
