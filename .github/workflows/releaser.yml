@@ -32,9 +32,19 @@ jobs:
           tag=${GITHUB_REF/refs\/tags\//}
           version=${tag#v}
           major=${version%%.*}
-          echo "tag=${tag}" >> $GITHUB_OUTPUT
-          echo "version=${version}" >> $GITHUB_OUTPUT
-          echo "major=${major}" >> $GITHUB_OUTPUT
+          {
+            echo "tag=${tag}";
+            echo "version=${version}"
+            echo "major=${major}"
+          } >> $GITHUB_OUTPUT
+
+                  
+#          tag=${GITHUB_REF/refs\/tags\//}
+#          version=${tag#v}
+#          major=${version%%.*}
+#          echo "tag=${tag}" >> $GITHUB_OUTPUT
+#          echo "version=${version}" >> $GITHUB_OUTPUT
+#          echo "major=${major}" >> $GITHUB_OUTPUT          
           
       - uses: release-drafter/release-drafter@v5.21.1
         with:
