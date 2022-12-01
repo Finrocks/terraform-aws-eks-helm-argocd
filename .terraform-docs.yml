@@ -27,6 +27,11 @@ output:
         ....
       }
     ```
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS --> 
+    ## License
+    The Apache-2.0 license
     
 sort:
   enabled: true
