@@ -5,34 +5,34 @@ output:
   file: README.md
   mode: replace
   template: |-
-    # terraform-postgresql-bootstrap
+  # terraform-postgresql-bootstrap
+  
+  Terraform module to provision and manage postgresql resources. 
     
-    Terraform module to provision and manage postgresql resources. 
-    
-    ## Usage
+  # Usage
 
-    ```hcl
-      locals {
-        argocd_values = templatefile("./helm-values/argocd.yaml",
-          {
-            argocd_url                      = "${var.argocd_url}"
-            admin_password                  = data.aws_ssm_parameter.encrypted_password.value
-            github_token                    = var.argocd_github_access_token
-          }
-        )
-      }
+  ```hcl
+    locals {
+      argocd_values = templatefile("./helm-values/argocd.yaml",
+        {
+          argocd_url                      = "${var.argocd_url}"
+          admin_password                  = data.aws_ssm_parameter.encrypted_password.value
+          github_token                    = var.argocd_github_access_token
+        }
+      )
+    }
               
-      module "argocd" {
-        enabled = true
-        source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
-        ....
-      }
-    ```
-    <!-- BEGIN_TF_DOCS -->
-    {{ .Content }}
-    <!-- END_TF_DOCS --> 
-    ## License
-    The Apache-2.0 license
+    module "argocd" {
+      enabled = true
+      source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
+      ....
+    }
+  ```
+  <!-- BEGIN_TF_DOCS -->
+  {{ .Content }}
+  <!-- END_TF_DOCS --> 
+  ## License
+  The Apache-2.0 license
     
 sort:
   enabled: true
