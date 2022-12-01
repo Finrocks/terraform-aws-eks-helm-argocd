@@ -9,7 +9,7 @@ output:
   
   Terraform module to provision and manage postgresql resources. 
     
-  # Usage
+  # Usage:
 
   ```hcl
     locals {
