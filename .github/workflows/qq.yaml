@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   lint:
+    name: Lint Code Base
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +21,7 @@ jobs:
           # Full git history is needed to get a proper
           # list of changed files within `super-linter`
           fetch-depth: 0
-    
+
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
@@ -28,4 +29,3 @@ jobs:
           # Change to 'master' if your main branch differs
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
