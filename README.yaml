@@ -21,18 +21,18 @@ license: "APACHE2"
 github_repo: Finrocks/terraform-aws-eks-helm-argocd
 
 # Badges to display
-badges:
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/github-action-deploy-helmfile.svg"
-    url: "https://github.com/cloudposse/github-action-deploy-helmfile/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
+# badges:
+#   - name: "Latest Release"
+#     image: "https://img.shields.io/github/release/cloudposse/github-action-deploy-helmfile.svg"
+#     url: "https://github.com/cloudposse/github-action-deploy-helmfile/releases/latest"
+#   - name: "Slack Community"
+#     image: "https://slack.cloudposse.com/badge.svg"
+#     url: "https://slack.cloudposse.com"
 
 related: []
 
 # Short description of this project
-description: Deploy on Kubernetes with HelmFile
+description: descriptiondescriptiondescription
 
 introduction: |-
   Deploy on Kubernetes with HelmFile. 
