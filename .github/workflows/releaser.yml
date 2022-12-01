@@ -25,20 +25,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-        
+
       - name: version
         id: version
-        run: |
-          tag=${GITHUB_REF/refs\/tags\//}
-          version=${tag#v}
-          major=${version%%.*}
-          {
-            echo "tag=${tag}";
+        run: |                  
+         tag=${GITHUB_REF/refs\/tags\//}
+         version=${tag#v}
+         major=${version%%.*}
+         {  echo "tag=${tag}";
             echo "version=${version}";
             echo "major=${major}";
-          } >> $GITHUB_OUTPUT
-
-                  
+         } >> $GITHUB_OUTPUT        
+          
+          
+          
+#       - name: version
+#         id: version
+#         run: |                  
 #          tag=${GITHUB_REF/refs\/tags\//}
 #          version=${tag#v}
 #          major=${version%%.*}
