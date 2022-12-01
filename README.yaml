@@ -112,8 +112,8 @@ usage: |-
               operation: destroy
               debug: false
     ```
-include:
-  - "docs/github-action.md"
+#include:
+#  - "docs/github-action.md"
 
 # Contributors to this project
 contributors:
