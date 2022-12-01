@@ -35,8 +35,9 @@ jobs:
          "major=${version%%.*}"
          { echo "tag=${tag}"; echo "version=${version}"; echo "major=${major}"; } >> $GITHUB_OUTPUT 
 
-#{ cmd1; cmd2; } >> file
 
+
+#{ cmd1; cmd2; } >> file
 #       - name: version
 #         id: version
 #         run: |                  
