@@ -1,4 +1,5 @@
-name: Super Code Liner
+---
+name: Super Code Linter
 
 
 on:
@@ -12,7 +13,7 @@ concurrency:
 
 jobs:
   lint:
-    name: Super Code Liner
+    name: Super Code Linter
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -20,8 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          # Full git history is needed to get a proper
-          # list of changed files within `super-linter`
           fetch-depth: 0
 
       - name: Lint Code Base
