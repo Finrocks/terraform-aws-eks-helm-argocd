@@ -37,11 +37,11 @@ jobs:
           printf 'tag=%s\nversion=%s\nmajor=%s' "$tag" "$version" "$major" >> $GITHUB_OUTPUT         
           
       - name: tag
-        run: ${{ steps.version.outputs.tag }}
+        run: echo ${{ steps.version.outputs.tag }}
       - name: version
-        run: ${{ steps.version.outputs.version }}       
+        run: echo  ${{ steps.version.outputs.version }}       
       - name: major
-        run: ${{ steps.version.outputs.major }}
+        run: echo ${{ steps.version.outputs.major }}
       
       
       - uses: release-drafter/release-drafter@v5.21.1
