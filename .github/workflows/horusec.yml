@@ -14,5 +14,5 @@ jobs:
         id: run_horusec
         uses: fike/horusec-action@v0.2.2
         with:
-          arguments: --config-file-path=.github/configs/horusec-config.json
+          arguments: --config-file-path .github/configs/horusec-config.json
           
