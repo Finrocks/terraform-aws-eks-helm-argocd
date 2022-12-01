@@ -1,3 +1,5 @@
+.build-harness
+build-harness
 .idea
 # Local .terraform directories
 **/.terraform/*
