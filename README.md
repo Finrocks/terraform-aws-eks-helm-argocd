@@ -10,40 +10,51 @@ locals {
   )
 }
               
-    module "argocd" {
-      enabled = true
-      source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git"
-      #version = "0.2.0"
-      eks_cluster_id = module.eks.eks_cluster_id
-      config = {
-        create_default_iam_policy = true
-        create_default_iam_role = true
-        #iam_policy_document = data.aws_iam_policy_document.this.json
-        use_sts_regional_endpoints = true
-      }
-      helm_config = {
-        name                                     = "argocd"
-        namespace                                = local.argocd_namespace
-        repository                               = "https://argoproj.github.io/argo-helm"
-        chart                                    = "argo-cd"
-        version                                  = "5.13.8"
-        max_history                              = 10
-        create_namespace                         = true
-        dependency_update                        = true
-        wait                                     = true
-        wait_for_jobs                            = true
-        timeout                                  = 300
-        recreate_pods                            = true
-        override_values                          = local.argocd_values
-      }
-      argocd_config = {
-      }
-      context = module.argocd_label.context
-      # Uncomment on first apply
-      depends_on = [
-        time_sleep.eks_node_groups_wait
-      ]
-    }
+module "argocd" {
+  enabled = true
+  source  = "git::git@github.com:Finrocks/terraform-aws-eks-helm-argocd.git?ref=pre-release"
+
+  config = {
+    eks_cluster_id             = module.eks.eks_cluster_id
+    create_iam_role            = true
+    use_sts_regional_endpoints = true
+  }
+
+  argocd_config = {
+    argocd_url = var.argocd_url #doesnt work
+    setup_admin_password = true
+    create_additional_project      = false
+    create_additional_cluster      = false
+    argocd_additional_project_name = null
+    argocd_additional_cluster_name = null
+    #    argocd_namespace               = local.argocd_namespace
+    #    create_ingress                 = true
+    #    argocd_ingress_host            = var.argocd_url
+  }
+
+  helm_config = {
+    name              = "argocd"
+    namespace         = local.argocd_namespace
+    repository        = "https://argoproj.github.io/argo-helm"
+    chart             = "argo-cd"
+    version           = "5.16.1"
+    max_history       = 10
+    create_namespace  = true
+    dependency_update = true
+    wait              = true
+    wait_for_jobs     = true
+    timeout           = 300
+    recreate_pods     = true
+    ####todo: need check whatever nonsensitive doesnt work
+    #override_values                          = nonsensitive(local.argocd_values)
+    override_values = local.argocd_values
+  }
+
+  context = module.argocd_label.context
+
+  # Uncomment on first apply
+  depends_on = [time_sleep.eks_node_groups_wait]
+}
 ```
     
 
