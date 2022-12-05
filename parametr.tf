@@ -20,7 +20,7 @@ resource "random_password" "argocd_password" {
 }
 
 module "argocd_parameter_store" {
-  count = local.enabled && var.argocd_config["setup_admin_password"] == true ? 1 : 0
+  count = local.enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
 
