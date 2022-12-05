@@ -25,14 +25,14 @@ data "aws_iam_policy_document" "kms" {
   }
 }
 
-data "aws_iam_policy_document" "merge" {
-  count = local.iam_role_enabled ? 1 : 0
-
-  override_policy_documents = [
-    one(data.aws_iam_policy_document.argocd[*].json),
-    one(data.aws_iam_policy_document.kms[*].json)
-  ]
-}
+#data "aws_iam_policy_document" "merge" {
+#  count = local.iam_role_enabled ? 1 : 0
+#
+#  override_policy_documents = [
+#    one(data.aws_iam_policy_document.argocd[*].json),
+#    one(data.aws_iam_policy_document.kms[*].json)
+#  ]
+#}
 
 module "argocd_server_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
