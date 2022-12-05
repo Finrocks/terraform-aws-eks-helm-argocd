@@ -1,25 +1,14 @@
-formatter: markdown
-
-output:
-  file: README.md
-  mode: replace
-  template: |-
-  
-    # Some name
-    A terraform module to bootstrap apps on AWS EKS using ArgoCD.
-
-    ## Usage
-
-    ```hcl
-    locals {
-      argocd_values = templatefile("./helm-values/argocd.yaml",
-        {
-          argocd_url                      = "${var.argocd_url}"
-          admin_password                  = data.aws_ssm_parameter.encrypted_password.value
-          github_token                    = var.argocd_github_access_token
-        }
-      )
+## Usage
+```hcl
+locals {
+  argocd_values = templatefile("./helm-values/argocd.yaml",
+    {
+      argocd_url                      = "${var.argocd_url}"
+      admin_password                  = data.aws_ssm_parameter.encrypted_password.value
+      github_token                    = var.argocd_github_access_token
     }
+  )
+}
               
     module "argocd" {
       enabled = true
@@ -55,9 +44,10 @@ output:
         time_sleep.eks_node_groups_wait
       ]
     }
-    ```
+```
+    
 
-    <!-- BEGIN_TF_DOCS -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
