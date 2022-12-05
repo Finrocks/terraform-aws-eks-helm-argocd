@@ -17,8 +17,8 @@ rules:
 
     # will be ignored only by this rule
     ignore:
-      - README.md
-      - examples/basic/README.md
+    #  - README.md
+    #  - examples/basic/README.md
       
 
     # if true also checks if file ends in a single newline character
