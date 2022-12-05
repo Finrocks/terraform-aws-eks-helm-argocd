@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "argocd" {
 }
 
 data "aws_iam_policy_document" "kms" {
-  count = local.iam_role_enabled ? 1 : 0
+  count = local.iam_role_enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
   statement {
     effect = "Allow"
 
