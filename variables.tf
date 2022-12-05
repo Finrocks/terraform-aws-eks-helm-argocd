@@ -46,10 +46,10 @@ variable "argocd_config" {
       Define whatever create additional cluster or not.
 
     `argocd_additional_project`:
-      Name of the project, requires `create_additional_project_name = true`.
+      Name of the project, requires create_additional_project_name = true.
 
     `argocd_additional_cluster`:
-      Name of the cluster, requires `create_additional_project_name = true`.
+      Name of the cluster, requires create_additional_project_name = true.
   DOC
 }
 
