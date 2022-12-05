@@ -56,7 +56,7 @@ module "argocd" {
   depends_on = [time_sleep.eks_node_groups_wait]
 }
 ```
-    
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -147,7 +147,7 @@ module "argocd" {
 | <a name="output_server_service_account_policy_id"></a> [server\_service\_account\_policy\_id](#output\_server\_service\_account\_policy\_id) | ArgoCD server IAM policy ID |
 | <a name="output_server_service_account_policy_name"></a> [server\_service\_account\_policy\_name](#output\_server\_service\_account\_policy\_name) | ArgoCD server IAM policy name |
 | <a name="output_server_service_account_role_arn"></a> [server\_service\_account\_role\_arn](#output\_server\_service\_account\_role\_arn) | ArgoCD server IAM role ARN |
-<!-- END_TF_DOCS --> 
+<!-- END_TF_DOCS -->
 
     ## License
     The Apache-2.0 license
