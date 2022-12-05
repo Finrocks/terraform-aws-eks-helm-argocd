@@ -1,8 +1,3 @@
-#variable "eks_cluster_id" {
-#  type        = string
-#  description = "EKS cluster ID"
-#}
-
 #####todo: fix postrender variable
 variable "config" {
   type = object({
@@ -13,13 +8,16 @@ variable "config" {
   })
 
   description = <<-DOC
-    eks_cluster_id
+    `eks_cluster_id`:
       The name of the EKS cluster to install.
-    create_iam_role:
+
+    `create_iam_role`:
       Defines whether to create default IAM role and attach it to argocd application controller and server.
-    additional_iam_policy_document:
+
+    `additional_iam_policy_document`:
       List of policy ARNs which will be additional attached to created IAM role.
-    use_sts_regional_endpoints:
+
+    `use_sts_regional_endpoints`:
       Whether to create use STS regional endpoints.
   DOC
 }
@@ -36,19 +34,22 @@ variable "argocd_config" {
 
   description = <<-DOC
     `argocd_url`:
-      Argocd url for ingress
+      Argocd url for ingress.
 
     `setup_admin_password`:
       Define whatever setup [configs.secret.argocdServerAdminPassword](https://artifacthub.io/packages/helm/argo/argo-cd#argo-cd-configs). Generated password take a look at [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html).
 
     `create_additional_project`:
       Define whatever create additional project or not.
-    create_additional_cluster:
+
+    `create_additional_cluster`:
       Define whatever create additional cluster or not.
-    argocd_additional_project:
-      Name of the project, requires `create_additional_project_name = true` .
-    argocd_additional_cluster:
-      Name of the cluster, requires `create_additional_project_name = true`
+
+    `argocd_additional_project`:
+      Name of the project, requires `create_additional_project_name = true`.
+
+    `argocd_additional_cluster`:
+      Name of the cluster, requires `create_additional_project_name = true`.
   DOC
 }
 
