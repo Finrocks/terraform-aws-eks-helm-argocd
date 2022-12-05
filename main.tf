@@ -39,7 +39,7 @@ data "utils_deep_merge_yaml" "default" {
   count = local.enabled ? 1 : 0
 
   input = [
-    sensitive(local.argocd_helm_values),
-    var.helm_config["override_values"]
+    local.argocd_helm_values,
+    sensitive(var.helm_config["override_values"])
   ]
 }
