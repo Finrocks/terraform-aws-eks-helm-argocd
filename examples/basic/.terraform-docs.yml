@@ -7,9 +7,7 @@ output:
   
     # Some name
     A terraform module to bootstrap apps on AWS EKS using ArgoCD.
-
     ## Usage
-
     ```hcl
     locals {
       argocd_values = templatefile("./helm-values/argocd.yaml",
@@ -56,14 +54,11 @@ output:
       ]
     }
     ```
-
     <!-- BEGIN_TF_DOCS -->
     {{ .Content }}
     <!-- END_TF_DOCS --> 
-
     ## License
     The Apache-2.0 license
-
 sort:
   enabled: true
   by: required
@@ -81,3 +76,4 @@ settings:
   required: true
   sensitive: true
   type: true
+  
