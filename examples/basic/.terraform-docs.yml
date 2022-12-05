@@ -4,6 +4,26 @@ output:
   file: README.md
   mode: replace
   template: |-
+  
+    # Some name
+    A terraform module to bootstrap apps on AWS EKS using ArgoCD.
+
+    ## Usage
+
+    ```hcl
+    module "apps" {
+      source              = "git::https://github.com/rallyware/terraform-argocd-aws-eks-cluster-bootstrap.git?ref=master"
+      argocd_iam_role_arn = "argocd-role-arn"
+      eks_cluster_id      = "staging-cluster"
+
+      argocd_additional_projects = [
+        {
+          name = "test"
+        }
+      ]
+    }
+    ```
+
     <!-- BEGIN_TF_DOCS -->
     {{ .Content }}
     <!-- END_TF_DOCS --> 
@@ -28,3 +48,4 @@ settings:
   required: true
   sensitive: true
   type: true
+  
