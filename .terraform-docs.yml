@@ -8,7 +8,7 @@ output:
     # Some name
     A terraform module to bootstrap apps on AWS EKS using ArgoCD.
 
-    ## Usage
+    # Usage
 
     ```hcl
     locals {
