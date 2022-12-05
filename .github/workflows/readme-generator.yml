@@ -28,7 +28,7 @@ jobs:
         uses: terraform-docs/gh-actions@v1.0.0
         with:
           working-dir: .
-          git-push: "false"
+          git-push: true
           output-file: README.md
           config-file: ".terraform-docs.yml"
 
@@ -36,6 +36,6 @@ jobs:
         uses: terraform-docs/gh-actions@v1.0.0
         with:
           working-dir: ./examples/basic/
-          git-push: "true"
+          git-push: true
           output-file: README.md
           config-file: ".terraform-docs.yml"
