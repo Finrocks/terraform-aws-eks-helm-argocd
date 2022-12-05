@@ -1,6 +1,6 @@
 output "argocd_password" {
 #  value = length(one(random_password.argocd_password[*].result)) > 0 ? nonsensitive(one(random_password.argocd_password[*].result)) : one(random_password.argocd_password[*].result)
-  value = try(nonsensitive(one(random_password.argocd_password[*].result)))
+  value = try(nonsensitive(one(random_password.argocd_password[*].result)), null)
 #  value = nonsensitive(random_password.argocd_password.result)
   description = "Argocd raw password"
 }
