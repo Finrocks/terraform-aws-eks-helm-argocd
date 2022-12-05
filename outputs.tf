@@ -5,7 +5,9 @@ output "argocd_password" {
 }
 output "argocd_password_encrypted" {
 #  value = bcrypt(random_password.argocd_password[0].result, 10)
-  value = nonsensitive(bcrypt(one(random_password.argocd_password[*].result), 10))
+#  coalesce(var.foo_coalesce, "HelloWorld")
+#  value = nonsensitive(bcrypt(one(random_password.argocd_password[*].result), 10))
+  value = coalesce(nonsensitive(bcrypt(one(random_password.argocd_password[*].result), 10)), "")
   description = "Argocd encrypted password"
 }
 
