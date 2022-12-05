@@ -37,9 +37,11 @@ variable "argocd_config" {
   description = <<-DOC
     `argocd_url`:
       Argocd url for ingress
-    setup_admin_password
+
+    `setup_admin_password`:
       Define whatever setup [configs.secret.argocdServerAdminPassword](https://artifacthub.io/packages/helm/argo/argo-cd#argo-cd-configs). Generated password take a look at [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html).
-    create_additional_project:
+
+    `create_additional_project`:
       Define whatever create additional project or not.
     create_additional_cluster:
       Define whatever create additional cluster or not.
