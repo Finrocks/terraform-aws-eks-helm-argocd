@@ -7,9 +7,7 @@ on:
   push:
     # branches to consider in the event; optional, defaults to all
     branches:
-      - master
-  pull_request_target:
-    types: [opened, reopened, synchronize]      
+      - master 
   pull_request:
 
 
