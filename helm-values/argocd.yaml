@@ -28,5 +28,3 @@ configs:
     %{ if setup_admin_password }
     argocdServerAdminPassword: "${admin_password}"
     %{ endif }
-
-    
