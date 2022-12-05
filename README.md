@@ -1,4 +1,4 @@
-## Usage
+# Usage
 ```hcl
 locals {
   argocd_values = templatefile("./helm-values/argocd.yaml",
