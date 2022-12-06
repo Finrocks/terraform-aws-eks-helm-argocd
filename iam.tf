@@ -27,7 +27,6 @@ data "aws_iam_policy_document" "assumerrr" {
     actions = ["sts:AssumeRole"]
     effect = "Allow"
     resources = ["*"]
-    sid = "ArgocdParameterDecryptor"
   }
 }
 
