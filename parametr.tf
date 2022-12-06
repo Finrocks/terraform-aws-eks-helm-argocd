@@ -70,14 +70,15 @@ resource "argocd_cluster" "additional_cluster" {
   name   = local.eks_cluster_id
 
   config {
-    aws_auth_config {
-      cluster_name = local.eks_cluster_id
-      role_arn     = one(module.argocd_server_iam_role[*].service_account_role_arn)
-#      role_arn     = one(module.argocd_application_controller_iam_role[*].service_account_role_arn)
-    }
+#    aws_auth_config {
+#      cluster_name = local.eks_cluster_id
+#      role_arn     = one(module.argocd_server_iam_role[*].service_account_role_arn)
+##      role_arn     = one(module.argocd_application_controller_iam_role[*].service_account_role_arn)
+#    }
 
     tls_client_config {
       ca_data = local.ca_data
+      insecure = false
     }
   }
 }
