@@ -5,7 +5,7 @@ data "aws_iam_policy_document" "argocd" {
     actions = ["sts:AssumeRole"]
     effect = "Allow"
     resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer"]
-    sid = "argocd-deployer"
+    sid = "ArgocdDeployer"
   }
 }
 
@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "kms" {
     actions = ["kms:Decrypt"]
     effect = "Allow"
     resources = [one(module.argocd_kms_key[*].key_arn)]
-    sid = "argocd-parameter-decryptor"
+    sid = "ArgocdParameterDecryptor"
   }
 }
 
