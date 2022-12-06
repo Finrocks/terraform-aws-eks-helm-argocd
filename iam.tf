@@ -54,10 +54,13 @@ module "argocd_server_iam_role" {
 
 module "argocd_application_controller_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
-  source                      = "cloudposse/eks-iam-role/aws"
-  version                     = "1.1.0"
+#  source                      = "cloudposse/eks-iam-role/aws"
+#  version                     = "1.1.0"
+  source  = "rallyware/eks-iam-role/aws"
+  version = "0.1.2"
 
-  aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]
+  aws_iam_policy_document     = one(data.aws_iam_policy_document.argocd[*].json)
+#  aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.application_controller_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
