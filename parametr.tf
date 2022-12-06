@@ -1,5 +1,5 @@
 module "argocd_kms_key" {
-  count = local.enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
+  count = local.admin_password_enabled ? 1 : 0
   source  = "cloudposse/kms-key/aws"
   version = "0.12.1"
 
@@ -12,7 +12,7 @@ module "argocd_kms_key" {
 }
 
 resource "random_password" "argocd_password" {
-  count = local.enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
+  count = local.admin_password_enabled ? 1 : 0
 
   length           = 20
   special          = true
@@ -20,7 +20,7 @@ resource "random_password" "argocd_password" {
 }
 
 module "argocd_parameter_store" {
-  count = local.enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
+  count = local.admin_password_enabled ? 1 : 0
   source  = "cloudposse/ssm-parameter-store/aws"
   version = "0.10.0"
 
@@ -57,7 +57,7 @@ module "argocd_parameter_store" {
 }
 
 data "aws_ssm_parameter" "encrypted_password" {
-  count = local.enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
+  count = local.admin_password_enabled ? 1 : 0
 
   name             = "/${local.eks_cluster_id}/argocd/password/encrypted"
   depends_on       = [module.argocd_parameter_store]

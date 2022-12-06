@@ -1,7 +1,3 @@
-locals {
-  additional_iam_policy_document               = sort(var.config["additional_iam_policy_document"])
-}
-
 data "aws_iam_policy_document" "argocd" {
   count = local.iam_role_enabled ? 1 : 0
 
