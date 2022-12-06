@@ -28,6 +28,12 @@ locals {
   )
 }
 
+data "aws_eks_cluster" "cluster" {
+  count = local.enabled ? 1 : 0
+
+  name = var.config["eks_cluster_id"]
+}
+
 data "aws_eks_cluster_auth" "cluster" {
   count = local.enabled ? 1 : 0
 
@@ -36,12 +42,6 @@ data "aws_eks_cluster_auth" "cluster" {
 
 data "aws_caller_identity" "default" {
   count = local.enabled ? 1 : 0
-}
-
-data "aws_eks_cluster" "cluster" {
-  count = local.enabled ? 1 : 0
-
-  name = var.config["eks_cluster_id"]
 }
 
 data "utils_deep_merge_yaml" "default" {
