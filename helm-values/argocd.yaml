@@ -25,6 +25,6 @@ server:
 
 configs:
   secret:
-    %{{ if $local.setup_admin_password_enabled  }}
+    %{{ if $adminpw  }}
     argocdServerAdminPassword: "${admin_password}"
     %{{ endif }}
