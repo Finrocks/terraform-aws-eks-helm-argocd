@@ -19,7 +19,7 @@ locals {
       server_sa_name         = local.server_service_account_name
       server_role_arn        = local.iam_role_enabled == true ? try(one(module.argocd_server_iam_role[*].service_account_role_arn), "qwe") : "qwee"
       argocd_url             = var.argocd_config["argocd_url"]
-      admin_password         = local.enabled && var.argocd_config["setup_admin_password"] ? one(data.aws_ssm_parameter.encrypted_password[*].value: null
+      admin_password         = local.enabled && var.argocd_config["setup_admin_password"] ? one(data.aws_ssm_parameter.encrypted_password[*].value) : null
     }
   )
 }
