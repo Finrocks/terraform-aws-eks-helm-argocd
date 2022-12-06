@@ -25,21 +25,16 @@ data "aws_iam_policy_document" "merge" {
 
   override_policy_documents = [
     one(data.aws_iam_policy_document.argocd[*].json),
-#    local.iam_role_enabled && var.argocd_config["setup_admin_password"] ? one(data.aws_iam_policy_document.kms[*].json) : ""
     length(data.aws_iam_policy_document.kms[*].json) > 0 ? one(data.aws_iam_policy_document.kms[*].json) : ""
   ]
 }
 
 module "argocd_server_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
-#  source                      = "cloudposse/eks-iam-role/aws"
-#  version                     = "1.1.0"
   source                      = "rallyware/eks-iam-role/aws"
   version                     = "0.1.2"
 
   aws_iam_policy_document     = one(data.aws_iam_policy_document.merge[*].json)
-#  aws_iam_policy_document     = one(data.aws_iam_policy_document.argocd[*].json)
-#  aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.server_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
@@ -50,13 +45,10 @@ module "argocd_server_iam_role" {
 
 module "argocd_application_controller_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
-#  source                      = "cloudposse/eks-iam-role/aws"
-#  version                     = "1.1.0"
   source                      = "rallyware/eks-iam-role/aws"
   version                     = "0.1.2"
 
-  aws_iam_policy_document     = one(data.aws_iam_policy_document.argocd[*].json)
-#  aws_iam_policy_document     = [one(data.aws_iam_policy_document.argocd[*].json), one(data.aws_iam_policy_document.kms[*].json)]
+  aws_iam_policy_document     = one(data.aws_iam_policy_document.merge[*].json)
   eks_cluster_oidc_issuer_url = local.eks_cluster_oidc_issuer_url
   service_account_name        = local.application_controller_service_account_name
   service_account_namespace   = var.helm_config["namespace"]
