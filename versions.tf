@@ -46,7 +46,7 @@ provider "argocd" {
 
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", ${local.enabled ? local.eks_cluster_id : "default"}]
+      args        = ["eks", "get-token", "--cluster-name", "${local.enabled ? local.eks_cluster_id : "default"}"]
       command     = "aws"
     }
   }
