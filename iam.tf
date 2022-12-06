@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "argocd" {
   statement {
     actions = ["sts:AssumeRole"]
     effect = "Allow"
-    resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer"]
+    resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer", "arn:aws:iam::*:role/*", "arn:aws:sts::*:assumed-role/dev-pixtab-argocd-server@argo/*"]
     sid = "ArgocdDeployer"
   }
 }
