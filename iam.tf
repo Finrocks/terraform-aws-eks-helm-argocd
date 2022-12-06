@@ -26,39 +26,39 @@ data "aws_iam_policy_document" "kms" {
 #      identifiers = [local.eks_cluster_oidc_issuer_url]
 #    }
 
-data "aws_iam_policy_document" "assumer" {
-  count = local.iam_role_enabled ? 1 : 0
-
-  statement {
-    effect = "Allow"
-    actions = [
-      "sts:AssumeRole"
-    ]
-    resources = [
-      "*"
-    ]
-
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${local.account_id}:root", "arn:aws:iam::${local.account_id}:assumed-role/dev-pixtab-argocd-server"]
-    }
-  }
-}
-
-resource "aws_iam_policy" "assumer" {
-  count = local.iam_role_enabled ? 1 : 0
-
-  name   = "assumer_policy"
-  path   = "/"
-  policy = one(data.aws_iam_policy_document.assumer[*].json)
-}
-
-resource "aws_iam_role_policy_attachment" "attach" {
-  count = local.iam_role_enabled ? 1 : 0
-
-  role       = one(module.argocd_server_iam_role[*].service_account_role_arn)
-  policy_arn = one(aws_iam_policy.assumer[*].arn)
-}
+#data "aws_iam_policy_document" "assumer" {
+#  count = local.iam_role_enabled ? 1 : 0
+#
+#  statement {
+#    effect = "Allow"
+#    actions = [
+#      "sts:AssumeRole"
+#    ]
+#    resources = [
+#      "*"
+#    ]
+#
+#    principals {
+#      type        = "AWS"
+#      identifiers = ["arn:aws:iam::${local.account_id}:root", "arn:aws:iam::${local.account_id}:assumed-role/dev-pixtab-argocd-server"]
+#    }
+#  }
+#}
+#
+#resource "aws_iam_policy" "assumer" {
+#  count = local.iam_role_enabled ? 1 : 0
+#
+#  name   = "assumer_policy"
+#  path   = "/"
+#  policy = one(data.aws_iam_policy_document.assumer[*].json)
+#}
+#
+#resource "aws_iam_role_policy_attachment" "attach" {
+#  count = local.iam_role_enabled ? 1 : 0
+#
+#  role       = one(module.argocd_server_iam_role[*].service_account_role_arn)
+#  policy_arn = one(aws_iam_policy.assumer[*].arn)
+#}
 
 data "aws_iam_policy_document" "merge" {
   count = local.iam_role_enabled ? 1 : 0
