@@ -7,7 +7,7 @@ locals {
   application_controller_service_account_name = format("%s-application-controller", var.helm_config["name"])
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
   additional_iam_policy_document              = sort(var.config["additional_iam_policy_document"])
-  ca_data                                     = base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data))
+  ca_data                                     = try(base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data)), null)
   #short-checker
   admin_password_enabled                      = local.enabled && var.argocd_config["setup_admin_password"]
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
