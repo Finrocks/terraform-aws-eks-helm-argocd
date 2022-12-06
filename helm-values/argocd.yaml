@@ -27,5 +27,4 @@ server:
 configs:
   secret:
     argocdServerAdminPassword: "${admin_password}"
-%{ else }
 %{ endif }    
