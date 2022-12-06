@@ -28,7 +28,4 @@ configs:
   secret:
     argocdServerAdminPassword: "${admin_password}"
 %{ else }
-configs:
-  secret:
-    argocdServerAdminPassword: "off"
 %{ endif }    
