@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "assumer" {
   statement {
     effect = "Allow"
     actions = [
-      "*"
+      "sts:AssumeRole"
     ]
     resources = [
       "*"
