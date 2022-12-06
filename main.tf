@@ -7,7 +7,6 @@ locals {
   application_controller_service_account_name = format("%s-application-controller", var.helm_config["name"])
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
-  additional_iam_policy_document               = sort(var.config["additional_iam_policy_document"])
 
   argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
     {
@@ -16,9 +15,9 @@ locals {
       role_enabled           = local.iam_role_enabled
       setup_admin_password   = var.argocd_config["setup_admin_password"]
       controller_sa_name     = local.application_controller_service_account_name
-      controller_role_arn    = local.iam_role_enabled == true ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : ""
+      controller_role_arn    = local.iam_role_enabled == true ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : null
       server_sa_name         = local.server_service_account_name
-      server_role_arn        = local.iam_role_enabled == true ? one(module.argocd_server_iam_role[*].service_account_role_arn) : ""
+      server_role_arn        = local.iam_role_enabled == true ? one(module.argocd_server_iam_role[*].service_account_role_arn) : null
       argocd_url             = var.argocd_config["argocd_url"]
       admin_password         = one(data.aws_ssm_parameter.encrypted_password[*].value)
     }
