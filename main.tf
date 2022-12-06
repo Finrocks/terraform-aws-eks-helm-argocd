@@ -28,6 +28,12 @@ locals {
   )
 }
 
+data "aws_eks_cluster_auth" "cluster" {
+  count = local.enabled ? 1 : 0
+
+  name = var.config["eks_cluster_id"]
+}
+
 data "aws_caller_identity" "default" {
   count = local.enabled ? 1 : 0
 }

@@ -29,6 +29,8 @@ terraform {
   }
 }
 
+
+
 provider "argocd" {
   server_addr                 = "argocd-server:80"
   username                    = "admin"
@@ -40,9 +42,10 @@ provider "argocd" {
   kubernetes {
     host                   = local.argocd_endpoint #one(data.aws_eks_cluster.cluster[*].endpoint)
     cluster_ca_certificate = base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data))
+    token                  = one(data.aws_eks_cluster_auth.cluster[*].token)
 
     exec {
-      api_version = "client.authentication.k8s.io/v1alpha1"
+      api_version = "client.authentication.k8s.io/v1beta1"
       args        = ["eks", "get-token", "--cluster-name", local.eks_cluster_id]
       command     = "aws"
     }
