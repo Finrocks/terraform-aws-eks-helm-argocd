@@ -50,7 +50,7 @@ resource "aws_iam_policy" "assumer" {
 
   name   = "assumer_policy"
   path   = "/"
-  policy = data.aws_iam_policy_document.assumer.json
+  policy = one(data.aws_iam_policy_document.assumer[*].json)
 }
 
 resource "aws_iam_role_policy_attachment" "attach" {
