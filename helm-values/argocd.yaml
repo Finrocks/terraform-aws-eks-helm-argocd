@@ -2,6 +2,9 @@
 fullnameOverride: "${fullname_override}"
 
 global:
+  logging:
+    level: "debug"
+
   securityContext:
     runAsUser: 999
     runAsGroup: 999

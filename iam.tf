@@ -20,11 +20,34 @@ data "aws_iam_policy_document" "kms" {
   }
 }
 
+data "aws_iam_policy_document" "role_assumer" {
+  count = local.iam_role_enabled ? 1 : 0
+
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect = "Allow"
+    sid = "Assumer"
+
+    principals {
+      type        = "AWS"
+      identifiers = [one(module.argocd_server_iam_role[*].service_account_role_arn)]
+    }
+
+    principals {
+      type        = "Federated"
+#      identifiers = ["arn:aws:iam::${var.account_id}:saml-provider/${var.provider_name}", "cognito-identity.amazonaws.com"]
+      identifiers = [local.eks_cluster_oidc_issuer_url]
+    }
+
+  }
+}
+
 data "aws_iam_policy_document" "merge" {
   count = local.iam_role_enabled ? 1 : 0
 
   override_policy_documents = [
     one(data.aws_iam_policy_document.argocd[*].json),
+    one(data.aws_iam_policy_document.role_assumer[*].json),
     length(data.aws_iam_policy_document.kms[*].json) > 0 ? one(data.aws_iam_policy_document.kms[*].json) : ""
   ]
 }
