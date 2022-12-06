@@ -41,7 +41,7 @@ provider "argocd" {
 
   kubernetes {
     host                   = local.argocd_endpoint #one(data.aws_eks_cluster.cluster[*].endpoint)
-    cluster_ca_certificate = base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data))
+    cluster_ca_certificate = try(base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data)), null)
     token                  = one(data.aws_eks_cluster_auth.cluster[*].token)
 
     exec {
