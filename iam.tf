@@ -2,26 +2,21 @@ data "aws_iam_policy_document" "argocd" {
   count = local.iam_role_enabled ? 1 : 0
 
   statement {
+    actions = ["sts:AssumeRole"]
     effect = "Allow"
-
     resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer"]
-
-    actions = [
-      "sts:AssumeRole"
-    ]
+    sid = "argocd-deployer"
   }
 }
 
 data "aws_iam_policy_document" "kms" {
   count = local.iam_role_enabled && var.argocd_config["setup_admin_password"] ? 1 : 0
+
   statement {
+    actions = ["kms:Decrypt"]
     effect = "Allow"
-
-    actions = [
-      "kms:Decrypt"
-    ]
-
     resources = [one(module.argocd_kms_key[*].key_arn)]
+    sid = "argocd-parameter-decryptor"
   }
 }
 
