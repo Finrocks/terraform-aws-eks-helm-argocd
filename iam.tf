@@ -76,7 +76,7 @@ data "aws_iam_policy_document" "merge" {
 
   override_policy_documents = [
     one(data.aws_iam_policy_document.argocd[*].json),
-    one(data.aws_iam_policy_document.assumerrr[*].json)
+    one(data.aws_iam_policy_document.assumerrr[*].json),
     length(data.aws_iam_policy_document.kms[*].json) > 0 ? one(data.aws_iam_policy_document.kms[*].json) : ""
   ]
 }
