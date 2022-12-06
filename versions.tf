@@ -32,8 +32,6 @@ terraform {
 
 
 provider "argocd" {
-  count = local.enabled ? 1 : 0
-
   server_addr                 = "argocd-server:80"
   username                    = "admin"
   password                    = one(random_password.argocd_password[*].result)
@@ -48,7 +46,7 @@ provider "argocd" {
 
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", local.enabled ? local.eks_cluster_id : "default"]
+      args        = ["eks", "get-token", "--cluster-name", ${local.enabled ? local.eks_cluster_id : "default"}]
       command     = "aws"
     }
   }
