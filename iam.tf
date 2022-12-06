@@ -45,15 +45,32 @@ data "aws_iam_policy_document" "assumer" {
   }
 }
 
+resource "aws_iam_policy" "assumer" {
+  count = local.iam_role_enabled ? 1 : 0
+
+  name   = "assumer_policy"
+  path   = "/"
+  policy = data.aws_iam_policy_document.assumer.json
+}
+
+resource "aws_iam_role_policy_attachment" "attach" {
+  count = local.iam_role_enabled ? 1 : 0
+
+  role       = one(module.argocd_server_iam_role[*].service_account_role_arn)
+  policy_arn = one(aws_iam_policy.assumer[*].arn)
+}
+
 data "aws_iam_policy_document" "merge" {
   count = local.iam_role_enabled ? 1 : 0
 
   override_policy_documents = [
     one(data.aws_iam_policy_document.argocd[*].json),
-    one(data.aws_iam_policy_document.assumer[*].json)
-#    length(data.aws_iam_policy_document.kms[*].json) > 0 ? one(data.aws_iam_policy_document.kms[*].json) : ""
+#    one(data.aws_iam_policy_document.assumer[*].json)
+    length(data.aws_iam_policy_document.kms[*].json) > 0 ? one(data.aws_iam_policy_document.kms[*].json) : ""
   ]
 }
+
+
 
 module "argocd_server_iam_role" {
   count                       = local.iam_role_enabled ? 1 : 0
