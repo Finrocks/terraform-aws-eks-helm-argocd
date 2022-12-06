@@ -28,16 +28,16 @@ data "aws_iam_policy_document" "role_assumer" {
 #    effect = "Allow"
 #    sid = "Assumer"
 
-    principals {
-      type        = "AWS"
-      identifiers = [one(module.argocd_server_iam_role[*].service_account_role_arn)]
-    }
-
 #    principals {
-#      type        = "Federated"
-##      identifiers = ["arn:aws:iam::${var.account_id}:saml-provider/${var.provider_name}", "cognito-identity.amazonaws.com"]
-#      identifiers = [local.eks_cluster_oidc_issuer_url]
+#      type        = "AWS"
+#      identifiers = [one(module.argocd_server_iam_role[*].service_account_role_arn)]
 #    }
+
+    principals {
+      type        = "Federated"
+#      identifiers = ["arn:aws:iam::${var.account_id}:saml-provider/${var.provider_name}", "cognito-identity.amazonaws.com"]
+      identifiers = [local.eks_cluster_oidc_issuer_url]
+    }
 
   }
 }
