@@ -9,7 +9,7 @@ locals {
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
   setup_admin_password_enabled                = local.enabled && var.argocd_config["setup_admin_password"]
 
-  argocd_helm_values = jsonencode(templatefile("${path.module}/helm-values/argocd.yaml",
+  argocd_helm_values = templatefile("${path.module}/helm-values/argocd.yaml",
     {
       fullname_override      = var.helm_config["name"]
       sts_regional_endpoints = var.config["use_sts_regional_endpoints"]
@@ -23,7 +23,7 @@ locals {
 #      admin_password         = local.enabled && var.argocd_config["setup_admin_password"] ? one(data.aws_ssm_parameter.encrypted_password[*].value) : null
       admin_password         = try(one(data.aws_ssm_parameter.encrypted_password[*].value), null)
     }
-  ))
+  )
 }
 
 data "aws_caller_identity" "default" {
