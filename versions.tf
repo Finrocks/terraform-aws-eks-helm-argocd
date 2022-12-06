@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.0"
+      version = "4.42.0"
     }
 
     argocd = {
@@ -14,7 +14,7 @@ terraform {
 
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2"
+      version = "2.7.1"
     }
 
     utils = {
@@ -39,7 +39,7 @@ provider "argocd" {
 
   kubernetes {
     host                   = local.argocd_endpoint #one(data.aws_eks_cluster.cluster[*].endpoint)
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+    cluster_ca_certificate = base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data))
 
     exec {
       api_version = "client.authentication.k8s.io/v1alpha1"
