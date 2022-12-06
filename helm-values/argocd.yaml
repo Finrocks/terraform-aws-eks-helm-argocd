@@ -23,7 +23,7 @@ server:
       eks.amazonaws.com/sts-regional-endpoints: "${sts_regional_endpoints}"
 %{ endif }
 
-%{ if adminpw  }
+%{ if admin_password_setup  }
 configs:
   secret:
     argocdServerAdminPassword: "${admin_password}"
