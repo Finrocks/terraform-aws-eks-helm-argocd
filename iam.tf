@@ -27,7 +27,14 @@ data "aws_iam_policy_document" "assumerrr" {
     actions = ["sts:AssumeRole"]
     effect = "Allow"
     resources = ["*"]
+
+  condition {
+      test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["true"]
+    }
   }
+
 }
 
 #    principals {
