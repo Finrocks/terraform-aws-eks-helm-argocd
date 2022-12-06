@@ -25,7 +25,8 @@ data "aws_iam_policy_document" "merge" {
 
   override_policy_documents = [
     one(data.aws_iam_policy_document.argocd[*].json),
-    try(one(data.aws_iam_policy_document.kms[*].json), [])
+    local.iam_role_enabled && var.argocd_config["setup_admin_password"] ? one(data.aws_iam_policy_document.kms[*].json) : null
+#    try(one(data.aws_iam_policy_document.kms[*].json), null)
   ]
 }
 
