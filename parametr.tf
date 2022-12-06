@@ -64,7 +64,7 @@ data "aws_ssm_parameter" "encrypted_password" {
 }
 
 resource "argocd_cluster" "additional_cluster" {
-  count = local.iam_role_enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
 
   server = local.argocd_endpoint
   name   = local.eks_cluster_id
