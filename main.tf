@@ -15,7 +15,7 @@ locals {
       role_enabled           = local.iam_role_enabled
       setup_admin_password   = var.argocd_config["setup_admin_password"]
       controller_sa_name     = local.application_controller_service_account_name
-      controller_role_arn    = local.iam_role_enabled == true ? try(one(module.argocd_application_controller_iam_role[*].service_account_role_arn), null) : try(one(module.argocd_application_controller_iam_role[*].service_account_role_arn), null)
+      controller_role_arn    = local.iam_role_enabled == true ? try(one(module.argocd_application_controller_iam_role[*].service_account_role_arn), "qww") : try(one(module.argocd_application_controller_iam_role[*].service_account_role_arn), "qqq")
       server_sa_name         = local.server_service_account_name
       server_role_arn        = local.iam_role_enabled == true ? try(one(module.argocd_server_iam_role[*].service_account_role_arn), "qwe") : try(one(module.argocd_server_iam_role[*].service_account_role_arn), "qwe")
       argocd_url             = var.argocd_config["argocd_url"]
