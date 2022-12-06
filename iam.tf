@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "assumerrr" {
   statement {
     actions = ["sts:AssumeRole"]
     effect = "Allow"
-    resources = ["*"]
+    resources = ["arn:aws:iam::529407427714:role/dev-pixtab-argocd-server@argo"]
 
   condition {
       test     = "Bool"
