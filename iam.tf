@@ -4,8 +4,8 @@ data "aws_iam_policy_document" "argocd" {
   statement {
     actions = ["sts:AssumeRole"]
     effect = "Allow"
-    resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer", "arn:aws:iam::*:role/*", "arn:aws:sts::*:assumed-role/dev-pixtab-argocd-server@argo/*"]
-    sid = "ArgocdDeployer"
+    resources = ["arn:aws:iam::${local.account_id}:role/*-argocd-deployer"]
+    sid = "Deployer"
   }
 }
 
@@ -36,12 +36,6 @@ data "aws_iam_policy_document" "assumerrr" {
   }
 
 }
-
-#    principals {
-#      type        = "Federated"
-##      identifiers = ["arn:aws:iam::${var.account_id}:saml-provider/${var.provider_name}", "cognito-identity.amazonaws.com"]
-#      identifiers = [local.eks_cluster_oidc_issuer_url]
-#    }
 
 #data "aws_iam_policy_document" "assumer" {
 #  count = local.iam_role_enabled ? 1 : 0
