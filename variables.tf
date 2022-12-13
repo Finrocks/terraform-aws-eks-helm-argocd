@@ -59,7 +59,7 @@ variable "helm_config" {
     namespace                  = optional(string, "argo")
     repository                 = optional(string, "https://argoproj.github.io/argo-helm")
     chart                      = optional(string, "argo-cd")
-    version                    = optional(string, "5.16.1")
+    version                    = optional(string, "5.16.3")
     max_history                = optional(number, 10)
     create_namespace           = optional(bool, true)
     dependency_update          = optional(bool, true)
