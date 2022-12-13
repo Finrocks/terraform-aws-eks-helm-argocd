@@ -9,7 +9,7 @@ terraform {
 
     argocd = {
       source  = "oboukili/argocd"
-      version = "4.1.0"
+      version = "4.2.0"
     }
 
     helm = {
@@ -19,7 +19,7 @@ terraform {
 
     utils = {
       source  = "cloudposse/utils"
-      version = ">= 0.14.0"
+      version = "1.6.0"
     }
 
     random = {
