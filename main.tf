@@ -122,10 +122,10 @@ resource "argocd_project" "default" {
       namespace = "*"
     }
 
-    destination {
-      server    = "https://kubernetes.default.svc"
-      namespace = "*"
-    }
+#    destination {
+#      server    = "https://kubernetes.default.svc"
+#      namespace = "*"
+#    }
 
     namespace_resource_whitelist {
       group = "*"
