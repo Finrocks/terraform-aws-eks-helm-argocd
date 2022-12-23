@@ -1,3 +1,27 @@
+## Requirements
+
+You should [configure](https://registry.terraform.io/providers/oboukili/argocd/latest/docs#usage) the argocd provider in order to use this module.
+```hcl
+provider "argocd" {
+  server_addr                 = "argocd-server:80"
+  username                    = "admin"
+  password                    = module.argocd.argocd_password
+  insecure                    = true
+  port_forward                = true
+  port_forward_with_namespace = local.argocd_namespace
+
+  kubernetes {
+    host                   = data.aws_eks_cluster.cluster.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+
+    exec {
+      api_version = "client.authentication.k8s.io/v1alpha1"
+      args        = ["eks", "get-token", "--cluster-name", module.eks_cluster.eks_cluster_id]
+      command     = "aws"
+    }
+  }
+}
+```
 # Usage
 ```hcl
 locals {
