@@ -159,7 +159,7 @@ resource "argocd_cluster" "additional_cluster" {
     }
   }
 
-  depends_on = [argocd_project.default]
+  depends_on = [helm_release.argocd, argocd_project.default]
 }
 
 ####todo: need fix when enabled = false
