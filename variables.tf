@@ -29,7 +29,7 @@ variable "argocd_config" {
     setup_admin_password           = optional(bool, true)
     create_additional_project      = optional(bool, false)
     create_additional_cluster      = optional(bool, false)
-    argocd_additional_project_name = optional(string, "")
+    argocd_additional_project_name = optional(string, null)
     argocd_additional_cluster_name = optional(string, null)
   })
 
