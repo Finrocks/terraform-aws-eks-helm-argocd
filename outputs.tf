@@ -8,6 +8,7 @@ output "argocd_password_encrypted" {
 #  value = nonsensitive(try(one(data.aws_ssm_parameter.encrypted_password[*].value), null))
   value = try(one(data.aws_ssm_parameter.encrypted_password[*].value), null)
   description = "Argocd encrypted password"
+  sensitive = true
 }
 
 output "metadata" {
