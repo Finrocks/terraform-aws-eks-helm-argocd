@@ -8,7 +8,6 @@ locals {
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
   additional_iam_policy_document              = sort(var.config["additional_iam_policy_document"])
   ca_data                                     = try(base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data)), null)
-  argocd_endpoint                             = one(data.aws_eks_cluster.cluster[*].endpoint)
   #short-checker
   argocd_additional_project                   = local.enabled && var.argocd_config["create_additional_project"]
   argocd_ingress_enabled                      = local.enabled && var.argocd_config["argocd_enable_ingress"]
