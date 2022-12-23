@@ -5,7 +5,8 @@ output "argocd_password" {
 
 output "argocd_password_encrypted" {
 #  value = try(nonsensitive(bcrypt(one(random_password.argocd_password[*].result), 10)), null)
-  value = nonsensitive(try(one(data.aws_ssm_parameter.encrypted_password[*].value), null))
+#  value = nonsensitive(try(one(data.aws_ssm_parameter.encrypted_password[*].value), null))
+  value = try(one(data.aws_ssm_parameter.encrypted_password[*].value), null)
   description = "Argocd encrypted password"
 }
 
