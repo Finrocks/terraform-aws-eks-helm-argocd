@@ -24,7 +24,8 @@ variable "config" {
 
 variable "argocd_config" {
   type = object({
-    argocd_url                     = string #doesnt work
+    argocd_enable_ingress          = optional(bool, false)
+    argocd_url                     = optional(string, null)
     setup_admin_password           = optional(bool, true)
     create_additional_project      = optional(bool, false)
     create_additional_cluster      = optional(bool, false)
@@ -33,6 +34,9 @@ variable "argocd_config" {
   })
 
   description = <<-DOC
+    `argocd_enable_ingress`"
+    Define whatever setup ingress or no.
+
     `argocd_url`:
       Argocd url for ingress.
 

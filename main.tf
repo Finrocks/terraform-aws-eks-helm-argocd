@@ -9,6 +9,7 @@ locals {
   additional_iam_policy_document              = sort(var.config["additional_iam_policy_document"])
   ca_data                                     = try(base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data)), null)
   #short-checker
+  argocd_ingress_enabled                      = local.enabled && var.argocd_config["argocd_enable_ingress"]
   admin_password_enabled                      = local.enabled && var.argocd_config["setup_admin_password"]
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
 
@@ -17,12 +18,13 @@ locals {
       fullname_override                       = var.helm_config["name"]
       sts_regional_endpoints                  = var.config["use_sts_regional_endpoints"]
       role_enabled                            = local.iam_role_enabled
+      ingress_enabled                         = local.argocd_ingress_enabled
       admin_password_setup                    = local.admin_password_enabled
       controller_sa_name                      = local.application_controller_service_account_name
       controller_role_arn                     = local.iam_role_enabled ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : try(one(module.argocd_application_controller_iam_role[*].service_account_role_arn), "")
       server_sa_name                          = local.server_service_account_name
       server_role_arn                         = local.iam_role_enabled ? one(module.argocd_server_iam_role[*].service_account_role_arn) : ""
-      argocd_url                              = var.argocd_config["argocd_url"]
+      argocd_url                              = local.argocd_ingress_enabled && var.argocd_config["argocd_url"]
       admin_password                          = try(one(data.aws_ssm_parameter.encrypted_password[*].value), null)
     }
   )
