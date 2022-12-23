@@ -141,6 +141,8 @@ resource "argocd_project" "default" {
       warn = true
     }
   }
+
+  depends_on = [helm_release.argocd]
 }
 
 
@@ -156,6 +158,8 @@ resource "argocd_cluster" "additional_cluster" {
       insecure = false
     }
   }
+
+  depends_on = [argocd_project.default]
 }
 
 ####todo: need fix when enabled = false
