@@ -63,29 +63,6 @@ data "aws_ssm_parameter" "encrypted_password" {
   depends_on       = [module.argocd_parameter_store]
 }
 
-#resource "argocd_cluster" "additional_cluster" {
-#  count = local.enabled ? 1 : 0
-#
-#  server = local.argocd_endpoint
-#  name   = local.eks_cluster_id
-#
-#  config {
-#    tls_client_config {
-#      ca_data = local.ca_data
-#      insecure = false
-#    }
-#  }
-#}
-
-####todo: need fix when enabled = false
-#module "argocd_additional_cluster" {
-#  enabled = true
-#  source  = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
-#
-#  eks_cluster_id = local.eks_cluster_id
-#  depends_on     = [helm_release.argocd]
-#}
-
 #module "argocd_apps" {
 #  enabled = true
 #  source  = "rallyware/aws-eks-cluster-bootstrap/argocd"

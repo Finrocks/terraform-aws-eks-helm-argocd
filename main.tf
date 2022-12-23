@@ -8,7 +8,9 @@ locals {
   server_service_account_name                 = format("%s-server", var.helm_config["name"])
   additional_iam_policy_document              = sort(var.config["additional_iam_policy_document"])
   ca_data                                     = try(base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data)), null)
+  argocd_endpoint                             = one(data.aws_eks_cluster.cluster[*].endpoint)
   #short-checker
+  argocd_additional_project                   = local.enabled && var.argocd_config["create_additional_project"]
   argocd_ingress_enabled                      = local.enabled && var.argocd_config["argocd_enable_ingress"]
   admin_password_enabled                      = local.enabled && var.argocd_config["setup_admin_password"]
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
@@ -100,3 +102,67 @@ resource "helm_release" "argocd" {
 
   values = [one(data.utils_deep_merge_yaml.default[*].output)]
 }
+
+resource "argocd_project" "default" {
+  count = local.argocd_additional_project ? 1 : 0
+
+  metadata {
+    name      = var.argocd_config["argocd_additional_project_name"]
+    namespace = var.helm_config["namespace"]
+    labels    = module.this.tags
+  }
+
+  spec {
+    description  = format("Bootstrap %s", local.eks_cluster_id)
+    source_repos = ["*"]
+
+    destination {
+      name      = local.eks_cluster_id
+      server    = local.argocd_endpoint
+      namespace = "*"
+    }
+
+    destination {
+      server    = "https://kubernetes.default.svc"
+      namespace = "*"
+    }
+
+    namespace_resource_whitelist {
+      group = "*"
+      kind  = "*"
+    }
+
+    cluster_resource_whitelist {
+      group = "*"
+      kind  = "*"
+    }
+
+    orphaned_resources {
+      warn = true
+    }
+  }
+}
+
+
+#resource "argocd_cluster" "additional_cluster" {
+#  count = local.enabled ? 1 : 0
+#
+#  server = local.argocd_endpoint
+#  name   = local.eks_cluster_id
+#
+#  config {
+#    tls_client_config {
+#      ca_data = local.ca_data
+#      insecure = false
+#    }
+#  }
+#}
+
+####todo: need fix when enabled = false
+#module "argocd_additional_cluster" {
+#  enabled = true
+#  source  = "git@github.com:Finrocks/terraform-argocd-additional-cluster.git"
+#
+#  eks_cluster_id = local.eks_cluster_id
+#  depends_on     = [helm_release.argocd]
+#}
