@@ -10,6 +10,7 @@ locals {
   ca_data                                     = try(base64decode(one(data.aws_eks_cluster.cluster[*].certificate_authority[0].data)), null)
   #short-checker
   argocd_additional_project                   = local.enabled && var.argocd_config["create_additional_project"]
+  argocd_additional_cluster                   = local.enabled && var.argocd_config["create_additional_cluster"]
   argocd_ingress_enabled                      = local.enabled && var.argocd_config["argocd_enable_ingress"]
   admin_password_enabled                      = local.enabled && var.argocd_config["setup_admin_password"]
   iam_role_enabled                            = local.enabled && var.config["create_iam_role"]
@@ -112,7 +113,7 @@ resource "argocd_project" "default" {
   }
 
   spec {
-    description  = format("Bootstrap %s", local.eks_cluster_id)
+    description  = local.eks_cluster_id
     source_repos = ["*"]
 
     destination {
@@ -143,19 +144,19 @@ resource "argocd_project" "default" {
 }
 
 
-#resource "argocd_cluster" "additional_cluster" {
-#  count = local.enabled ? 1 : 0
-#
-#  server = local.argocd_endpoint
-#  name   = local.eks_cluster_id
-#
-#  config {
-#    tls_client_config {
-#      ca_data = local.ca_data
-#      insecure = false
-#    }
-#  }
-#}
+resource "argocd_cluster" "additional_cluster" {
+  count = local.argocd_additional_cluster ? 1 : 0
+
+  server = local.argocd_endpoint
+  name   = local.eks_cluster_id
+
+  config {
+    tls_client_config {
+      ca_data = local.ca_data
+      insecure = false
+    }
+  }
+}
 
 ####todo: need fix when enabled = false
 #module "argocd_additional_cluster" {
