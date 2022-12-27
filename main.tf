@@ -25,7 +25,7 @@ locals {
       controller_sa_name                      = local.application_controller_service_account_name
       controller_role_arn                     = local.iam_role_enabled ? one(module.argocd_application_controller_iam_role[*].service_account_role_arn) : try(one(module.argocd_application_controller_iam_role[*].service_account_role_arn), "")
       server_sa_name                          = local.server_service_account_name
-      server_role_arn                         = local.iam_role_enabled ? one(module.argocd_server_iam_role[*].service_account_role_arn) : ""
+      server_role_arn                         = local.iam_role_enabled ? one(module.argocd_server_iam_role[*].service_account_role_arn) : try(one(module.argocd_server_iam_role[*].service_account_role_arn), "")
       argocd_url                              = var.argocd_config["argocd_url"]
       admin_password                          = try(one(data.aws_ssm_parameter.encrypted_password[*].value), null)
     }
