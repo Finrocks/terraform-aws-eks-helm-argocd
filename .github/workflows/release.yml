@@ -39,7 +39,7 @@ jobs:
       - name: TEST_VAR
         run: echo "tag=${{ steps.version.outputs.tag }} version==${{ steps.version.outputs.version }} major=${{ steps.version.outputs.major }}"
       
-      - uses: release-drafter/release-drafter@v5.21.1
+      - uses: release-drafter/release-drafter@v5.24.0
         with:
           publish: true
           version: ${{ steps.version.outputs.version }}
