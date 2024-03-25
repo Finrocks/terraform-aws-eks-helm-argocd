@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: main docs
-        uses: terraform-docs/gh-actions@v1.0.0
+        uses: terraform-docs/gh-actions@v1.1.0
         with:
           working-dir: .
           git-push: true
@@ -28,7 +28,7 @@ jobs:
           config-file: ".terraform-docs.yml"
 
       - name: basic example docs
-        uses: terraform-docs/gh-actions@v1.0.0
+        uses: terraform-docs/gh-actions@v1.1.0
         with:
           working-dir: ./examples/basic/
           git-push: true
